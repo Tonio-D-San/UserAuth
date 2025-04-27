@@ -131,10 +131,7 @@ public class WebSecurityConfiguration {
       implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) {
-      System.out.println(userRequest);
-      OAuth2User oAuth2User = new DefaultOAuth2UserService().loadUser(userRequest);
-      System.out.println(oAuth2User);
-      return oAuth2User;
+      return new DefaultOAuth2UserService().loadUser(userRequest);
     }
   }
 
