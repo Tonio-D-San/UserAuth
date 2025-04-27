@@ -3,8 +3,6 @@ package it.asansonne.authhub.security;
 import static it.asansonne.authhub.constant.SharedConstant.API;
 import static it.asansonne.authhub.constant.SharedConstant.API_VERSION;
 
-import it.asansonne.authhub.ccsr.component.CustomOAuth2UserService;
-import it.asansonne.authhub.event.OAuth2AuthHubAuthenticatedEvent;
 import it.asansonne.authhub.exception.handler.AuthorizationAuthenticationHandler;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,7 +10,6 @@ import java.util.List;
 import java.util.Map;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.converter.Converter;
@@ -128,27 +125,17 @@ public class WebSecurityConfiguration {
   }
 
 
-//  @Component
-//  @AllArgsConstructor
-//  static class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
-//
-//    private final ApplicationEventPublisher eventPublisher;
-//
-//    @Override
-//    public OAuth2User loadUser(OAuth2UserRequest userRequest) {
-//      OAuth2UserService<OAuth2UserRequest, OAuth2User> delegate = new DefaultOAuth2UserService();
-//      OAuth2User oAuth2User = delegate.loadUser(userRequest);
-//
-//      // Informazioni base
-//      Map<String, Object> attributes = oAuth2User.getAttributes();
-//      String email = (String) attributes.get("email");
-//      String name = (String) attributes.get("name");
-//
-//      // Pubblica evento di autenticazione completata
-//      eventPublisher.publishEvent(new OAuth2AuthHubAuthenticatedEvent(email, name));
-//
-//      return oAuth2User;
-//    }
-//  }
+  @Component
+  @AllArgsConstructor
+  protected static class CustomOAuth2UserService
+      implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
+    @Override
+    public OAuth2User loadUser(OAuth2UserRequest userRequest) {
+      System.out.println(userRequest);
+      OAuth2User oAuth2User = new DefaultOAuth2UserService().loadUser(userRequest);
+      System.out.println(oAuth2User);
+      return oAuth2User;
+    }
+  }
 
 }

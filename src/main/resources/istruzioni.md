@@ -44,3 +44,5 @@
     - **Default Scopes**: `openid email profile`
 
 - Salva.
+
+https://console.cloud.google.com/
