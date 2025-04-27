@@ -589,13 +589,13 @@
     {
       "id": "167fc152-213f-4c2d-b2f9-03a3ddce4a4c",
       "createdTimestamp": 1730280764285,
-      "username": "lbisci",
+      "username": "jdoe",
       "enabled": true,
       "totp": false,
       "emailVerified": true,
       "firstName": "Jhon",
       "lastName": "Doe",
-      "email": "lbisci@test.it",
+      "email": "jdoe@test.it",
       "credentials": [
         {
           "type": "password",

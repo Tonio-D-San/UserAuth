@@ -24,7 +24,7 @@ public class OpenApiConfiguration {
   private static final String SEC_SCHEME_OAUTH2 = "oauth2";
   @Value("${info.app.name}")
   private String appName;
-  @Value("${keycloak.host}")
+  @Value("${server.host}")
   private String authServer;
   @Value("${keycloak.realm.name}")
   private String realm;
