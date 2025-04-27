@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
  * The type Jpa config.
  */
 @Configuration
-@EnableJpaRepositories(basePackages = "${base.package}"+".ccsr.repository.jpa")
-@EntityScan(basePackages = "${base.package}"+".model.jpa")
+@EnableJpaRepositories(basePackages = "it.asansonne.userauth.ccsr.repository.jpa")
+@EntityScan(basePackages = "it.asansonne.userauth.model.jpa")
 public class JpaConfig {
 }
