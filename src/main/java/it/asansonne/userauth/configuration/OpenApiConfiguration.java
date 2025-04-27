@@ -19,7 +19,7 @@ import org.springframework.context.annotation.Configuration;
  * The type Open api configuration.
  */
 @Configuration
-@OpenAPIDefinition(servers = {@Server(url = "http://localhost:8081", description = "StoryWeaver")})
+@OpenAPIDefinition(servers = {@Server(url = "http://localhost:8081", description = "UserAuth API")})
 public class OpenApiConfiguration {
   private static final String SEC_SCHEME_OAUTH2 = "oauth2";
   @Value("${info.app.name}")
