@@ -40,7 +40,7 @@ import org.springframework.web.util.UriComponentsBuilder;
  * The type User controller.
  */
 @RestController
-@RequestMapping(API + "/" + API_VERSION + "users")
+@RequestMapping(API + "/" + API_VERSION + "/users")
 @AllArgsConstructor
 @Tag(name = "UserController" + API_VERSION)
 @PreAuthorize(ADMIN_ROLES)
