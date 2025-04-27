@@ -4,6 +4,7 @@ import static it.asansonne.authhub.constant.SharedConstant.API;
 import static it.asansonne.authhub.constant.SharedConstant.API_VERSION;
 
 import it.asansonne.authhub.ccsr.component.CustomOAuth2UserService;
+import it.asansonne.authhub.event.OAuth2AuthHubAuthenticatedEvent;
 import it.asansonne.authhub.exception.handler.AuthorizationAuthenticationHandler;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -11,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.converter.Converter;
@@ -20,7 +22,11 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
+import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
+import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
 import org.springframework.security.oauth2.core.oidc.StandardClaimNames;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.security.web.SecurityFilterChain;
@@ -48,8 +54,6 @@ public class WebSecurityConfiguration {
                                             KeycloakAuthenticationConverter authenticationConverter,
                                             CustomOAuth2UserService customOAuth2UserService)
       throws Exception {
-    log.info("Configuring security filter chain");
-    log.info("CustomOAuth2UserService: {}", customOAuth2UserService);
     return http.cors(Customizer.withDefaults())
         .oauth2ResourceServer(
             oauth2 ->
@@ -141,9 +145,10 @@ public class WebSecurityConfiguration {
 //      String name = (String) attributes.get("name");
 //
 //      // Pubblica evento di autenticazione completata
-//      eventPublisher.publishEvent(new OAuth2AuthHubenticatedEvent(email, name));
+//      eventPublisher.publishEvent(new OAuth2AuthHubAuthenticatedEvent(email, name));
 //
 //      return oAuth2User;
-
+//    }
+//  }
 
 }
