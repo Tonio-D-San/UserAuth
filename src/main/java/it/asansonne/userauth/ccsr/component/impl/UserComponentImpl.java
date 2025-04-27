@@ -1,8 +1,8 @@
 package it.asansonne.userauth.ccsr.component.impl;
 
-import static it.asansonne.userauth.constant.MessageConstant.FORBIDDEN;
-import static it.asansonne.userauth.constant.MessageConstant.GROUP_NOT_FOUND;
-import static it.asansonne.userauth.constant.MessageConstant.PERSON_NOT_FOUND;
+import static it.asansonne.userauth.enums.MessageConstant.FORBIDDEN;
+import static it.asansonne.userauth.enums.MessageConstant.GROUP_NOT_FOUND;
+import static it.asansonne.userauth.enums.MessageConstant.PERSON_NOT_FOUND;
 import static it.asansonne.userauth.constant.SharedConstant.DEFAULT_GROUP;
 
 import it.asansonne.userauth.ccsr.component.KeycloakComponent;
@@ -97,7 +97,7 @@ public class UserComponentImpl implements UserComponent {
           userService.updateUser(updateFields(userUpdateRequest, findUser(userUuid)))
       );
     } else {
-      throw new AccessDeniedException(FORBIDDEN);
+      throw new AccessDeniedException(FORBIDDEN.getMessage());
     }
   }
 
@@ -122,7 +122,7 @@ public class UserComponentImpl implements UserComponent {
 
   private UserJpa findUser(UUID userUuid) {
     return userService.findUserByUuid(userUuid)
-        .orElseThrow(() -> new NotFoundException(PERSON_NOT_FOUND));
+        .orElseThrow(() -> new NotFoundException(PERSON_NOT_FOUND.getMessage()));
   }
 
   private void makeGroup(UserJpa user, UserGroupRequest userUpdateRequest) {
@@ -164,13 +164,13 @@ public class UserComponentImpl implements UserComponent {
 
   private GroupRequest groupToGroupRequest() {
     return groupMapper.toRequest(groupService.findGroupByUuid(DEFAULT_GROUP)
-        .orElseThrow(() -> new NotFoundException(GROUP_NOT_FOUND)));
+        .orElseThrow(() -> new NotFoundException(GROUP_NOT_FOUND.getMessage())));
   }
 
   private List<GroupJpa> listGroups(List<GroupRequest> groups) {
     return groups.stream().map(
             group -> groupService.findGroupByUuid(group.getUuid())
-                .orElseThrow(() -> new NotFoundException(GROUP_NOT_FOUND)))
+                .orElseThrow(() -> new NotFoundException(GROUP_NOT_FOUND.getMessage())))
         .toList();
   }
 

@@ -1,5 +1,7 @@
 package it.asansonne.userauth.mapper.impl;
 
+import static it.asansonne.userauth.enums.SharedErrors.ERROR_DURING_JSON_DESERIALIZATION;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import it.asansonne.userauth.dto.request.UserRequest;
@@ -68,7 +70,7 @@ public class UserModelMapper implements RequestModelMapper<UserRequest, UserJpa>
     try {
       return List.of(new ObjectMapper().readValue(json, UserResponse[].class));
     } catch (JsonProcessingException e) {
-      throw new IllegalArgumentException("Error during JSON deserialization", e);
+      throw new IllegalArgumentException(ERROR_DURING_JSON_DESERIALIZATION.getMessage(), e);
     }
   }
 }

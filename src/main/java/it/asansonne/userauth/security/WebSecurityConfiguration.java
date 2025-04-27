@@ -1,5 +1,6 @@
 package it.asansonne.userauth.security;
 
+import it.asansonne.userauth.enums.SharedEnums;
 import it.asansonne.userauth.exception.handler.AuthorizationAuthenticationHandler;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -56,7 +57,8 @@ public class WebSecurityConfiguration {
             .accessDeniedHandler(handler))
         .authorizeHttpRequests(
             requests -> requests
-                .requestMatchers(new AntPathRequestMatcher("/api/v2/**"))
+                .requestMatchers(new AntPathRequestMatcher(String.format("/%s/%s/**",
+                    SharedEnums.API.getMessage(), SharedEnums.API_VERSION.getMessage())))
                 .authenticated()
                 .anyRequest()
                 .permitAll())
@@ -95,7 +97,7 @@ public class WebSecurityConfiguration {
       final var realmAccess = (Map<String, Object>) jwt.getClaims()
           .getOrDefault("resource_access", Map.of());
       final var client = (Map<String, Object>) realmAccess
-          .getOrDefault("cyber-client-be", Map.of());
+          .getOrDefault("${keycloak.client-id.be}", Map.of());
       final var roles = (List<String>) client
           .getOrDefault("roles", List.of());
       final List<String> prefixRoles = roles.stream().map(s -> "ROLE_" + s).toList();

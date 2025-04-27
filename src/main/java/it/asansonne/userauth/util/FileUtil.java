@@ -64,20 +64,20 @@ public class FileUtil {
   }
 
   /**
-   * Gets file name from complete path.
+   * Gets a file name from a complete path.
    *
    * @param completePath the complete path
-   * @return the file name from complete path
+   * @return the file name from a complete path
    */
   public static String getFileNameFromCompletePath(String completePath) {
     return completePath.substring(completePath.lastIndexOf("/") + 1);
   }
 
   /**
-   * Gets path name from complete path.
+   * Gets path name from a complete path.
    *
    * @param completePath the complete path
-   * @return the path name from complete path
+   * @return the path name from a complete path
    */
   public static String getPathNameFromCompletePath(String completePath) {
     return completePath.substring(0, completePath.lastIndexOf("/")) + "/";

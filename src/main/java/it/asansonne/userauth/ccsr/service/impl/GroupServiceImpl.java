@@ -1,6 +1,6 @@
 package it.asansonne.userauth.ccsr.service.impl;
 
-import static it.asansonne.userauth.constant.MessageConstant.GROUP_EMPTY;
+import static it.asansonne.userauth.enums.MessageConstant.GROUP_EMPTY;
 
 import it.asansonne.userauth.ccsr.repository.jpa.GroupRepository;
 import it.asansonne.userauth.ccsr.service.GroupService;
@@ -23,7 +23,7 @@ public final class GroupServiceImpl implements GroupService {
   public Optional<GroupJpa> findGroupByUuid(UUID uuid) {
     Optional<GroupJpa> group = groupRepository.findGroupByUuid(uuid);
     if (group.isEmpty()) {
-      throw new EntityNotFoundException(GROUP_EMPTY);
+      throw new EntityNotFoundException(GROUP_EMPTY.getMessage());
     }
     return group;
   }

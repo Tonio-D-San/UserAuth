@@ -45,6 +45,6 @@ public class GroupResponse implements Dto {
       description = "Category path",
       name = "path",
       type = "String",
-      example = "/cyber-users/admin-service-administrators")
+      example = "/application-users/admin-service-administrators")
   private String path;
 }

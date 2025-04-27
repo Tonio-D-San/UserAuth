@@ -37,7 +37,7 @@ public class UserResponse implements Dto {
       description = "User email",
       name = "email",
       type = "String",
-      example = "example@cybsec.it")
+      example = "example@domain.it")
   private String email;
 
   @Schema(

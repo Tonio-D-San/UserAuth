@@ -1,5 +1,8 @@
 package it.asansonne.userauth.exception.handler;
 
+import static it.asansonne.userauth.enums.SharedErrors.ERROR;
+import static it.asansonne.userauth.enums.SharedErrors.VALIDATION_ERROR;
+
 import it.asansonne.userauth.exception.ExceptionMessage;
 import it.asansonne.userauth.exception.custom.NotFoundException;
 import it.asansonne.userauth.exception.custom.ParentCreationDateException;
@@ -27,7 +30,7 @@ final class ApplicationExceptionHandler {
   @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
   @ExceptionHandler(RuntimeException.class)
   private ExceptionMessage runtimeExceptionHandler(RuntimeException e) {
-    return new ExceptionMessage(HttpStatus.INTERNAL_SERVER_ERROR, "Error: " + e.getMessage());
+    return new ExceptionMessage(HttpStatus.INTERNAL_SERVER_ERROR, ERROR + e.getMessage());
   }
 
   @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -44,7 +47,7 @@ final class ApplicationExceptionHandler {
       String fieldName = ((FieldError) error).getField();
       errors.put(fieldName, error.getDefaultMessage());
     });
-    return new ExceptionMessage(HttpStatus.BAD_REQUEST, "Validation Error", errors);
+    return new ExceptionMessage(HttpStatus.BAD_REQUEST, VALIDATION_ERROR.getMessage(), errors);
   }
 
   @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -56,7 +59,7 @@ final class ApplicationExceptionHandler {
   @ResponseStatus(HttpStatus.NOT_FOUND)
   @ExceptionHandler({NoResourceFoundException.class, NotFoundException.class})
   private ExceptionMessage noResourceExceptionHandler(Exception e) {
-    return new ExceptionMessage(HttpStatus.NOT_FOUND, "Error: " + e.getMessage());
+    return new ExceptionMessage(HttpStatus.NOT_FOUND, ERROR + e.getMessage());
   }
 
   @ResponseStatus(HttpStatus.BAD_REQUEST)

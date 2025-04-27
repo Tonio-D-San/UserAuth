@@ -1,5 +1,8 @@
 package it.asansonne.userauth.util;
 
+import static it.asansonne.userauth.enums.SharedErrors.ERROR_DURING_JSON_DESERIALIZATION;
+import static it.asansonne.userauth.enums.SharedErrors.ERROR_DURING_JSON_SERIALIZATION;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
@@ -16,7 +19,7 @@ public class JsonConverter implements AttributeConverter<Object, String> {
     try {
       return objectMapper.writeValueAsString(attribute);
     } catch (Exception e) {
-      throw new IllegalArgumentException("Error during JSON serialization", e);
+      throw new IllegalArgumentException(ERROR_DURING_JSON_SERIALIZATION.getMessage(), e);
     }
   }
 
@@ -25,7 +28,7 @@ public class JsonConverter implements AttributeConverter<Object, String> {
     try {
       return objectMapper.readValue(dbData, Object.class);
     } catch (Exception e) {
-      throw new IllegalArgumentException("Error during JSON deserialization", e);
+      throw new IllegalArgumentException(ERROR_DURING_JSON_DESERIALIZATION.getMessage(), e);
     }
   }
 }

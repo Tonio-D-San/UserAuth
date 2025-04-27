@@ -1,5 +1,7 @@
 package it.asansonne.userauth.exception.handler;
 
+import static it.asansonne.userauth.enums.SharedErrors.ERROR;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import it.asansonne.userauth.exception.ExceptionMessage;
 import jakarta.servlet.http.HttpServletRequest;
@@ -25,6 +27,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class AuthorizationAuthenticationHandler implements AccessDeniedHandler,
     AuthenticationEntryPoint {
+  public static final String APPLICATION_JSON = "application/json";
   private final ObjectMapper objectMapper;
 
   @Override
@@ -34,10 +37,10 @@ public class AuthorizationAuthenticationHandler implements AccessDeniedHandler,
                      AccessDeniedException accessDeniedException)
       throws IOException {
     ExceptionMessage exceptionMessage = new ExceptionMessage(HttpStatus.FORBIDDEN,
-        "Error: " + accessDeniedException.getMessage());
+        ERROR + accessDeniedException.getMessage());
     response.getWriter().write(objectMapper.writeValueAsString(exceptionMessage));
     response.setStatus(HttpStatus.FORBIDDEN.value());
-    response.setContentType("application/json");
+    response.setContentType(APPLICATION_JSON);
   }
 
   @Override
@@ -46,10 +49,10 @@ public class AuthorizationAuthenticationHandler implements AccessDeniedHandler,
   public void commence(HttpServletRequest request, HttpServletResponse response,
                        AuthenticationException authException) throws IOException {
     ExceptionMessage exceptionMessage = new ExceptionMessage(HttpStatus.UNAUTHORIZED,
-        "Error: " + authException.getMessage());
+        ERROR + authException.getMessage());
     response.getWriter().write(objectMapper.writeValueAsString(exceptionMessage));
     response.setStatus(HttpStatus.UNAUTHORIZED.value());
-    response.setContentType("application/json");
+    response.setContentType(APPLICATION_JSON);
 
   }
 
