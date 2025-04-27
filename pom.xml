@@ -70,6 +70,10 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-oauth2-client</artifactId>
+        </dependency>
         <!--    openAPI v3  -->
         <dependency>
             <groupId>org.springdoc</groupId>
@@ -202,18 +206,6 @@
                         </goals>
                     </execution>
                 </executions>
-                <dependencies>
-                    <dependency>
-                        <groupId>com.puppycrawl.tools</groupId>
-                        <artifactId>checkstyle</artifactId>
-                        <version>10.0</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>com.thomasjensen.checkstyle.addons</groupId>
-                        <artifactId>checkstyle-addons</artifactId>
-                        <version>7.0.1</version>
-                    </dependency>
-                </dependencies>
             </plugin>
             <plugin>
                 <groupId>org.springdoc</groupId>

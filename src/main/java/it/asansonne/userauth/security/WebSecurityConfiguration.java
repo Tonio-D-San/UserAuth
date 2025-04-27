@@ -3,6 +3,7 @@ package it.asansonne.userauth.security;
 import static it.asansonne.userauth.constant.SharedConstant.API;
 import static it.asansonne.userauth.constant.SharedConstant.API_VERSION;
 
+import it.asansonne.userauth.ccsr.service.UserService;
 import it.asansonne.userauth.exception.handler.AuthorizationAuthenticationHandler;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -18,7 +19,11 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
+import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
+import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
 import org.springframework.security.oauth2.core.oidc.StandardClaimNames;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.security.web.SecurityFilterChain;
@@ -42,13 +47,17 @@ public class WebSecurityConfiguration {
    */
   @Bean
   protected SecurityFilterChain filterChain(HttpSecurity http,
-                                            KeycloakAuthenticationConverter authenticationConverter)
+                                            KeycloakAuthenticationConverter authenticationConverter,
+                                            CustomOAuth2UserService customOAuth2UserService)
       throws Exception {
     return http.cors(Customizer.withDefaults())
         .oauth2ResourceServer(
             oauth2 ->
                 oauth2.jwt(jwt ->
                     jwt.jwtAuthenticationConverter(authenticationConverter)))
+        .oauth2Login(oauth2Login ->
+            oauth2Login.userInfoEndpoint(userInfoEndpoint ->
+                userInfoEndpoint.userService(customOAuth2UserService)))
         // State-less session (state in access-token only)
         .sessionManagement(sm ->
             sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -113,4 +122,28 @@ public class WebSecurityConfiguration {
       return authorities.stream().map(SimpleGrantedAuthority::new).toList();
     }
   }
+
+  @Component
+  @AllArgsConstructor
+  static class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
+
+    private final UserService userService;
+
+    @Override
+    public OAuth2User loadUser(OAuth2UserRequest userRequest) {
+      OAuth2UserService<OAuth2UserRequest, OAuth2User> delegate = new DefaultOAuth2UserService();
+      OAuth2User oAuth2User = delegate.loadUser(userRequest);
+
+      // Informazioni base
+      Map<String, Object> attributes = oAuth2User.getAttributes();
+      String email = (String) attributes.get("email");
+      String name = (String) attributes.get("name");
+
+      // Salvataggio su DB/Keycloak
+//      userService.createOrUpdateExternalUser(email, name);
+
+      return oAuth2User;
+    }
+  }
+
 }

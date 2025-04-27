@@ -59,7 +59,7 @@ public class KeycloakComponentImpl implements KeycloakComponent {
         throw new NotFoundException(PERSON_NOT_FOUND.getMessage());
       }
       return responseModelMapper.dtoToModelResponse(
-          userMapper.jsonToDto(response.getBody()).get(0)
+          userMapper.jsonToDto(response.getBody()).getFirst()
       );
     }
 
