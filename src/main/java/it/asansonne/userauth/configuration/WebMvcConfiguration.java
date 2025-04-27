@@ -1,7 +1,7 @@
 package it.asansonne.userauth.configuration;
 
-import static it.asansonne.userauth.enums.SharedEnums.API;
-import static it.asansonne.userauth.enums.SharedEnums.API_VERSION;
+import static it.asansonne.userauth.constant.SharedConstant.API;
+import static it.asansonne.userauth.constant.SharedConstant.API_VERSION;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
@@ -23,7 +23,7 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
   @Override
   public void addCorsMappings(CorsRegistry registry) {
     registry
-        .addMapping(String.format("/%s/%s/**", API.getMessage(), API_VERSION.getMessage()))
+        .addMapping(String.format("/%s/%s/**", API, API_VERSION))
         .allowedOrigins(allowedOrigins)
         .allowedMethods(allowedMethods)
         .allowedHeaders(allowedHeaders)

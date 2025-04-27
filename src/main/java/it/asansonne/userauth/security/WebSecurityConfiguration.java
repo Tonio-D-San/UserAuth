@@ -1,6 +1,8 @@
 package it.asansonne.userauth.security;
 
-import it.asansonne.userauth.enums.SharedEnums;
+import static it.asansonne.userauth.constant.SharedConstant.API;
+import static it.asansonne.userauth.constant.SharedConstant.API_VERSION;
+
 import it.asansonne.userauth.exception.handler.AuthorizationAuthenticationHandler;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -58,7 +60,7 @@ public class WebSecurityConfiguration {
         .authorizeHttpRequests(
             requests -> requests
                 .requestMatchers(new AntPathRequestMatcher(String.format("/%s/%s/**",
-                    SharedEnums.API.getMessage(), SharedEnums.API_VERSION.getMessage())))
+                    API, API_VERSION)))
                 .authenticated()
                 .anyRequest()
                 .permitAll())

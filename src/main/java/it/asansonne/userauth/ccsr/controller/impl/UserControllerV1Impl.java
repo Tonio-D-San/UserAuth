@@ -2,6 +2,8 @@ package it.asansonne.userauth.ccsr.controller.impl;
 
 import static it.asansonne.userauth.constant.SharedConstant.ADMIN_ROLES;
 import static it.asansonne.userauth.constant.SharedConstant.ADMIN_USER_ROLES;
+import static it.asansonne.userauth.constant.SharedConstant.API;
+import static it.asansonne.userauth.constant.SharedConstant.API_VERSION;
 import static it.asansonne.userauth.constant.SharedConstant.USER_ROLES;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -35,12 +37,12 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 /**
- * The type User controller v1.
+ * The type User controller.
  */
 @RestController
-@RequestMapping("api/v1/users")
+@RequestMapping(API + "/" + API_VERSION + "users")
 @AllArgsConstructor
-@Tag(name = "UserController V1")
+@Tag(name = "UserController" + API_VERSION)
 @PreAuthorize(ADMIN_ROLES)
 public class UserControllerV1Impl implements UserControllerV1 {
   private final UserComponent userComponent;
