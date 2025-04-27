@@ -15,7 +15,7 @@ services:
     container_name: ${KEYCLOAK_TEST}
     restart: no
     environment:
-      KC_HOSTNAME: ${KEYCLOAK}
+      KC_HOSTNAME: localhost
       KC_HOSTNAME_PORT: 5443
       KC_HOSTNAME_STRICT: false
       KC_HOSTNAME_STRICT_HTTPS: false
