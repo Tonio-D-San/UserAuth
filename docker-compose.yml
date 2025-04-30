@@ -10,7 +10,7 @@ volumes:
 
 services:
   ############## Keycloak Test ##############
-  auth_hub:
+  auth-hub:
     depends_on:
       - postgres_test
       - keycloak_test
@@ -25,7 +25,7 @@ services:
     networks:
       - application
       - databases
-    container_name: auth_hub
+    container_name: auth-hub
 
   ############## Keycloak Test ##############
   keycloak_test:
@@ -35,7 +35,7 @@ services:
     env_file:
       - .env
     volumes:
-      - ./services/keycloak/user-realm_dev.json:/opt/keycloak/data/import/user-realm.json
+      - ./services/keycloak/auth.json:/opt/keycloak/data/import/user-realm.json
     command: [ "start-dev", "--import-realm","--http-port=5443" ]
     ports:
       - '${KC_HOSTNAME_PORT}:${KC_HOSTNAME_PORT}'
@@ -50,7 +50,6 @@ services:
       retries: 50
     networks:
       - application
-
 
   ############## Postgres Test ##############
   postgres_test:
