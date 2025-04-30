@@ -124,7 +124,6 @@ public class WebSecurityConfiguration {
     }
   }
 
-
   @Component
   @AllArgsConstructor
   protected static class CustomOAuth2UserService

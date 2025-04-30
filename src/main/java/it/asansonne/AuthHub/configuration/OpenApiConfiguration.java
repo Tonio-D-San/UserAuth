@@ -19,12 +19,12 @@ import org.springframework.context.annotation.Configuration;
  * The type Open api configuration.
  */
 @Configuration
-@OpenAPIDefinition(servers = {@Server(url = "http://localhost:8081", description = "AuthHub API")})
+@OpenAPIDefinition(servers = {@Server(url = "http://authhub:8082", description = "AuthHub API")})
 public class OpenApiConfiguration {
   private static final String SEC_SCHEME_OAUTH2 = "oauth2";
   @Value("${info.app.name}")
   private String appName;
-  @Value("${server.host}")
+  @Value("${keycloak.host}")
   private String authServer;
   @Value("${keycloak.realm.name}")
   private String realm;

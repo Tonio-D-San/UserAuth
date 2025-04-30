@@ -36,9 +36,11 @@ public class AuthorizationAuthenticationHandler implements AccessDeniedHandler,
   public void handle(HttpServletRequest request, HttpServletResponse response,
                      AccessDeniedException accessDeniedException)
       throws IOException {
-    ExceptionMessage exceptionMessage = new ExceptionMessage(HttpStatus.FORBIDDEN,
-        ERROR.getMessage() + accessDeniedException.getMessage());
-    response.getWriter().write(objectMapper.writeValueAsString(exceptionMessage));
+    response.getWriter()
+        .write(objectMapper
+            .writeValueAsString(
+                new ExceptionMessage(HttpStatus.FORBIDDEN,
+                    ERROR.getMessage() + accessDeniedException.getMessage())));
     response.setStatus(HttpStatus.FORBIDDEN.value());
     response.setContentType(APPLICATION_JSON);
   }
@@ -48,9 +50,13 @@ public class AuthorizationAuthenticationHandler implements AccessDeniedHandler,
   @ExceptionHandler(AuthenticationException.class)
   public void commence(HttpServletRequest request, HttpServletResponse response,
                        AuthenticationException authException) throws IOException {
-    ExceptionMessage exceptionMessage = new ExceptionMessage(HttpStatus.UNAUTHORIZED,
-        ERROR.getMessage() + authException.getMessage());
-    response.getWriter().write(objectMapper.writeValueAsString(exceptionMessage));
+    response.getWriter()
+        .write(objectMapper
+            .writeValueAsString(
+                new ExceptionMessage(HttpStatus.UNAUTHORIZED,
+                    ERROR.getMessage() + authException.getMessage())
+            )
+        );
     response.setStatus(HttpStatus.UNAUTHORIZED.value());
     response.setContentType(APPLICATION_JSON);
 

@@ -44,8 +44,7 @@ final class ApplicationExceptionHandler {
   private ExceptionMessage validationExceptionHandler(MethodArgumentNotValidException e) {
     Map<String, String> errors = new HashMap<>();
     e.getBindingResult().getAllErrors().forEach(error -> {
-      String fieldName = ((FieldError) error).getField();
-      errors.put(fieldName, error.getDefaultMessage());
+      errors.put(((FieldError) error).getField(), error.getDefaultMessage());
     });
     return new ExceptionMessage(HttpStatus.BAD_REQUEST, VALIDATION_ERROR.getMessage(), errors);
   }
