@@ -10,25 +10,35 @@ volumes:
 
 services:
   ############## Keycloak Test ##############
+  auth_hub:
+    depends_on:
+      - postgres_test
+      - keycloak_test
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    ports:
+      - "8082:8082"
+    restart: no
+    networks:
+      - application
+      - databases
+    container_name: auth_hub
+
+  ############## Keycloak Test ##############
   keycloak_test:
     image: quay.io/keycloak/keycloak:23.0.1
     container_name: ${KEYCLOAK_TEST}
     restart: no
-    environment:
-      KC_HOSTNAME: localhost
-      KC_HOSTNAME_PORT: 5443
-      KC_HOSTNAME_STRICT: false
-      KC_HOSTNAME_STRICT_HTTPS: false
-      KC_LOG_LEVEL: info
-      KC_METRICS_ENABLED: true
-      KC_HEALTH_ENABLED: true
-      KEYCLOAK_ADMIN: admin
-      KEYCLOAK_ADMIN_PASSWORD: admin
+    env_file:
+      - .env
     volumes:
       - ./services/keycloak/user-realm_dev.json:/opt/keycloak/data/import/user-realm.json
     command: [ "start-dev", "--import-realm","--http-port=5443" ]
     ports:
-      - '5443:5443'
+      - '${KC_HOSTNAME_PORT}:${KC_HOSTNAME_PORT}'
     healthcheck:
       test:
         [
@@ -41,10 +51,11 @@ services:
     networks:
       - application
 
+
   ############## Postgres Test ##############
   postgres_test:
     image: postgres:15.6
-    container_name: ${POSTGRES}_${POSTGRES_DB_NAME}_${TEST}
+    container_name: ${POSTGRES_TEST}
     restart: no
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U postgres" ]
@@ -53,10 +64,8 @@ services:
       retries: 5
     ports:
       - '5432:5432'
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=${POSTGRES_DB_NAME}_${TEST}
+    env_file:
+      - .env
     volumes:
       - postgres_test:/var/lib/postgresql/data
       - ./database/postgres/user_db_structure.sql:/docker-entrypoint-initdb.d/01_user_db_structure.sql
