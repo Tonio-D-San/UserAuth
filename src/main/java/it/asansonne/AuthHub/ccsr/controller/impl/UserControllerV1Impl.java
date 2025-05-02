@@ -8,31 +8,21 @@ import static it.asansonne.authhub.constant.SharedConstant.USER_ROLES;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import it.asansonne.authhub.ccsr.component.UserComponent;
-import it.asansonne.authhub.ccsr.controller.UserControllerV1;
+import it.asansonne.authhub.ccsr.controller.UserControllerMappingV1;
 import it.asansonne.authhub.dto.request.UserGroupRequest;
 import it.asansonne.authhub.dto.request.UserRequest;
 import it.asansonne.authhub.dto.request.UserUpdateRequest;
 import it.asansonne.authhub.dto.request.StatusRequest;
 import it.asansonne.authhub.dto.response.UserResponse;
-import jakarta.validation.Valid;
 import java.security.Principal;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -44,62 +34,40 @@ import org.springframework.web.util.UriComponentsBuilder;
 @AllArgsConstructor
 @Tag(name = "UserController" + API_VERSION)
 @PreAuthorize(ADMIN_ROLES)
-public class UserControllerV1Impl implements UserControllerV1 {
+public class UserControllerV1Impl implements UserControllerMappingV1 {
   private final UserComponent userComponent;
 
   @Override
-  @GetMapping(value = "/{uuid}", produces = MediaType.APPLICATION_JSON_VALUE)
-  @ResponseStatus(HttpStatus.OK)
-  public UserResponse findUserByUuid(@PathVariable("uuid") UUID uuid) {
+  public UserResponse findUserByUuid(UUID uuid) {
     return userComponent.findUserByUuid(uuid);
   }
 
   @Override
-  @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
-  @ResponseStatus(HttpStatus.OK)
-  public Page<UserResponse> findAllUsers(
-      @RequestParam(value = "page", required = false, defaultValue = "0") Integer page,
-      @RequestParam(value = "size", required = false, defaultValue = "5") Integer size,
-      @RequestParam(value = "direction", required = false, defaultValue = "asc") String direction) {
-    PageRequest pageRequest = PageRequest.of(page, size,
-        Sort.by(Sort.Direction.fromString(direction), SURNAME));
-    return userComponent.findAllUsers(pageRequest);
+  public Page<UserResponse> findAllUsers(Integer page, Integer size, String direction) {
+    return userComponent.findAllUsers(
+        PageRequest.of(page, size, Sort.by(Sort.Direction.fromString(direction), SURNAME))
+    );
   }
 
   @Override
-  @GetMapping(value = "/active", produces = MediaType.APPLICATION_JSON_VALUE)
-  @ResponseStatus(HttpStatus.OK)
   @PreAuthorize(ADMIN_USER_ROLES)
-  public Page<UserResponse> findActiveUsers(
-      @RequestParam(value = "page", required = false, defaultValue = "0") Integer page,
-      @RequestParam(value = "size", required = false, defaultValue = "5") Integer size,
-      @RequestParam(value = "direction", required = false, defaultValue = "asc") String direction) {
-    PageRequest pageRequest = PageRequest.of(page, size,
-        Sort.by(Sort.Direction.fromString(direction), SURNAME));
-    return userComponent.findActiveUsers(pageRequest);
+  public Page<UserResponse> findActiveUsers(Integer page, Integer size, String direction) {
+    return userComponent.findActiveUsers(
+        PageRequest.of(page, size, Sort.by(Sort.Direction.fromString(direction), SURNAME))
+    );
   }
 
   @Override
-  @GetMapping(value = "/inactive", produces = MediaType.APPLICATION_JSON_VALUE)
-  @ResponseStatus(HttpStatus.OK)
-  public Page<UserResponse> findInactiveUsers(
-      @RequestParam(value = "page", required = false, defaultValue = "0") Integer page,
-      @RequestParam(value = "size", required = false, defaultValue = "5") Integer size,
-      @RequestParam(value = "direction", required = false, defaultValue = "asc") String direction) {
-    PageRequest pageRequest = PageRequest.of(page, size,
-        Sort.by(Sort.Direction.fromString(direction), SURNAME));
-    return userComponent.findInactiveUsers(pageRequest);
+  public Page<UserResponse> findInactiveUsers(Integer page, Integer size, String direction) {
+    return userComponent.findInactiveUsers(
+        PageRequest.of(page, size, Sort.by(Sort.Direction.fromString(direction), SURNAME))
+    );
   }
 
   @Override
-  @PostMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE,
-      consumes = MediaType.APPLICATION_JSON_VALUE)
-  @ResponseStatus(HttpStatus.CREATED)
-  public ResponseEntity<UserResponse> createUser(
-      @Valid @RequestBody UserRequest userRequest,
-      UriComponentsBuilder builder) {
-    UserResponse response =
-        userComponent.createUser(userRequest);
+  public ResponseEntity<UserResponse> createUser(UserRequest userRequest,
+                                                 UriComponentsBuilder builder) {
+    UserResponse response = userComponent.createUser(userRequest);
     return ResponseEntity
         .created(builder
             .path(API + "/" + API_VERSION + "/admin/")
@@ -109,32 +77,25 @@ public class UserControllerV1Impl implements UserControllerV1 {
   }
 
   @Override
-  @PatchMapping(value = "/{uuid}", produces = MediaType.APPLICATION_JSON_VALUE,
-      consumes = MediaType.APPLICATION_JSON_VALUE)
-  @ResponseStatus(HttpStatus.OK)
   @PreAuthorize(USER_ROLES)
-  public UserResponse updateUserByUuid(Principal principal,
-                                           @Valid @RequestBody UserUpdateRequest userRequest,
-                                           @PathVariable("uuid") UUID uuid) {
+  public UserResponse updateUserByUuid(Principal principal, UserUpdateRequest userRequest,
+                                       UUID uuid) {
     return userComponent.updateUserByUuid(principal, userRequest, uuid);
   }
 
   @Override
-  @PatchMapping(value = "/groups/{uuid}", produces = MediaType.APPLICATION_JSON_VALUE,
-      consumes = MediaType.APPLICATION_JSON_VALUE)
-  @ResponseStatus(HttpStatus.OK)
-  public UserResponse updateGroupByUserUuid(
-      @Valid @RequestBody UserGroupRequest userRequest,
-      @PathVariable("uuid") UUID uuid) {
+  @PreAuthorize(USER_ROLES)
+  public UserResponse updateMe(Principal principal, UserUpdateRequest userRequest) {
+    return null;
+  }
+
+  @Override
+  public UserResponse updateGroupByUserUuid(UserGroupRequest userRequest, UUID uuid) {
     return userComponent.updateGroupByUserUuid(userRequest, uuid);
   }
 
   @Override
-  @PatchMapping(value = "/status/{uuid}", produces = MediaType.APPLICATION_JSON_VALUE,
-      consumes = MediaType.APPLICATION_JSON_VALUE)
-  @ResponseStatus(HttpStatus.OK)
-  public void updateStatusUserByUuid(@PathVariable("uuid") UUID uuid,
-                                       @RequestBody StatusRequest status) {
+  public void updateStatusUserByUuid(UUID uuid, StatusRequest status) {
     userComponent.updateStatusUserByUuid(uuid, status);
   }
 }
