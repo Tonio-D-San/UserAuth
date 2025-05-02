@@ -101,6 +101,11 @@ public class UserComponentImpl implements UserComponent {
     }
   }
 
+  @Override
+  public UserResponse updateMe(Principal principal, UserUpdateRequest userRequest) {
+    return null;
+  }
+
   // userService.updateGroupsUser is a method that saves the user
   @Override
   public UserResponse updateGroupByUserUuid(UserGroupRequest userUpdateRequest,

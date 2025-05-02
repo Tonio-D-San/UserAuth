@@ -58,12 +58,22 @@ public interface UserComponent {
   /**
    * Update user response.
    *
+   * @param principal         the principal
    * @param userUpdateRequest the user request
    * @param userUuid          the user uuid
    * @return the user response
    */
   UserResponse updateUserByUuid(Principal principal, UserUpdateRequest userUpdateRequest,
                                     UUID userUuid);
+
+  /**
+   * Update me user response.
+   *
+   * @param principal   the principal
+   * @param userRequest the user request
+   * @return the user response
+   */
+  UserResponse updateMe(Principal principal, UserUpdateRequest userRequest);
 
   /**
    * Update user response.
@@ -79,7 +89,7 @@ public interface UserComponent {
    * Update status user.
    *
    * @param userUuid the user uuid
-   * @param status     the user status
+   * @param status   the user status
    */
   void updateStatusUserByUuid(UUID userUuid, StatusRequest status);
 }

@@ -86,7 +86,7 @@ public class UserControllerV1Impl implements UserControllerMappingV1 {
   @Override
   @PreAuthorize(USER_ROLES)
   public UserResponse updateMe(Principal principal, UserUpdateRequest userRequest) {
-    return null;
+    return userComponent.updateMe(principal, userRequest);
   }
 
   @Override
