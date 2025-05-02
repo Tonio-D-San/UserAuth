@@ -20,6 +20,14 @@ public interface KeycloakComponent {
   UserJpa readUser(String email);
 
   /**
+   * Read me user jpa.
+   *
+   * @param userId the user id
+   * @return the user jpa
+   */
+  UserJpa readMe(UUID userId);
+
+  /**
    * Create a user.
    *
    * @param request the request
