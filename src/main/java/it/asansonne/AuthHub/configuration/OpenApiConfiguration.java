@@ -19,7 +19,7 @@ import org.springframework.context.annotation.Configuration;
  * The type Open api configuration.
  */
 @Configuration
-@OpenAPIDefinition(servers = {@Server(url = "http://authhub:8082", description = "AuthHub API")})
+@OpenAPIDefinition(servers = {@Server(url = "http://auth-hub:8082", description = "AuthHub API")})
 public class OpenApiConfiguration {
   private static final String SEC_SCHEME_OAUTH2 = "oauth2";
   @Value("${info.app.name}")
