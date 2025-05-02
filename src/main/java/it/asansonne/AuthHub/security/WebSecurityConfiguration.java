@@ -109,7 +109,7 @@ public class WebSecurityConfiguration {
       final var realmAccess = (Map<String, Object>) jwt.getClaims()
           .getOrDefault("resource_access", Map.of());
       final var client = (Map<String, Object>) realmAccess
-          .getOrDefault("${keycloak.client-id.be}", Map.of());
+          .getOrDefault("user-client-be", Map.of());
       final var roles = (List<String>) client
           .getOrDefault("roles", List.of());
       final List<String> prefixRoles = roles.stream().map(s -> "ROLE_" + s).toList();
