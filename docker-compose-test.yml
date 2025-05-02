@@ -9,12 +9,12 @@ volumes:
     driver: local
 
 services:
-  ############## Keycloak Dev ##############
+  ############## Keycloak Test ##############
   auth-hub:
-    container_name: ${PROJECT_DEV}
+    container_name: ${PROJECT_TEST}
     depends_on:
-      - ${POSTGRES_DEV}
-      - ${KEYCLOAK_DEV}
+      - ${POSTGRES_SERVICE_NAME_TEST}
+      - ${KC_SERVICE_NAME_TEST}
     build:
       context: ./
       dockerfile: Dockerfile
@@ -28,10 +28,10 @@ services:
       - databases
 
 
-  ############## Keycloak Dev ##############
-  keycloak_dev:
+  ############## Keycloak Test ##############
+  keycloak-test:
     image: quay.io/keycloak/keycloak:23.0.1
-    container_name: ${KEYCLOAK_DEV}
+    container_name: ${KEYCLOAK_TEST}
     restart: no
     env_file:
       - .env
@@ -53,9 +53,9 @@ services:
       - application
 
   ############## Postgres Test ##############
-  postgres_dev:
+  postgres-test:
     image: postgres:15.6
-    container_name: ${POSTGRES_DEV}
+    container_name: ${POSTGRES_TEST}
     restart: no
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U postgres" ]
