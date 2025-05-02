@@ -115,7 +115,7 @@ public interface UserControllerV1 {
    *
    * @return the user keycloak response
    */
-  @PatchMapping(value = "/me/update", produces = MediaType.APPLICATION_JSON_VALUE,
+  @PatchMapping(value = "/me/create", produces = MediaType.APPLICATION_JSON_VALUE,
       consumes = MediaType.APPLICATION_JSON_VALUE)
   @ResponseStatus(HttpStatus.OK)
   UserResponse updateMe(Principal principal, UserUpdateRequest userRequest);

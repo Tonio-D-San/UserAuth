@@ -4,6 +4,7 @@ import static it.asansonne.authhub.constant.SharedConstant.ADMIN_ROLES;
 import static it.asansonne.authhub.constant.SharedConstant.ADMIN_USER_ROLES;
 import static it.asansonne.authhub.constant.SharedConstant.API;
 import static it.asansonne.authhub.constant.SharedConstant.API_VERSION;
+import static it.asansonne.authhub.constant.SharedConstant.FIRST_ACCESS_ROLES;
 import static it.asansonne.authhub.constant.SharedConstant.USER_ROLES;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -84,7 +85,7 @@ public class UserControllerV1Impl implements UserControllerMappingV1 {
   }
 
   @Override
-  @PreAuthorize(USER_ROLES)
+  @PreAuthorize(FIRST_ACCESS_ROLES)
   public UserResponse updateMe(Principal principal, UserUpdateRequest userRequest) {
     return userComponent.updateMe(principal, userRequest);
   }

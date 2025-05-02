@@ -103,7 +103,13 @@ public class UserComponentImpl implements UserComponent {
 
   @Override
   public UserResponse updateMe(Principal principal, UserUpdateRequest userRequest) {
-    return null;
+    return userResponseModelMapper.toDto(
+      userService.updateUser(
+        keycloakComponent.readMe(
+          UUID.fromString(principal.getName().split("[,\\[\\]\\s]+")[1])
+        )
+      )
+    );
   }
 
   // userService.updateGroupsUser is a method that saves the user

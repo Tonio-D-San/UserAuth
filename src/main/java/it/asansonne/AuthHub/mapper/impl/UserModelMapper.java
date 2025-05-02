@@ -3,14 +3,17 @@ package it.asansonne.authhub.mapper.impl;
 import static it.asansonne.authhub.enums.SharedErrors.ERROR_DURING_JSON_DESERIALIZATION;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import it.asansonne.authhub.dto.request.UserRequest;
+import it.asansonne.authhub.dto.response.GroupResponse;
 import it.asansonne.authhub.dto.response.UserResponse;
-import it.asansonne.authhub.exception.custom.NotFoundException;
 import it.asansonne.authhub.mapper.RequestModelMapper;
 import it.asansonne.authhub.mapper.ResponseModelMapper;
+import it.asansonne.authhub.model.jpa.GroupJpa;
 import it.asansonne.authhub.model.jpa.UserJpa;
 import java.util.List;
+import java.util.UUID;
 import org.springframework.stereotype.Component;
 
 /**
@@ -70,6 +73,27 @@ public class UserModelMapper implements RequestModelMapper<UserRequest, UserJpa>
     try {
       return List.of(new ObjectMapper().readValue(json, UserResponse[].class));
     } catch (JsonProcessingException e) {
+      throw new IllegalArgumentException(ERROR_DURING_JSON_DESERIALIZATION.getMessage(), e);
+    }
+  }
+
+  public UserResponse myJsonToDto(String json, GroupJpa group) {
+    try {
+      JsonNode rootNode = new ObjectMapper().readTree(json);
+      return UserResponse.builder()
+          .id(UUID.fromString(rootNode.get("id").asText()))
+          .email(rootNode.get("email").asText())
+          .firstName(rootNode.get("firstName").asText())
+          .lastName(rootNode.get("lastName").asText())
+          .enabled(rootNode.get("enabled").asBoolean())
+          .groups(
+              List.of(GroupResponse.builder()
+              .uuid(group.getUuid())
+              .name(group.getName())
+              .path(group.getPath())
+              .build()))
+          .build();
+    } catch (Exception e) {
       throw new IllegalArgumentException(ERROR_DURING_JSON_DESERIALIZATION.getMessage(), e);
     }
   }
