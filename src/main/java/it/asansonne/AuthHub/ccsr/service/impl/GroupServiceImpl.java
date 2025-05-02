@@ -1,22 +1,35 @@
 package it.asansonne.authhub.ccsr.service.impl;
 
 import static it.asansonne.authhub.enums.MessageConstant.GROUP_EMPTY;
+import static it.asansonne.authhub.util.RestUtil.setHeader;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import it.asansonne.authhub.ccsr.repository.jpa.GroupRepository;
 import it.asansonne.authhub.ccsr.service.GroupService;
 import it.asansonne.authhub.model.jpa.GroupJpa;
 import jakarta.persistence.EntityNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 /**
  * The type Group service.
  */
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public final class GroupServiceImpl implements GroupService {
+  @Value("${keycloak.host.groups}")
+  private String urlGroups;
+  private final RestTemplate restTemplate = new RestTemplate();
   private final GroupRepository groupRepository;
 
   @Override
@@ -27,4 +40,41 @@ public final class GroupServiceImpl implements GroupService {
     }
     return group;
   }
+
+  public List<GroupJpa> fetchAllGroups(JwtAuthenticationToken jwtAuthToken) {
+    List<GroupJpa> groups = new ArrayList<>();
+    fetchGroupsRecursively(urlGroups, jwtAuthToken, groups);
+    return groups;
+  }
+
+  private void fetchGroupsRecursively(String url, JwtAuthenticationToken jwtAuthToken,
+                                      List<GroupJpa> groups) {
+    try {
+      for (JsonNode groupNode :
+          new ObjectMapper()
+              .readTree(restTemplate.exchange(
+                  url,
+                  HttpMethod.GET,
+                  new HttpEntity<>("{}", setHeader(jwtAuthToken)),
+                  String.class
+              ).getBody())
+      ) {
+        GroupJpa group = new GroupJpa();
+        group.setUuid(UUID.fromString(groupNode.get("id").asText()));
+        group.setName(groupNode.get("name").asText());
+        group.setPath(groupNode.get("path").asText());
+        groups.add(group);
+        if (groupNode.get("subGroupCount").asInt() > 0) {
+          fetchGroupsRecursively(
+              urlGroups + "/" + group.getUuid() + "/children",
+              jwtAuthToken,
+              groups
+          );
+        }
+      }
+    } catch (Exception e) {
+      throw new RuntimeException("Errore durante il recupero dei gruppi", e); //TODO: cambiare eccezione e usare messaggi di errore dalle properties
+    }
+  }
+
 }

@@ -1,10 +1,20 @@
 package it.asansonne.authhub.mapper.impl;
 
+import static it.asansonne.authhub.enums.MessageConstant.GROUP_NOT_FOUND;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import it.asansonne.authhub.ccsr.service.GroupService;
 import it.asansonne.authhub.dto.request.GroupRequest;
+import it.asansonne.authhub.dto.request.StatusRequest;
+import it.asansonne.authhub.dto.request.UserRequest;
 import it.asansonne.authhub.dto.response.GroupResponse;
+import it.asansonne.authhub.exception.custom.NotFoundException;
 import it.asansonne.authhub.mapper.RequestModelMapper;
 import it.asansonne.authhub.mapper.ResponseModelMapper;
 import it.asansonne.authhub.model.jpa.GroupJpa;
+import it.asansonne.authhub.dto.UserPayload;
+import java.util.List;
 import org.springframework.stereotype.Component;
 
 /**
@@ -13,6 +23,12 @@ import org.springframework.stereotype.Component;
 @Component
 public class GroupModelMapper implements RequestModelMapper<GroupRequest, GroupJpa>,
     ResponseModelMapper<GroupJpa, GroupResponse> {
+
+  private final GroupService groupService;
+
+  public GroupModelMapper(GroupService groupService) {
+    this.groupService = groupService;
+  }
 
   @Override
   public GroupJpa toModel(GroupRequest dto) {
@@ -62,4 +78,56 @@ public class GroupModelMapper implements RequestModelMapper<GroupRequest, GroupJ
         .uuid(group.getUuid())
         .build();
   }
+
+  public String setPayload(StatusRequest status) {
+    return "{"
+        + "\"enabled\": " + status.getIsActive()
+        + "}";
+  }
+
+  public String setPayload(UserRequest request) {
+    try {
+      return new ObjectMapper().writeValueAsString(
+          UserPayload.builder()
+              .username(request.getUsername())
+              .credentials(List.of(UserPayload.Credential.builder()
+                  .type("password")
+                  .value(request.getPassword())
+                  .temporary(true)
+                  .build()))
+              .requiredActions(List.of("UPDATE_PASSWORD"))
+              .email(request.getEmail())
+              .lastName(request.getLastname())
+              .firstName(request.getFirstname())
+              .enabled(request.getIsActive())
+              .groups(request.getGroups() != null && !request.getGroups().isEmpty()
+                  ? List.of(groupJson(request.getGroups())
+                  .toString()
+                  .replace("[", "")
+                  .replace("]", "")
+                  .split(","))
+                  : null)
+              .build()
+      );
+    } catch (JsonProcessingException e) {
+      throw new IllegalStateException("Errore durante la serializzazione del payload", e);
+    }
+  }
+
+  private StringBuilder groupJson(List<GroupRequest> groups) {
+    StringBuilder groupsJson = new StringBuilder("[");
+    for (GroupRequest group : groups) {
+      if (groupsJson.length() > 1) {
+        groupsJson.append(",");
+      }
+      groupsJson.append("\"")
+          .append(groupService.findGroupByUuid(group.getUuid())
+              .orElseThrow(() -> new NotFoundException(GROUP_NOT_FOUND.getMessage()))
+              .getPath())
+          .append("\"");
+    }
+    groupsJson.append("]");
+    return groupsJson;
+  }
+
 }
