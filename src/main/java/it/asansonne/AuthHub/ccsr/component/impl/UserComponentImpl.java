@@ -1,5 +1,7 @@
 package it.asansonne.authhub.ccsr.component.impl;
 
+import static it.asansonne.authhub.constant.SharedConstant.BASE_GROUP;
+
 import it.asansonne.authhub.ccsr.component.KeycloakComponent;
 import it.asansonne.authhub.ccsr.component.UserComponent;
 import it.asansonne.authhub.ccsr.service.GroupService;
@@ -25,6 +27,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.stereotype.Component;
 
 /**
@@ -169,8 +173,7 @@ public class UserComponentImpl implements UserComponent {
   }
 
   private GroupRequest groupToGroupRequest() {
-    return groupMapper.toRequest(
-        groupService.findGroupByUuid(UUID.fromString("group.default.id"))
+    return groupMapper.toRequest(groupService.findGroupByUuid(BASE_GROUP)
           .orElseThrow(() -> new NotFoundException("group.not.found"))
     );
   }
