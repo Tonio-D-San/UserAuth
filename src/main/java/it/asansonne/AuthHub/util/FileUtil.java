@@ -1,5 +1,7 @@
 package it.asansonne.authhub.util;
 
+import static it.asansonne.authhub.constant.SharedConstant.ADMIN;
+
 import it.asansonne.authhub.model.jpa.UserJpa;
 import java.time.Instant;
 import java.time.OffsetDateTime;
@@ -101,9 +103,6 @@ public class FileUtil {
   public static boolean isAdmin(UserJpa user) {
     return user.getGroups()
         .stream()
-        .anyMatch(group ->
-            group.getName()
-                .equals("admin.group.name")
-        );
+        .anyMatch(group -> group.getName().equals(ADMIN));
   }
 }
