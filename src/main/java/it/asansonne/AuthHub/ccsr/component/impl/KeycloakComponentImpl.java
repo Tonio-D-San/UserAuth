@@ -7,6 +7,7 @@ import static it.asansonne.authhub.util.RestUtil.setHeader;
 
 import it.asansonne.authhub.ccsr.component.KeycloakComponent;
 import it.asansonne.authhub.ccsr.service.GroupService;
+import it.asansonne.authhub.ccsr.service.KeycloakService;
 import it.asansonne.authhub.dto.request.UserRequest;
 import it.asansonne.authhub.dto.request.StatusRequest;
 import it.asansonne.authhub.dto.request.UserUpdateRequest;
@@ -41,6 +42,7 @@ public class KeycloakComponentImpl implements KeycloakComponent {
   private final ResponseModelMapper<UserJpa, UserResponse> responseModelMapper;
   private final GroupService groupService;
   private final GroupModelMapper groupModelMapper;
+  private final KeycloakService keycloakService;
   @Value("${keycloak.host.user}")
   private String urlUser;
 
@@ -210,5 +212,9 @@ public class KeycloakComponentImpl implements KeycloakComponent {
   private GroupJpa getGroupByUuid(UUID groupId) {
     return groupService.findGroupByUuid(groupId)
         .orElseThrow(() -> new NotFoundException("group.not.found"));
+  }
+
+  private void updateUserAttribute(JwtAuthenticationToken jwtAuthenticationToken, String status) {
+        keycloakService.updateUserAttribute(setHeader(jwtAuthenticationToken), status);
   }
 }

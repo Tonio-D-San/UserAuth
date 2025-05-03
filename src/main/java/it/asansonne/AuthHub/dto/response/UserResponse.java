@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.v3.oas.annotations.media.Schema;
 import it.asansonne.authhub.dto.Dto;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -73,6 +74,13 @@ public class UserResponse implements Dto {
       name = "groups",
       type = "List<GroupResponse>")
   private List<GroupResponse> groups;
+
+  @Schema(
+      description = "Attributes of the user",
+      name = "attributes",
+      type = "List<String>",
+      example = "[complete, pending]")
+  private Map<String, List<String>> attributes;
 
   @Schema(
       description = "User active toggle",
