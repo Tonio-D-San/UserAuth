@@ -83,11 +83,10 @@ public class UserComponentImpl implements UserComponent {
     return userResponseModelMapper.toDto(userService.updateUser(user));
   }
 
-  // userService.updateUser is a method that saves the user
   @Override
-  public UserResponse updateUserByUuid(Principal principal,
-                                           UserUpdateRequest userUpdateRequest,
-                                           UUID userUuid) {
+  public UserResponse updateUserByUuid(
+      Principal principal, UserUpdateRequest userUpdateRequest, UUID userUuid
+  ) {
     if (findUser(UUID.fromString(principal.getName().split("[,\\[\\]\\s]+")[1])).getUuid()
         .equals(userUuid)) {
       return userResponseModelMapper.toDto(
