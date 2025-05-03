@@ -19,6 +19,7 @@ import java.util.UUID;
 import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.util.UriComponentsBuilder;
 
 public interface UserControllerMappingV1 extends UserControllerV1 {
@@ -120,7 +121,10 @@ public interface UserControllerMappingV1 extends UserControllerV1 {
                   )
               },
               schema = @Schema(implementation = ExceptionMessage.class)))})
-  Page<UserResponse> findAllUsers(Integer page, Integer size, String direction);
+  Page<UserResponse> findAllUsers(
+      @RequestParam(value = "page", required = false, defaultValue = "0") Integer page,
+      @RequestParam(value = "size", required = false, defaultValue = "5") Integer size,
+      @RequestParam(value = "direction", required = false, defaultValue = "asc") String direction);
 
   @Operation(summary = "All active users found")
   @ApiResponses(value = {

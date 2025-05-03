@@ -9,6 +9,7 @@ import it.asansonne.authhub.ccsr.component.KeycloakComponent;
 import it.asansonne.authhub.ccsr.service.GroupService;
 import it.asansonne.authhub.dto.request.UserRequest;
 import it.asansonne.authhub.dto.request.StatusRequest;
+import it.asansonne.authhub.dto.request.UserUpdateRequest;
 import it.asansonne.authhub.dto.response.UserResponse;
 import it.asansonne.authhub.exception.custom.NotFoundException;
 import it.asansonne.authhub.mapper.ResponseModelMapper;
@@ -66,17 +67,18 @@ public class KeycloakComponentImpl implements KeycloakComponent {
    * @param userId of the user
    */
   @Override
-  public UserJpa readMe(UUID userId) {
+  public UserJpa readMe(UUID userId, UserUpdateRequest userUpdateRequest) {
     if (SecurityContextHolder.getContext().getAuthentication()
         instanceof JwtAuthenticationToken jwtAuthToken) {
       ResponseEntity<String> response = getMyProfile(userId, jwtAuthToken);
       validateResponse(response);
-      deleteUserGroup(userId, addUserGroup(userId, FIRST_ACCESS_GROUP, jwtAuthToken));
+      deleteUserGroup(userId, getGroupByUuid(FIRST_ACCESS_GROUP));
       return responseModelMapper.dtoToModelResponse(
           userMapper.myJsonToDto(
               response.getBody(),
-              addUserGroup(userId, USER_GROUP, jwtAuthToken)
-          ) //TODO: mappare tutto e salvare
+              userUpdateRequest,
+              addUserGroup(userId, jwtAuthToken)
+          )
       );
     }
     throw new IllegalStateException("jwt.error");
@@ -167,13 +169,13 @@ public class KeycloakComponentImpl implements KeycloakComponent {
 
   /**
    * Add a group by UUID
-   * @param userId the user id
+   *
+   * @param userId       the user id
    * @param jwtAuthToken the jwt auth token
    * @return the group
    */
-  private GroupJpa addUserGroup(UUID userId, UUID groupId, JwtAuthenticationToken jwtAuthToken) {
-    GroupJpa group = groupService.findGroupByUuid(groupId)
-        .orElseThrow(() -> new NotFoundException("group.not.found"));
+  private GroupJpa addUserGroup(UUID userId, JwtAuthenticationToken jwtAuthToken) {
+    GroupJpa group = getGroupByUuid(USER_GROUP);
     updateGroup(userId, group.getUuid(), jwtAuthToken);
     return group;
   }
@@ -207,4 +209,8 @@ public class KeycloakComponentImpl implements KeycloakComponent {
     );
   }
 
+  private GroupJpa getGroupByUuid(UUID groupId) {
+    return groupService.findGroupByUuid(groupId)
+        .orElseThrow(() -> new NotFoundException("group.not.found"));
+  }
 }

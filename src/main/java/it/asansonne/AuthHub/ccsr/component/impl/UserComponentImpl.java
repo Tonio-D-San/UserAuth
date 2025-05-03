@@ -27,8 +27,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.stereotype.Component;
 
 /**
@@ -101,11 +99,12 @@ public class UserComponentImpl implements UserComponent {
   }
 
   @Override
-  public UserResponse updateMe(Principal principal, UserUpdateRequest userRequest) {
+  public UserResponse updateMe(Principal principal, UserUpdateRequest userUpdateRequest) {
     return userResponseModelMapper.toDto(
       userService.updateUser(
         keycloakComponent.readMe(
-          UUID.fromString(principal.getName().split("[,\\[\\]\\s]+")[1])
+          UUID.fromString(principal.getName().split("[,\\[\\]\\s]+")[1]),
+          userUpdateRequest
         )
       )
     );

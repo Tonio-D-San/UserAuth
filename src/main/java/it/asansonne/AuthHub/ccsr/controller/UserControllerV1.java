@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -47,10 +47,9 @@ public interface UserControllerV1 {
   @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
   @ResponseStatus(HttpStatus.OK)
   Page<UserResponse> findAllUsers(
-      @RequestParam(value = "page", required = false, defaultValue = "0") Integer page,
-      @RequestParam(value = "size", required = false, defaultValue = "5") Integer size,
-      @RequestParam(value = "direction", required = false, defaultValue = "asc") String direction
-  );
+      @Parameter(name = "page", description = "page number") Integer page,
+      @Parameter(name = "size", description = "element's number in page") Integer size,
+      @Parameter(name = "direction", description = "order direction") String direction);
 
   /**
    * Find active users page.
@@ -63,10 +62,9 @@ public interface UserControllerV1 {
   @GetMapping(value = "/active", produces = MediaType.APPLICATION_JSON_VALUE)
   @ResponseStatus(HttpStatus.OK)
   Page<UserResponse> findActiveUsers(
-      @RequestParam(value = "page", required = false, defaultValue = "0") Integer page,
-      @RequestParam(value = "size", required = false, defaultValue = "5") Integer size,
-      @RequestParam(value = "direction", required = false, defaultValue = "asc") String direction
-  );
+      @Parameter(name = "page", description = "page number") Integer page,
+      @Parameter(name = "size", description = "element's number in page") Integer size,
+      @Parameter(name = "direction", description = "order direction") String direction);
 
   /**
    * Find inactive users page.
@@ -79,10 +77,9 @@ public interface UserControllerV1 {
   @GetMapping(value = "/inactive", produces = MediaType.APPLICATION_JSON_VALUE)
   @ResponseStatus(HttpStatus.OK)
   Page<UserResponse> findInactiveUsers(
-      @RequestParam(value = "page", required = false, defaultValue = "0") Integer page,
-      @RequestParam(value = "size", required = false, defaultValue = "5") Integer size,
-      @RequestParam(value = "direction", required = false, defaultValue = "asc") String direction
-  );
+      @Parameter(name = "page", description = "page number") Integer page,
+      @Parameter(name = "size", description = "element's number in page") Integer size,
+      @Parameter(name = "direction", description = "order direction") String direction);
 
   /**
    * Create user response entity.
@@ -118,7 +115,7 @@ public interface UserControllerV1 {
   @PatchMapping(value = "/me/create", produces = MediaType.APPLICATION_JSON_VALUE,
       consumes = MediaType.APPLICATION_JSON_VALUE)
   @ResponseStatus(HttpStatus.OK)
-  UserResponse updateMe(Principal principal, UserUpdateRequest userRequest);
+  UserResponse updateMe(Principal principal, @RequestBody UserUpdateRequest userRequest);
 
   /**
    * Update user keycloak response.

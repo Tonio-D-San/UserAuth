@@ -79,7 +79,6 @@ public final class GroupServiceImpl implements GroupService {
       }
     } catch (Exception e) {
       throw new IllegalStateException("error.get.groups", e);
-      //TODO: cambiare eccezione e usare messaggi di errore dalle properties
     }
   }
 

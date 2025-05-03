@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import it.asansonne.authhub.dto.request.UserRequest;
+import it.asansonne.authhub.dto.request.UserUpdateRequest;
 import it.asansonne.authhub.dto.response.GroupResponse;
 import it.asansonne.authhub.dto.response.UserResponse;
 import it.asansonne.authhub.mapper.RequestModelMapper;
@@ -75,7 +76,7 @@ public class UserModelMapper implements RequestModelMapper<UserRequest, UserJpa>
     }
   }
 
-  public UserResponse myJsonToDto(String json, GroupJpa group) {
+  public UserResponse myJsonToDto(String json, UserUpdateRequest userUpdateRequest, GroupJpa group) {
     try {
       JsonNode rootNode = new ObjectMapper().readTree(json);
       return UserResponse.builder()
@@ -84,6 +85,7 @@ public class UserModelMapper implements RequestModelMapper<UserRequest, UserJpa>
           .firstName(rootNode.get("firstName").asText())
           .lastName(rootNode.get("lastName").asText())
           .enabled(rootNode.get("enabled").asBoolean())
+          .biography(userUpdateRequest.getBiography())
           .groups(
               List.of(GroupResponse.builder()
               .uuid(group.getUuid())

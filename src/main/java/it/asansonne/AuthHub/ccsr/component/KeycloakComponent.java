@@ -2,6 +2,7 @@ package it.asansonne.authhub.ccsr.component;
 
 import it.asansonne.authhub.dto.request.UserRequest;
 import it.asansonne.authhub.dto.request.StatusRequest;
+import it.asansonne.authhub.dto.request.UserUpdateRequest;
 import it.asansonne.authhub.model.jpa.GroupJpa;
 import it.asansonne.authhub.model.jpa.UserJpa;
 import java.util.UUID;
@@ -25,7 +26,7 @@ public interface KeycloakComponent {
    * @param userId the user id
    * @return the user jpa
    */
-  UserJpa readMe(UUID userId);
+  UserJpa readMe(UUID userId, UserUpdateRequest userUpdateRequest);
 
   /**
    * Create a user.
