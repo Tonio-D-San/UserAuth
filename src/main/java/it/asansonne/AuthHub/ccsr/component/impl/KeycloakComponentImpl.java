@@ -1,5 +1,7 @@
 package it.asansonne.authhub.ccsr.component.impl;
 
+import static it.asansonne.authhub.constant.SharedConstant.FIRST_ACCESS_GROUP;
+import static it.asansonne.authhub.constant.SharedConstant.USER_GROUP;
 import static it.asansonne.authhub.util.RestUtil.getResponseEntity;
 import static it.asansonne.authhub.util.RestUtil.setHeader;
 
@@ -40,10 +42,6 @@ public class KeycloakComponentImpl implements KeycloakComponent {
   private final GroupModelMapper groupModelMapper;
   @Value("${keycloak.host.user}")
   private String urlUser;
-  @Value("${keycloak.host.clients}")
-  private String urlClient;
-  @Value("${keycloak.host.groups}")
-  private String urlGroup;
 
   /**
    * Read user from Keycloak by username.
@@ -73,28 +71,15 @@ public class KeycloakComponentImpl implements KeycloakComponent {
         instanceof JwtAuthenticationToken jwtAuthToken) {
       ResponseEntity<String> response = getMyProfile(userId, jwtAuthToken);
       validateResponse(response);
-      GroupJpa userGroup = addUserGroup(userId, jwtAuthToken);
-      removeRole(userId, jwtAuthToken);
+      deleteUserGroup(userId, addUserGroup(userId, FIRST_ACCESS_GROUP, jwtAuthToken));
       return responseModelMapper.dtoToModelResponse(
-          userMapper.myJsonToDto(response.getBody(), userGroup) //TODO: mappare tutto e salvare
+          userMapper.myJsonToDto(
+              response.getBody(),
+              addUserGroup(userId, USER_GROUP, jwtAuthToken)
+          ) //TODO: mappare tutto e salvare
       );
     }
     throw new IllegalStateException("jwt.error");
-  }
-
-  private GroupJpa addUserGroup(UUID userId, JwtAuthenticationToken jwtAuthToken) {
-    GroupJpa group = groupService.findGroupByUuid(UUID.fromString("group.user.id"))
-        .orElseThrow(() -> new NotFoundException("group.not.found"));
-    updateGroup(userId, group, jwtAuthToken);
-    return group;
-  }
-
-  private ResponseEntity<String> getMyProfile(UUID userId, JwtAuthenticationToken jwtAuthToken) {
-    return getResponseEntity(
-        String.format("%s/%s", urlUser, userId),
-        HttpMethod.GET,
-        new HttpEntity<>(setHeader(jwtAuthToken))
-    );
   }
 
   /**
@@ -102,6 +87,7 @@ public class KeycloakComponentImpl implements KeycloakComponent {
    *
    * @param request of the user
    */
+  @Override
   public void createUser(UserRequest request) {
     if (SecurityContextHolder.getContext().getAuthentication()
         instanceof JwtAuthenticationToken jwtAuthToken) {
@@ -121,10 +107,11 @@ public class KeycloakComponentImpl implements KeycloakComponent {
    * @param userUuid the user id
    * @param request  updated user data
    */
+  @Override
   public void updateUser(UUID userUuid, GroupJpa request) {
     if (SecurityContextHolder.getContext().getAuthentication()
         instanceof JwtAuthenticationToken jwtAuthToken) {
-      updateGroup(userUuid, request, jwtAuthToken);
+      updateGroup(userUuid, request.getUuid(), jwtAuthToken);
     } else {
       throw new IllegalStateException("jwt.error");
     }
@@ -136,6 +123,7 @@ public class KeycloakComponentImpl implements KeycloakComponent {
    * @param userUuid the user id
    * @param status   updated user status
    */
+  @Override
   public void updateStatusUser(UUID userUuid, StatusRequest status) {
     if (SecurityContextHolder.getContext().getAuthentication()
         instanceof JwtAuthenticationToken jwtAuthToken) {
@@ -177,29 +165,46 @@ public class KeycloakComponentImpl implements KeycloakComponent {
     }
   }
 
-  private void updateGroup(UUID userUuid, GroupJpa groupId, JwtAuthenticationToken jwtAuthToken) {
+  /**
+   * Add a group by UUID
+   * @param userId the user id
+   * @param jwtAuthToken the jwt auth token
+   * @return the group
+   */
+  private GroupJpa addUserGroup(UUID userId, UUID groupId, JwtAuthenticationToken jwtAuthToken) {
+    GroupJpa group = groupService.findGroupByUuid(groupId)
+        .orElseThrow(() -> new NotFoundException("group.not.found"));
+    updateGroup(userId, group.getUuid(), jwtAuthToken);
+    return group;
+  }
+
+  /**
+   * GET .../admin/realms/{realm-name}/users/{user-id}
+   *
+   * @param userId the user id
+   * @param jwtAuthToken the jwt auth token
+   * @return the response entity
+   */
+  private ResponseEntity<String> getMyProfile(UUID userId, JwtAuthenticationToken jwtAuthToken) {
+    return getResponseEntity(
+        String.format("%s/%s", urlUser, userId),
+        HttpMethod.GET,
+        new HttpEntity<>(setHeader(jwtAuthToken))
+    );
+  }
+
+  /**
+   * GET .../admin/realms/${realm-name}/users/{user-id}/groups/{group-id}
+   * @param userUuid the user id
+   * @param groupUUid the group id
+   * @param jwtAuthToken the jwt auth token
+   */
+  private void updateGroup(UUID userUuid, UUID groupUUid, JwtAuthenticationToken jwtAuthToken) {
     getResponseEntity(
-        String.format("%s/%s/groups/%s", urlUser, userUuid, groupId.getUuid()),
+        String.format("%s/%s/groups/%s", urlUser, userUuid, groupUUid),
         HttpMethod.PUT,
         new HttpEntity<>("{}", setHeader(jwtAuthToken))
     );
   }
 
-  private void getGroups(JwtAuthenticationToken jwtAuthToken) {
-    //GET /admin/realms/{realm}/groups
-    getResponseEntity(
-        urlGroup,
-        HttpMethod.GET,
-        new HttpEntity<>("{}", setHeader(jwtAuthToken))
-    );
-  }
-
-  private void removeRole(UUID userUuid, JwtAuthenticationToken jwtAuthToken) {
-    getResponseEntity(
-        String.format("%s/%s/role-mappings/clients/%s",
-            urlUser, userUuid, groupService.fetchAllGroups(jwtAuthToken).getFirst().getUuid()),
-        HttpMethod.DELETE,
-        new HttpEntity<>("{}", setHeader(jwtAuthToken))
-    );
-  }
 }
