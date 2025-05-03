@@ -37,6 +37,8 @@ services:
       - .env
     volumes:
       - ./services/keycloak/auth.json:/opt/keycloak/data/import/user-realm.json
+      - ./services/keycloak/custom-theme:/opt/keycloak/providers/mio-tema
+      - ./services/keycloak/custom-theme:/opt/keycloak/themes/mio-tema
     command: [ "start-dev", "--import-realm","--http-port=5443" ]
     ports:
       - '${KC_HOSTNAME_PORT}:${KC_HOSTNAME_PORT}'
