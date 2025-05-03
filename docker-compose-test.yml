@@ -36,7 +36,7 @@ services:
     env_file:
       - .env
     volumes:
-      - ./services/keycloak/new-auth.json:/opt/keycloak/data/import/user-realm.json
+      - ./services/keycloak/auth.json:/opt/keycloak/data/import/user-realm.json
     command: [ "start-dev", "--import-realm","--http-port=5443" ]
     ports:
       - '${KC_HOSTNAME_PORT}:${KC_HOSTNAME_PORT}'
