@@ -52,6 +52,11 @@ public final class GroupServiceImpl implements GroupService {
     return groups;
   }
 
+  @Override
+  public List<GroupJpa> findAllByUuidIn(List<UUID> uuidList) {
+    return groupRepository.findAllByUuidIn(uuidList);
+  }
+
   private void fetchGroupsRecursively(String url, JwtAuthenticationToken jwtAuthToken,
                                       List<GroupJpa> groups) {
     try {
