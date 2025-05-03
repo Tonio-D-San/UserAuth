@@ -34,6 +34,13 @@ public class UserResponse implements Dto {
   private UUID id;
 
   @Schema(
+      description = "User username",
+      name = "username",
+      type = "String",
+      example = "username")
+  private String username;
+
+  @Schema(
       description = "User email",
       name = "email",
       type = "String",
