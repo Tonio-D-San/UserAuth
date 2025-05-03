@@ -22,6 +22,12 @@ import org.springframework.stereotype.Component;
 public class UserModelMapper implements RequestModelMapper<UserRequest, UserJpa>,
     ResponseModelMapper<UserJpa, UserResponse> {
 
+  private final GroupModelMapper groupModelMapper;
+
+  public UserModelMapper(GroupModelMapper groupModelMapper) {
+    this.groupModelMapper = groupModelMapper;
+  }
+
   @Override
   public UserJpa toModel(UserRequest dto) {
     if (dto == null) {
@@ -44,6 +50,7 @@ public class UserModelMapper implements RequestModelMapper<UserRequest, UserJpa>
         .lastName(model.getSurname())
         .biography(model.getBiography())
         .enabled(model.getIsActive())
+        .groups(model.getGroups() != null ? groupModelMapper.toDto(model.getGroups()) : null)
         .build();
   }
 

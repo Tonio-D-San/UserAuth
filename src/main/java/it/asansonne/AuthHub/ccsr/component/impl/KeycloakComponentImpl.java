@@ -67,18 +67,16 @@ public class KeycloakComponentImpl implements KeycloakComponent {
    * @param userId of the user
    */
   @Override
-  public UserJpa readMe(UUID userId, UserUpdateRequest userUpdateRequest) {
+  public UserResponse readMe(UUID userId, UserUpdateRequest userUpdateRequest) {
     if (SecurityContextHolder.getContext().getAuthentication()
         instanceof JwtAuthenticationToken jwtAuthToken) {
       ResponseEntity<String> response = getMyProfile(userId, jwtAuthToken);
       validateResponse(response);
       deleteUserGroup(userId, getGroupByUuid(FIRST_ACCESS_GROUP));
-      return responseModelMapper.dtoToModelResponse(
-          userMapper.myJsonToDto(
-              response.getBody(),
-              userUpdateRequest,
-              addUserGroup(userId, jwtAuthToken)
-          )
+      return userMapper.myJsonToDto(
+          response.getBody(),
+          userUpdateRequest,
+          addUserGroupOnKc(userId, jwtAuthToken)
       );
     }
     throw new IllegalStateException("jwt.error");
@@ -174,7 +172,7 @@ public class KeycloakComponentImpl implements KeycloakComponent {
    * @param jwtAuthToken the jwt auth token
    * @return the group
    */
-  private GroupJpa addUserGroup(UUID userId, JwtAuthenticationToken jwtAuthToken) {
+  private GroupJpa addUserGroupOnKc(UUID userId, JwtAuthenticationToken jwtAuthToken) {
     GroupJpa group = getGroupByUuid(USER_GROUP);
     updateGroup(userId, group.getUuid(), jwtAuthToken);
     return group;

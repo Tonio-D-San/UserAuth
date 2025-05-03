@@ -11,6 +11,7 @@ import it.asansonne.authhub.dto.request.UserGroupRequest;
 import it.asansonne.authhub.dto.request.UserRequest;
 import it.asansonne.authhub.dto.request.UserUpdateRequest;
 import it.asansonne.authhub.dto.request.StatusRequest;
+import it.asansonne.authhub.dto.response.GroupResponse;
 import it.asansonne.authhub.dto.response.UserResponse;
 import it.asansonne.authhub.exception.custom.NotFoundException;
 import it.asansonne.authhub.mapper.ResponseModelMapper;
@@ -99,14 +100,28 @@ public class UserComponentImpl implements UserComponent {
 
   @Override
   public UserResponse updateMe(Principal principal, UserUpdateRequest userUpdateRequest) {
-    return userResponseModelMapper.toDto(
-      userService.updateUser(
-        keycloakComponent.readMe(
-          UUID.fromString(principal.getName().split("[,\\[\\]\\s]+")[1]),
-          userUpdateRequest
-        )
-      )
+    UserResponse response = keycloakComponent.readMe(
+        UUID.fromString(principal.getName().split("[,\\[\\]\\s]+")[1]),
+        userUpdateRequest
     );
+    UserJpa user = userResponseModelMapper.dtoToModelResponse(response);
+    if (response.getGroups() != null) {
+      List<GroupJpa> existingGroups = groupService.findAllByUuidIn(
+          response.getGroups().stream()
+              .map(GroupResponse::getUuid)
+              .toList()
+      );
+      user.setGroups(existingGroups);
+      for (GroupJpa group : existingGroups) {
+        if (group.getUsers() == null) {
+          group.setUsers(new ArrayList<>());
+        }
+        if (!group.getUsers().contains(user)) {
+          group.getUsers().add(user);
+        }
+      }
+    }
+    return userResponseModelMapper.toDto(userService.updateUser(user));
   }
 
   // userService.updateGroupsUser is a method that saves the user
