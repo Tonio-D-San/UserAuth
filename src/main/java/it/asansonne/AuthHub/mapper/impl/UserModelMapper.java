@@ -13,20 +13,18 @@ import it.asansonne.authhub.model.jpa.GroupJpa;
 import it.asansonne.authhub.model.jpa.UserJpa;
 import java.util.List;
 import java.util.UUID;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 /**
  * The type User mapper.
  */
 @Component
+@RequiredArgsConstructor
 public class UserModelMapper implements RequestModelMapper<UserRequest, UserJpa>,
     ResponseModelMapper<UserJpa, UserResponse> {
 
   private final GroupModelMapper groupModelMapper;
-
-  public UserModelMapper(GroupModelMapper groupModelMapper) {
-    this.groupModelMapper = groupModelMapper;
-  }
 
   @Override
   public UserJpa toModel(UserRequest dto) {
@@ -88,6 +86,7 @@ public class UserModelMapper implements RequestModelMapper<UserRequest, UserJpa>
       JsonNode rootNode = new ObjectMapper().readTree(json);
       return UserResponse.builder()
           .id(UUID.fromString(rootNode.get("id").asText()))
+          .username(rootNode.get("username").asText())
           .email(rootNode.get("email").asText())
           .firstName(rootNode.get("firstName").asText())
           .lastName(rootNode.get("lastName").asText())

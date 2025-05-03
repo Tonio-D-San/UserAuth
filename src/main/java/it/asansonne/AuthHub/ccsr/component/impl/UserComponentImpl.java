@@ -130,9 +130,7 @@ public class UserComponentImpl implements UserComponent {
                                                 UUID userUuid) {
     UserJpa user = findUser(userUuid);
     makeGroup(user, userUpdateRequest);
-    return userResponseModelMapper.toDto(
-        userService.updateUser(user)
-    );
+    return userResponseModelMapper.toDto(userService.updateUser(user));
   }
 
   @Override
