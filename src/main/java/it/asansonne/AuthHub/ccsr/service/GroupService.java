@@ -19,5 +19,7 @@ public interface GroupService {
    */
   Optional<GroupJpa> findGroupByUuid(UUID uuid);
 
+  GroupJpa findByPathContainingIgnoreCase(String path);
+
   List<GroupJpa> fetchAllGroups(JwtAuthenticationToken jwtAuthToken);
 }

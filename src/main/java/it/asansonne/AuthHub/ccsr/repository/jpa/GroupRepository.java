@@ -19,4 +19,6 @@ public interface GroupRepository extends JpaRepository<GroupJpa, Integer> {
    * @return the optional
    */
   Optional<GroupJpa> findGroupByUuid(UUID groupUuid);
+
+  Optional<GroupJpa> findByPathContainingIgnoreCase(String path);
 }

@@ -40,6 +40,12 @@ public final class GroupServiceImpl implements GroupService {
     return group;
   }
 
+  @Override
+  public GroupJpa findByPathContainingIgnoreCase(String path) {
+    return groupRepository.findByPathContainingIgnoreCase(path)
+        .orElseThrow(() -> new EntityNotFoundException("group.empty"));
+  }
+
   public List<GroupJpa> fetchAllGroups(JwtAuthenticationToken jwtAuthToken) {
     List<GroupJpa> groups = new ArrayList<>();
     fetchGroupsRecursively(urlGroups, jwtAuthToken, groups);
@@ -72,7 +78,8 @@ public final class GroupServiceImpl implements GroupService {
         }
       }
     } catch (Exception e) {
-      throw new RuntimeException("error.get.groups", e); //TODO: cambiare eccezione e usare messaggi di errore dalle properties
+      throw new IllegalStateException("error.get.groups", e);
+      //TODO: cambiare eccezione e usare messaggi di errore dalle properties
     }
   }
 
