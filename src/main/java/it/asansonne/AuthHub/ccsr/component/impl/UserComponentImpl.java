@@ -1,10 +1,5 @@
 package it.asansonne.authhub.ccsr.component.impl;
 
-import static it.asansonne.authhub.enums.MessageConstant.FORBIDDEN;
-import static it.asansonne.authhub.enums.MessageConstant.GROUP_NOT_FOUND;
-import static it.asansonne.authhub.enums.MessageConstant.PERSON_NOT_FOUND;
-import static it.asansonne.authhub.constant.SharedConstant.DEFAULT_GROUP;
-
 import it.asansonne.authhub.ccsr.component.KeycloakComponent;
 import it.asansonne.authhub.ccsr.component.UserComponent;
 import it.asansonne.authhub.ccsr.service.GroupService;
@@ -97,7 +92,7 @@ public class UserComponentImpl implements UserComponent {
           userService.updateUser(updateFields(userUpdateRequest, findUser(userUuid)))
       );
     } else {
-      throw new AccessDeniedException(FORBIDDEN.getMessage());
+      throw new AccessDeniedException("forbidden");
     }
   }
 
@@ -133,7 +128,7 @@ public class UserComponentImpl implements UserComponent {
 
   private UserJpa findUser(UUID userUuid) {
     return userService.findUserByUuid(userUuid)
-        .orElseThrow(() -> new NotFoundException(PERSON_NOT_FOUND.getMessage()));
+        .orElseThrow(() -> new NotFoundException("person.not.found"));
   }
 
   private void makeGroup(UserJpa user, UserGroupRequest userUpdateRequest) {
@@ -174,14 +169,16 @@ public class UserComponentImpl implements UserComponent {
   }
 
   private GroupRequest groupToGroupRequest() {
-    return groupMapper.toRequest(groupService.findGroupByUuid(DEFAULT_GROUP)
-        .orElseThrow(() -> new NotFoundException(GROUP_NOT_FOUND.getMessage())));
+    return groupMapper.toRequest(
+        groupService.findGroupByUuid(UUID.fromString("group.default.id"))
+          .orElseThrow(() -> new NotFoundException("group.not.found"))
+    );
   }
 
   private List<GroupJpa> listGroups(List<GroupRequest> groups) {
     return groups.stream().map(
             group -> groupService.findGroupByUuid(group.getUuid())
-                .orElseThrow(() -> new NotFoundException(GROUP_NOT_FOUND.getMessage())))
+                .orElseThrow(() -> new NotFoundException("group.not.found")))
         .toList();
   }
 

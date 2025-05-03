@@ -1,7 +1,5 @@
 package it.asansonne.authhub.exception.handler;
 
-import static it.asansonne.authhub.enums.SharedErrors.ERROR;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import it.asansonne.authhub.exception.ExceptionMessage;
 import jakarta.servlet.http.HttpServletRequest;
@@ -39,8 +37,7 @@ public class AuthorizationAuthenticationHandler implements AccessDeniedHandler,
     response.getWriter()
         .write(objectMapper
             .writeValueAsString(
-                new ExceptionMessage(HttpStatus.FORBIDDEN,
-                    ERROR.getMessage() + accessDeniedException.getMessage())));
+                new ExceptionMessage(HttpStatus.FORBIDDEN, accessDeniedException.getMessage())));
     response.setStatus(HttpStatus.FORBIDDEN.value());
     response.setContentType(APPLICATION_JSON);
   }
@@ -53,8 +50,7 @@ public class AuthorizationAuthenticationHandler implements AccessDeniedHandler,
     response.getWriter()
         .write(objectMapper
             .writeValueAsString(
-                new ExceptionMessage(HttpStatus.UNAUTHORIZED,
-                    ERROR.getMessage() + authException.getMessage())
+                new ExceptionMessage(HttpStatus.UNAUTHORIZED, authException.getMessage())
             )
         );
     response.setStatus(HttpStatus.UNAUTHORIZED.value());

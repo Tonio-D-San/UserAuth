@@ -1,9 +1,5 @@
 package it.asansonne.authhub.ccsr.component.impl;
 
-import static it.asansonne.authhub.constant.SharedConstant.USER_GROUP;
-import static it.asansonne.authhub.enums.MessageConstant.GROUP_NOT_FOUND;
-import static it.asansonne.authhub.enums.MessageConstant.JWT_ERROR;
-import static it.asansonne.authhub.enums.MessageConstant.PERSON_NOT_FOUND;
 import static it.asansonne.authhub.util.RestUtil.getResponseEntity;
 import static it.asansonne.authhub.util.RestUtil.setHeader;
 
@@ -63,7 +59,7 @@ public class KeycloakComponentImpl implements KeycloakComponent {
           userMapper.jsonToDto(response.getBody()).getFirst()
       );
     }
-    throw new IllegalStateException(JWT_ERROR.getMessage());
+    throw new IllegalStateException("jwt.error");
   }
 
   /**
@@ -83,12 +79,12 @@ public class KeycloakComponentImpl implements KeycloakComponent {
           userMapper.myJsonToDto(response.getBody(), userGroup) //TODO: mappare tutto e salvare
       );
     }
-    throw new IllegalStateException(JWT_ERROR.getMessage());
+    throw new IllegalStateException("jwt.error");
   }
 
   private GroupJpa addUserGroup(UUID userId, JwtAuthenticationToken jwtAuthToken) {
-    GroupJpa group = groupService.findGroupByUuid(USER_GROUP)
-        .orElseThrow(() -> new NotFoundException(GROUP_NOT_FOUND.getMessage()));
+    GroupJpa group = groupService.findGroupByUuid(UUID.fromString("group.user.id"))
+        .orElseThrow(() -> new NotFoundException("group.not.found"));
     updateGroup(userId, group, jwtAuthToken);
     return group;
   }
@@ -115,7 +111,7 @@ public class KeycloakComponentImpl implements KeycloakComponent {
           new HttpEntity<>(groupModelMapper.setPayload(request), setHeader(jwtAuthToken))
       );
     } else {
-      throw new IllegalStateException(JWT_ERROR.getMessage());
+      throw new IllegalStateException("jwt.error");
     }
   }
 
@@ -130,7 +126,7 @@ public class KeycloakComponentImpl implements KeycloakComponent {
         instanceof JwtAuthenticationToken jwtAuthToken) {
       updateGroup(userUuid, request, jwtAuthToken);
     } else {
-      throw new IllegalStateException(JWT_ERROR.getMessage());
+      throw new IllegalStateException("jwt.error");
     }
   }
 
@@ -149,7 +145,7 @@ public class KeycloakComponentImpl implements KeycloakComponent {
           new HttpEntity<>(groupModelMapper.setPayload(status), setHeader(jwtAuthToken))
       );
     } else {
-      throw new IllegalStateException(JWT_ERROR.getMessage());
+      throw new IllegalStateException("jwt.error");
     }
   }
 
@@ -163,7 +159,7 @@ public class KeycloakComponentImpl implements KeycloakComponent {
           new HttpEntity<>("{}", setHeader(jwtAuthToken))
       );
     } else {
-      throw new IllegalStateException(JWT_ERROR.getMessage());
+      throw new IllegalStateException("jwt.error");
     }
   }
 
@@ -177,7 +173,7 @@ public class KeycloakComponentImpl implements KeycloakComponent {
 
   private void validateResponse(ResponseEntity<String> response) {
     if (response.getStatusCode() != HttpStatus.OK) {
-      throw new NotFoundException(PERSON_NOT_FOUND.getMessage());
+      throw new NotFoundException("person.not.found");
     }
   }
 

@@ -1,7 +1,5 @@
 package it.asansonne.authhub.mapper.impl;
 
-import static it.asansonne.authhub.enums.MessageConstant.GROUP_NOT_FOUND;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import it.asansonne.authhub.ccsr.service.GroupService;
@@ -122,7 +120,7 @@ public class GroupModelMapper implements RequestModelMapper<GroupRequest, GroupJ
       }
       groupsJson.append("\"")
           .append(groupService.findGroupByUuid(group.getUuid())
-              .orElseThrow(() -> new NotFoundException(GROUP_NOT_FOUND.getMessage()))
+              .orElseThrow(() -> new NotFoundException("group.not.found"))
               .getPath())
           .append("\"");
     }

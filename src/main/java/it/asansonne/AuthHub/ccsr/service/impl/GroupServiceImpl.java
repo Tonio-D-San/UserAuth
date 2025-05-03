@@ -1,6 +1,5 @@
 package it.asansonne.authhub.ccsr.service.impl;
 
-import static it.asansonne.authhub.enums.MessageConstant.GROUP_EMPTY;
 import static it.asansonne.authhub.util.RestUtil.setHeader;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -36,7 +35,7 @@ public final class GroupServiceImpl implements GroupService {
   public Optional<GroupJpa> findGroupByUuid(UUID uuid) {
     Optional<GroupJpa> group = groupRepository.findGroupByUuid(uuid);
     if (group.isEmpty()) {
-      throw new EntityNotFoundException(GROUP_EMPTY.getMessage());
+      throw new EntityNotFoundException("group.empty");
     }
     return group;
   }
@@ -73,7 +72,7 @@ public final class GroupServiceImpl implements GroupService {
         }
       }
     } catch (Exception e) {
-      throw new RuntimeException("Errore durante il recupero dei gruppi", e); //TODO: cambiare eccezione e usare messaggi di errore dalle properties
+      throw new RuntimeException("error.get.groups", e); //TODO: cambiare eccezione e usare messaggi di errore dalle properties
     }
   }
 

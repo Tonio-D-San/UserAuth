@@ -1,9 +1,5 @@
 package it.asansonne.authhub.ccsr.service.impl;
 
-import static it.asansonne.authhub.enums.MessageConstant.PERSON_ACTIVE_EMPTY;
-import static it.asansonne.authhub.enums.MessageConstant.PERSON_EMPTY;
-import static it.asansonne.authhub.enums.MessageConstant.PERSON_INACTIVE_EMPTY;
-
 import it.asansonne.authhub.ccsr.repository.jpa.UserRepository;
 import it.asansonne.authhub.ccsr.service.UserService;
 import it.asansonne.authhub.model.jpa.UserJpa;
@@ -37,7 +33,7 @@ public final class UserServiceImpl implements UserService {
   public Page<UserJpa> findAllUsers(Pageable pageable) {
     Page<UserJpa> users = userRepository.findAll(pageable);
     if (users.isEmpty()) {
-      throw new EntityNotFoundException(PERSON_EMPTY.getMessage());
+      throw new EntityNotFoundException("person.empty");
     }
     return users;
   }
@@ -46,7 +42,7 @@ public final class UserServiceImpl implements UserService {
   public Page<UserJpa> findActiveUsers(Pageable pageable) {
     Page<UserJpa> users = userRepository.findAllByIsActiveTrue(pageable);
     if (users.isEmpty()) {
-      throw new EntityNotFoundException(PERSON_ACTIVE_EMPTY.getMessage());
+      throw new EntityNotFoundException("person.active.empty");
     }
     return users;
   }
@@ -55,7 +51,7 @@ public final class UserServiceImpl implements UserService {
   public Page<UserJpa> findInactiveUsers(Pageable pageable) {
     Page<UserJpa> users = userRepository.findAllByIsActiveFalse(pageable);
     if (users.isEmpty()) {
-      throw new EntityNotFoundException(PERSON_INACTIVE_EMPTY.getMessage());
+      throw new EntityNotFoundException("person.inactive.empty");
     }
     return users;
   }

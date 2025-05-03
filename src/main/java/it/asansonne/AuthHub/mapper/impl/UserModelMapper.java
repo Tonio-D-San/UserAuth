@@ -1,7 +1,5 @@
 package it.asansonne.authhub.mapper.impl;
 
-import static it.asansonne.authhub.enums.SharedErrors.ERROR_DURING_JSON_DESERIALIZATION;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -73,7 +71,7 @@ public class UserModelMapper implements RequestModelMapper<UserRequest, UserJpa>
     try {
       return List.of(new ObjectMapper().readValue(json, UserResponse[].class));
     } catch (JsonProcessingException e) {
-      throw new IllegalArgumentException(ERROR_DURING_JSON_DESERIALIZATION.getMessage(), e);
+      throw new IllegalArgumentException("error.json.deserialization", e);
     }
   }
 
@@ -94,7 +92,7 @@ public class UserModelMapper implements RequestModelMapper<UserRequest, UserJpa>
               .build()))
           .build();
     } catch (Exception e) {
-      throw new IllegalArgumentException(ERROR_DURING_JSON_DESERIALIZATION.getMessage(), e);
+      throw new IllegalArgumentException("error.json.deserialization", e);
     }
   }
 }
