@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
-public class UserPayload {
+public class UserPayload implements Dto {
     private String username;
     private List<Credential> credentials;
     private List<String> requiredActions;
