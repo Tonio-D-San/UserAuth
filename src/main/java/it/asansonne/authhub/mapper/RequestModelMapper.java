@@ -5,7 +5,6 @@ import it.asansonne.authhub.model.Models;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -34,7 +33,7 @@ public interface RequestModelMapper<D extends Dto, M extends Models> {
    */
   default List<M> toModel(Collection<D> dtos) {
     return dtos == null ? Collections.emptyList() :
-        dtos.stream().map(this::toModel).collect(Collectors.toList());
+        dtos.stream().map(this::toModel).toList();
   }
 
   /**

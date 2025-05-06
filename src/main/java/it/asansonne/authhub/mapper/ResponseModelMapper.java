@@ -5,7 +5,6 @@ import it.asansonne.authhub.model.Models;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -26,7 +25,7 @@ public interface ResponseModelMapper<M extends Models, D extends Dto> {
    */
   default List<D> toDto(Collection<M> models) {
     return models == null ? Collections.emptyList() :
-        models.stream().map(this::toDto).collect(Collectors.toList());
+        models.stream().map(this::toDto).toList();
   }
 
   /**
