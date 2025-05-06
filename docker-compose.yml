@@ -1,0 +1,74 @@
+networks:
+  application:
+    driver: bridge
+  databases:
+    driver: bridge
+
+volumes:
+  postgres_test:
+    driver: local
+
+services:
+  ############## Keycloak Dev ##############
+  auth-hub:
+    container_name: ${PROJECT_DEV}
+    depends_on:
+      - ${POSTGRES_DEV}
+      - ${KEYCLOAK_DEV}
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    ports:
+      - "8082:8082"
+    restart: no
+    networks:
+      - application
+      - databases
+
+
+  ############## Keycloak Dev ##############
+  auth-hub-keycloak-dev:
+    image: quay.io/keycloak/keycloak:23.0.1
+    container_name: ${KEYCLOAK_DEV}
+    restart: no
+    env_file:
+      - .env
+    volumes:
+      - ./services/keycloak/auth.json:/opt/keycloak/data/import/user-realm.json
+    command: [ "start-dev", "--import-realm","--http-port=5443" ]
+    ports:
+      - '${KC_HOSTNAME_PORT}:${KC_HOSTNAME_PORT}'
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "exec 3<>/dev/tcp/localhost/5443 && echo -e 'GET /health/ready HTTP/1.1\\r\\nHost: localhost\\r\\nConnection: close\\r\\n\\r\\n' >&3 && cat <&3 | grep -q '200 OK'"
+        ]
+      interval: 5s
+      timeout: 2s
+      retries: 50
+    networks:
+      - application
+
+  ############## Postgres Test ##############
+  auth-hub-postgres-dev:
+    image: postgres:15.6
+    container_name: ${POSTGRES_DEV}
+    restart: no
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    ports:
+      - '5432:5432'
+    env_file:
+      - .env
+    volumes:
+      - postgres_test:/var/lib/postgresql/data
+      - ./database/postgres/user_db_structure.sql:/docker-entrypoint-initdb.d/01_user_db_structure.sql
+      - ./database/postgres/user_db_insert_user_test.sql:/docker-entrypoint-initdb.d/02_user_insert.sql
+    networks:
+      - databases

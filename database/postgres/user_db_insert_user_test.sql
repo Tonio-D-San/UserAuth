@@ -7,9 +7,9 @@ VALUES ('5a265f75-597d-4fd8-958b-1d02fbf7b0e8', 'Marco', 'Carta', '', 'mcarta@te
        ('b9afa0e2-1ca7-4b3e-912b-1574d87c085b', 'Francesco', 'Primo', '', 'fprimo@test.com', TRUE,NULL);
 
 INSERT INTO user_group (user_id, group_id)
-VALUES (2, 3),
-       (3, 3),
-       (4, 3),
-       (5, 3),
-       (6, 3),
-       (7, 3);
+VALUES (2, 4),
+       (3, 4),
+       (4, 4),
+       (5, 4),
+       (6, 4),
+       (7, 1);

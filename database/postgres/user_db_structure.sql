@@ -21,8 +21,8 @@ CREATE TABLE groups
 
 CREATE TABLE user_group
 (
-    user_id SERIAL REFERENCES users (id),
-    group_id  SERIAL REFERENCES groups (id),
+    user_id  SERIAL REFERENCES users (id),
+    group_id SERIAL REFERENCES groups (id),
     PRIMARY KEY (user_id, group_id)
 );
 
@@ -34,7 +34,7 @@ INSERT INTO groups (uuid, name, path, description)
 VALUES ('7de6d481-9da9-4bcc-aca2-30073030ae9d',
         'users',
         '/users',
-        'Role for admin'),
+        'Role for all users'),
        ('f70783d9-b64b-46b9-81c2-e4af0e5f9889',
         'admin-service-administrators',
         '/users/admin-service-administrators',
@@ -42,8 +42,11 @@ VALUES ('7de6d481-9da9-4bcc-aca2-30073030ae9d',
        ('e246270c-acaa-4aed-8d9f-4b7bbe95f2cb',
         'user-service-administrators',
         '/users/user-service-administrators',
-        'Role for users');
-
+        'Role for users'),
+       ('c587b883-e508-43db-b633-f6231b955556',
+        'first-access',
+        '/users/user-service-administrators/first-access',
+        'Role for first access');
 INSERT INTO user_group(user_id, group_id)
-VALUES (1, 2),
-       (1, 3)
+VALUES (1, 3),
+       (1, 4)
