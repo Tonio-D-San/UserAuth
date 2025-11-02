@@ -27,8 +27,9 @@ services:
       - POSTGRES_DB=${POSTGRES_DB}
     volumes:
       - postgres:/var/lib/postgresql/data
-      - ${DB_POSTGRES_LOCAL_LOCATION}/${PERSON_DDL_NAME}.sql:${DB_POSTGRES_CONTAINER_LOCATION}/01_ddl.sql
+      - ${DB_POSTGRES_LOCAL_LOCATION}/${PERSON_DDL_NAME}.sql:${DB_POSTGRES_CONTAINER_LOCATION}/01_auth_ddl.sql
       - ${DB_POSTGRES_LOCAL_LOCATION}/${GROUP_DUMP_NAME}.sql:${DB_POSTGRES_CONTAINER_LOCATION}/02_group_dump.sql
+      - ${DB_POSTGRES_LOCAL_LOCATION}/${DASHBOARD_DDL_NAME}.sql:${DB_POSTGRES_CONTAINER_LOCATION}/04_dashboard_ddl.sql
     networks:
       - databases
 
@@ -49,3 +50,21 @@ services:
       bash -c "PGPASSWORD=${POSTGRES_PASSWORD} psql -h ${PG_CONTAINER_TEST} -U ${POSTGRES_USER} -d ${POSTGRES_DB} -f ${DB_POSTGRES_CONTAINER_LOCATION}/03_test_dump.sql"
     networks:
       - databases
+
+#  postgres-dashboard:
+#    image: postgres:15.6
+#    container_name: ${PG_CONTAINER_TEST}_dashboard
+#    depends_on:
+#      postgres-test:
+#        condition: service_healthy
+#    environment:
+#      - POSTGRES_USER=${POSTGRES_USER}
+#      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+#      - POSTGRES_DB=${POSTGRES_DB}
+#    volumes:
+#      - postgres:/var/lib/postgresql/data
+#      - ${DB_POSTGRES_LOCAL_LOCATION}/${DASHBOARD_DDL_NAME}.sql:${DB_POSTGRES_CONTAINER_LOCATION}/04_dashboard_ddl.sql
+#    command: >
+#      bash -c "PGPASSWORD=${POSTGRES_PASSWORD} psql -h ${PG_CONTAINER_TEST} -U ${POSTGRES_USER} -d ${POSTGRES_DB} -f ${DB_POSTGRES_CONTAINER_LOCATION}/04_dashboard_ddl.sql"
+#    networks:
+#      - databases
