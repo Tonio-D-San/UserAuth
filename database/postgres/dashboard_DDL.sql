@@ -28,9 +28,9 @@ CREATE TABLE cards
 );
 
 -- =========================================
--- abilities
+-- player_abilities
 -- =========================================
-CREATE TABLE abilities
+CREATE TABLE player_abilities
 (
     id           SERIAL PRIMARY KEY,
     uuid         UUID NOT NULL UNIQUE,
@@ -157,6 +157,6 @@ CREATE TABLE kingdoms
 CREATE TABLE player_ability
 (
     player_id  INTEGER NOT NULL REFERENCES players (id) ON DELETE CASCADE,
-    ability_id INTEGER NOT NULL REFERENCES abilities (id) ON DELETE CASCADE,
+    ability_id INTEGER NOT NULL REFERENCES player_abilities (id) ON DELETE CASCADE,
     PRIMARY KEY (player_id, ability_id)
 );
