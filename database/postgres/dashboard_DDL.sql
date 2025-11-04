@@ -27,16 +27,83 @@ CREATE TABLE cards
     used_points      INTEGER
 );
 
--- =========================================
--- player_abilities
--- =========================================
+-- =========================================================
+-- TABELLA: player_abilities
+-- =========================================================
+CREATE TABLE ability_definition
+(
+    code             VARCHAR(50) PRIMARY KEY, -- Enum salvato come stringa
+    name             VARCHAR(255) NOT NULL,
+    description_key  VARCHAR(255) NOT NULL,
+    type             VARCHAR(50),
+    requirement_type VARCHAR(10)
+);
+
+-- =========================================================
+-- TABELLA: ability_definition
+-- =========================================================
 CREATE TABLE player_abilities
 (
     id           SERIAL PRIMARY KEY,
     uuid         UUID NOT NULL UNIQUE,
+    training     VARCHAR(255),
     ability_name VARCHAR(50),
-    background   TEXT
+    CONSTRAINT fk_ability_name FOREIGN KEY (ability_name)
+        REFERENCES ability_definition (code)
+        ON DELETE SET NULL
 );
+
+-- =========================================================
+-- TABELLA: note
+-- =========================================================
+CREATE TABLE notes
+(
+    id   SERIAL PRIMARY KEY,
+    uuid UUID NOT NULL UNIQUE,
+    note TEXT
+);
+
+-- =========================================================
+-- TABELLA DI JOIN: ability_definition_notes
+-- ManyToMany fra AbilityDefinition e Note
+-- =========================================================
+CREATE TABLE ability_definition_notes
+(
+    ability_definition_code VARCHAR(50) NOT NULL,
+    note_id                 INT         NOT NULL,
+    PRIMARY KEY (ability_definition_code, note_id),
+    CONSTRAINT fk_ability_definition_notes_ability_definition
+        FOREIGN KEY (ability_definition_code) REFERENCES ability_definition (code) ON DELETE CASCADE,
+    CONSTRAINT fk_ability_definition_notes_note
+        FOREIGN KEY (note_id) REFERENCES notes (id) ON DELETE CASCADE
+);
+
+-- =========================================================
+-- TABELLA: ability_definition_requirements
+-- ElementCollection di AbilityName (enum salvato come stringa)
+-- =========================================================
+CREATE TABLE ability_definition_requirements
+(
+    ability_definition_code VARCHAR(50) NOT NULL,
+    requirements             VARCHAR(50) NOT NULL,
+    PRIMARY KEY (ability_definition_code, requirements),
+    CONSTRAINT fk_ability_definition_requirements
+        FOREIGN KEY (ability_definition_code) REFERENCES ability_definition (code) ON DELETE CASCADE
+);
+
+-- =========================================================
+-- TABELLA: ability_definition_unlockables
+-- ElementCollection di AbilityName (enum salvato come stringa)
+-- =========================================================
+CREATE TABLE ability_definition_unlockables
+(
+    ability_definition_code VARCHAR(50) NOT NULL,
+    unlockables              VARCHAR(50) NOT NULL,
+    PRIMARY KEY (ability_definition_code, unlockables),
+    CONSTRAINT fk_ability_definition_unlockables
+        FOREIGN KEY (ability_definition_code) REFERENCES ability_definition (code) ON DELETE CASCADE
+);
+
 
 -- =========================================
 -- players
@@ -53,6 +120,19 @@ CREATE TABLE players
     CONSTRAINT fk_player_user FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
     CONSTRAINT fk_player_card FOREIGN KEY (card_id) REFERENCES cards (id),
     CONSTRAINT fk_player_bag FOREIGN KEY (bag_id) REFERENCES bags (id)
+);
+
+-- =========================================================
+-- TABELLA DI JOIN: player_ability
+-- (ManyToMany fra PlayerAbilities e Player)
+-- =========================================================
+CREATE TABLE player_ability
+(
+    player_id  INT NOT NULL,
+    ability_id INT NOT NULL,
+    PRIMARY KEY (player_id, ability_id),
+    CONSTRAINT fk_player FOREIGN KEY (player_id) REFERENCES players (id) ON DELETE CASCADE,
+    CONSTRAINT fk_player_ability FOREIGN KEY (ability_id) REFERENCES player_abilities (id) ON DELETE CASCADE
 );
 
 -- =========================================
@@ -148,15 +228,4 @@ CREATE TABLE kingdoms
     player_id    INTEGER UNIQUE,
     CONSTRAINT fk_kingdom_card FOREIGN KEY (card_id) REFERENCES cards (id),
     CONSTRAINT fk_kingdom_player FOREIGN KEY (player_id) REFERENCES players (id) ON DELETE CASCADE
-);
-
-
--- =========================================
--- PLAYER_ABILITY (join table ManyToMany)
--- =========================================
-CREATE TABLE player_ability
-(
-    player_id  INTEGER NOT NULL REFERENCES players (id) ON DELETE CASCADE,
-    ability_id INTEGER NOT NULL REFERENCES player_abilities (id) ON DELETE CASCADE,
-    PRIMARY KEY (player_id, ability_id)
 );

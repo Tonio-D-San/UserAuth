@@ -8,7 +8,7 @@ CREATE TABLE users
     surname     VARCHAR(50)  NOT NULL,
     biography   TEXT,
     email       VARCHAR(100) NOT NULL UNIQUE,
-    password    VARCHAR(100) NOT NULL,
+    password    VARCHAR(100),
     is_active   BOOLEAN      NOT NULL,
     img_profile BYTEA
 );
