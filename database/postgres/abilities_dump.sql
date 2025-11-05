@@ -432,7 +432,7 @@ VALUES ('MAGICAL_CONTAMINATION',
 -- DUMP RITUALIST Ability → ability_definition
 -- ===========================================
 INSERT INTO ability_definition (code, name, description_key, type, requirement_type)
-VALUES ('RITUALIS_ONE',
+VALUES ('RITUALIST_ONE',
         'ritualist_one.name',
         'ritualist_one.description',
         'RITUALIST',
@@ -503,11 +503,67 @@ VALUES ('HERBAL_INCOME_ONE',
         'YIELD',
         'ALONE');
 
+-- ===========================================
+-- DUMP YIELD Ability → ability_definition
+-- ===========================================
+INSERT INTO ability_definition (code, name, description_key, type, requirement_type)
+VALUES ('HERBAL_INCOME_ONE',
+        'herbal_income_one.name',
+        'herbal_income_one.description',
+        'YIELD',
+        'ALONE'),
+       ('HERBAL_INCOME_TWO',
+        'herbal_income_two.name',
+        'herbal_income_two.description',
+        'YIELD',
+        'ALONE'),
+       ('HERBAL_INCOME_THREE',
+        'herbal_income_three.name',
+        'herbal_income_three.description',
+        'YIELD',
+        'ALONE'),
+       ('MINERAL_INCOME_ONE',
+        'mineral_income_one.name',
+        'mineral_income_one.description',
+        'YIELD',
+        'ALONE'),
+       ('MINERAL_INCOME_TWO',
+        'mineral_income_two.name',
+        'mineral_income_two.description',
+        'YIELD',
+        'ALONE'),
+       ('MINERAL_INCOME_THREE',
+        'mineral_income_three.name',
+        'mineral_income_three.description',
+        'YIELD',
+        'ALONE'),
+       ('MONEY_INCOME_ONE',
+        'money_income_one.name',
+        'money_income_one.description',
+        'YIELD',
+        'ALONE'),
+       ('MONEY_INCOME_TWO',
+        'money_income_two.name',
+        'money_income_two.description',
+        'YIELD',
+        'ALONE'),
+       ('MONEY_INCOME_THREE',
+        'money_income_three.name',
+        'money_income_three.description',
+        'YIELD',
+        'ALONE'),
+       ('FENCE',
+        'fence.name',
+        'fence.description',
+        'YIELD',
+        'ALONE');
+
 -- ==============================
 -- RELAZIONI (PREREQUISITI)
 -- ==============================
 INSERT INTO ability_definition_requirements (ability_definition_code, requirements)
-VALUES ('IMPROVED_CONSTITUTION', 'CONSTITUTION'),
+VALUES -- GENERIC ABILITIES --
+       ('IMPROVED_CONSTITUTION', 'CONSTITUTION'),
        ('TENACITY', 'IMPROVED_CONSTITUTION'),
        ('TENACIOUS_VOICE', 'TENACITY'),
        ('TENACIOUS_STEP', 'TENACIOUS_VOICE'),
@@ -517,7 +573,89 @@ VALUES ('IMPROVED_CONSTITUTION', 'CONSTITUTION'),
        ('SECRET_LANGUAGES_THREE', 'SECRET_LANGUAGES_TWO'),
        ('MYTHS_LEGENDS_TWO', 'MYTHS_LEGENDS_ONE'),
        ('MYTHS_LEGENDS_THREE', 'MYTHS_LEGENDS_TWO'),
-       ('REFINE_ALATHIUM', 'ALCHEMY_ONE');
+       ('REFINE_ALATHIUM', 'ALCHEMY_ONE'),
+       ('REFINE_ALATHIUM', 'ALCHEMy_ONE'),
+       ('REFINE_ALATHIUM', 'CRAFTSMAN_ONE'),
+       ('TENACITY', 'IMPROVED_CONSTITUTION'),
+       ('TENACIOUS_VOICE', 'TENACITY'),
+       -- ALCHEMY ABILITIES --
+       -- TODO ALCHIMIA DA FINIRE DOPO AVER FINITO LE MISTURE --
+       ('ALCHEMY_TWO', 'ALCHEMY_ONE'),
+       ('ALCHEMY_THREE', 'ALCHEMY_TWO'),
+       ('ALCHEMICAL_CROSSROADS', 'ALCHEMY_THREE'),
+       ('IMMUNOLOGIST', 'ALCHEMY_ONE'),
+       -- EXTRACTION ABILITIES --
+       ('EXTRACTION_ONE', 'FINDING_COLLECTION_AREAS'),
+       ('EXTRACTION_TWO', 'EXTRACTION_ONE'),
+       ('EXTRACTION_THREE', 'EXTRACTION_TWO'),
+       ('MINERALOGY_ONE', 'FINDING_COLLECTION_AREAS'),
+       ('MINERALOGY_TWO', 'MINERALOGY_ONE'),
+       ('MINERALOGY_THREE', 'MINERALOGY_TWO'),
+       ('MINERAL_TRASNMUTATION', 'MINERALOGY_THREE'),
+       ('HERBAL_TRASMUTATION', 'HERBALISM_THREE'),
+       -- CRAFTSMANSHIP ABILITIES --
+       ('CRAFTSMAN_TWO', 'CRAFTSMAN_ONE'),
+       ('CRAFTSMAN_THREE', 'CRAFTSMAN_TWO'),
+       ('MYSTIC_SMITH', 'CRAFTSMAN_THREE'),
+       ('MYSTIC_SMITH', 'RITUAL_VECTOR'),
+       ('MYSTIC_SMITH', 'PERCEIVING_MAGIC'),
+       -- TODO ARTIFICIERE DA FINIRE DOPO AVER FINITO I PROGETTI --
+       ('ARTIFICER_TWO', 'ARTIFICER_ONE'),
+       ('ARTIFICER_THREE', 'ARTIFICER_TWO'),
+       -- COMBAT ABILITIES --
+       ('MEDIUM_ARMOR', 'LIGHT_ARMOR'),
+       ('HEAVY_ARMOR', 'MEDIUM_ARMOR'),
+       -- TODO RIFIATARE DA FINIRE DOPO AVER FINITO LE TECNICHE --
+       ('BREATHING', 'CONSTITUTION'),
+       ('IMPROVED_BREATHING', 'BREATHING'),
+       -- RECOVERY ABILITIES --
+       ('EXPERT_RESCUER', 'FIRST_AID'),
+       ('HEALING_ARTS', 'EXPERT_RESCUER'),
+       ('SURGEON', 'HEALING_ARTS'),
+       ('FIELD_SURGEON_ONE', 'SURGEON'),
+       ('FIELD_SURGEON_TWO', 'FIELD_SURGEON_ONE'),
+       ('FIELD_EXPEDIENTS_ONE', 'FIELD_SURGEON_TWO'),
+       ('FIELD_EXPEDIENTS_TWO', 'FIELD_EXPEDIENTS_ONE'),
+       ('TENACIOUS_HEALER', 'HEALING_ARTS'),
+       ('TENACIOUS_HEALER', 'TENACITY'),
+       ('TOXICOLOGIST', 'HEALING_ARTS'),
+       -- MAGIC ABILITIES --
+       -- TODO CONTAMINAZIONE_MAGICA DA FINIRE DOPO AVER FINITO GLI INCANTI --
+       ('MAGICAL_CONTAMINATION', 'ENCHANTER_THREE'),
+       ('POWER_GIFT', 'PERCEIVING_MAGIC'),
+       ('ENCHANTER_ONE', 'PERCEIVING_MAGIC'),
+       -- TODO INCANTATORE due/tre DA FINIRE DOPO AVER FINITO I TRUCCHETTI E GLI INCANTESIMI --
+       ('ENCHANTER_TWO', 'ENCHANTER_ONE'),
+       ('ENCHANTER_THREE', 'ENCHANTER_TWO'),
+       ('LIGHT_ENCHANTER', 'ENCHANTER_ONE'),
+       ('LIGHT_ENCHANTER', 'LIGHT_ARMOR'),
+       ('LIGHT_ENCHANTER', 'MEDIUM_ARMOR'),
+       ('LIGHT_ENCHANTER', 'HEAVY_ARMOR'),
+       ('BATTLE_ENCHANTER', 'ENCHANTER_TWO'),
+       ('BATTLE_ENCHANTER', 'LIGHT_ARMOR'),
+       ('BATTLE_ENCHANTER', 'MEDIUM_ARMOR'),
+       ('BATTLE_ENCHANTER', 'HEAVY_ARMOR'),
+       ('WAR_ENCHANTER', 'ENCHANTER_THREE'),
+       ('WAR_ENCHANTER', 'LIGHT_ARMOR'),
+       ('WAR_ENCHANTER', 'MEDIUM_ARMOR'),
+       ('WAR_ENCHANTER', 'HEAVY_ARMOR'),
+       -- RITUALIST ABILITIES --
+       ('RITUALIST_ONE', 'RITUAL_VECTOR'),
+       -- TODO RITUALISTA due/tre DA FINIRE DOPO AVER FINITO I RITUALI --
+       ('RITUALIST_TWO', 'RITUALIST_ONE'),
+       ('RITUALIST_THREE', 'RITUALIST_TWO'),
+       -- YIELD --
+       ('HERBAL_INCOME_ONE', 'HERBAL_TRASMUTATION'),
+       ('HERBAL_INCOME_TWO', 'HERBAL_INCOME_ONE'),
+       ('HERBAL_INCOME_THREE', 'HERBAL_INCOME_TWO'),
+       ('MINERAL_INCOME_ONE', 'MINERALOGY_ONE'),
+       ('MINERAL_INCOME_TWO', 'MINERAL_INCOME_ONE'),
+       ('MINERAL_INCOME_THREE', 'MINERAL_INCOME_TWO'),
+       ('MONEY_INCOME_ONE', 'EVALUATE'),
+       ('MONEY_INCOME_TWO', 'MONEY_INCOME_ONE'),
+       ('MONEY_INCOME_THREE', 'MONEY_INCOME_TWO'),
+       ('FENCE', 'QUICK_HAND')
+;
 
 -- ==============================
 -- RELAZIONI (SBLOCCABILI)
