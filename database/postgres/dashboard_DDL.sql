@@ -28,7 +28,7 @@ CREATE TABLE cards
 );
 
 -- =========================================================
--- TABELLA: player_abilities
+-- TABELLA: ability_definition
 -- =========================================================
 CREATE TABLE ability_definition
 (
@@ -40,13 +40,12 @@ CREATE TABLE ability_definition
 );
 
 -- =========================================================
--- TABELLA: ability_definition
+-- TABELLA: player_abilities
 -- =========================================================
 CREATE TABLE player_abilities
 (
     id           SERIAL PRIMARY KEY,
     uuid         UUID NOT NULL UNIQUE,
-    training     VARCHAR(255),
     ability_name VARCHAR(50),
     CONSTRAINT fk_ability_name FOREIGN KEY (ability_name)
         REFERENCES ability_definition (code)
@@ -85,7 +84,7 @@ CREATE TABLE ability_definition_notes
 CREATE TABLE ability_definition_requirements
 (
     ability_definition_code VARCHAR(50) NOT NULL,
-    requirements             VARCHAR(50) NOT NULL,
+    requirements            VARCHAR(50) NOT NULL,
     PRIMARY KEY (ability_definition_code, requirements),
     CONSTRAINT fk_ability_definition_requirements
         FOREIGN KEY (ability_definition_code) REFERENCES ability_definition (code) ON DELETE CASCADE
@@ -98,7 +97,7 @@ CREATE TABLE ability_definition_requirements
 CREATE TABLE ability_definition_unlockables
 (
     ability_definition_code VARCHAR(50) NOT NULL,
-    unlockables              VARCHAR(50) NOT NULL,
+    unlockables             VARCHAR(50) NOT NULL,
     PRIMARY KEY (ability_definition_code, unlockables),
     CONSTRAINT fk_ability_definition_unlockables
         FOREIGN KEY (ability_definition_code) REFERENCES ability_definition (code) ON DELETE CASCADE
@@ -117,6 +116,7 @@ CREATE TABLE players
     user_id    BIGINT  NOT NULL,
     card_id    INTEGER UNIQUE,
     bag_id     INTEGER NOT NULL UNIQUE,
+    training   VARCHAR(255),
     CONSTRAINT fk_player_user FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
     CONSTRAINT fk_player_card FOREIGN KEY (card_id) REFERENCES cards (id),
     CONSTRAINT fk_player_bag FOREIGN KEY (bag_id) REFERENCES bags (id)
