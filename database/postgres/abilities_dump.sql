@@ -428,7 +428,8 @@ VALUES ('MAGICAL_CONTAMINATION',
         'war_enchanter.name',
         'war_enchanter.description',
         'MAGIC',
-        'AND');
+        'AND')
+;
 
 -- ===========================================
 -- DUMP RITUALIST Ability → ability_definition
