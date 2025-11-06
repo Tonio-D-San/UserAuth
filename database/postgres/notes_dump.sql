@@ -5,7 +5,8 @@
 INSERT INTO notes (uuid, note)
 VALUES (gen_random_uuid(), 'marshall.note'),
        (gen_random_uuid(), 'tenacity.note_one'),
-       (gen_random_uuid(), 'tenacity.note_two')
+       (gen_random_uuid(), 'tenacity.note_two'),
+       (gen_random_uuid(), 'toxicologist.note')
 ;
 
 -- ==============================
@@ -14,5 +15,6 @@ VALUES (gen_random_uuid(), 'marshall.note'),
 INSERT INTO ability_definition_notes (ability_definition_code, note_id)
 VALUES ('MARSHAL', 1),
        ('TENACITY', 2),
-       ('TENACITY', 3)
+       ('TENACITY', 3),
+       ('TOXICOLOGIST', 4)
 ;
