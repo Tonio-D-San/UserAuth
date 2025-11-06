@@ -5,7 +5,7 @@ networks:
     driver: bridge
 
 volumes:
-  postgres:
+  postgres_test:
     driver: local
 
 services:
@@ -26,7 +26,7 @@ services:
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       - POSTGRES_DB=${POSTGRES_DB}
     volumes:
-      - postgres:/var/lib/postgresql/data
+      - postgres_test:/var/lib/postgresql/data
       - ${DB_POSTGRES_LOCAL_LOCATION}/${PERSON_DDL_NAME}.sql:${DB_POSTGRES_CONTAINER_LOCATION}/01_auth_ddl.sql
       - ${DB_POSTGRES_LOCAL_LOCATION}/${GROUP_DUMP_NAME}.sql:${DB_POSTGRES_CONTAINER_LOCATION}/02_group_dump.sql
       - ${DB_POSTGRES_LOCAL_LOCATION}/${DASHBOARD_DDL_NAME}.sql:${DB_POSTGRES_CONTAINER_LOCATION}/03_dashboard_ddl.sql
@@ -45,7 +45,7 @@ services:
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       - POSTGRES_DB=${POSTGRES_DB}
     volumes:
-      - postgres:/var/lib/postgresql/data
+      - postgres_test:/var/lib/postgresql/data
       - ${DB_POSTGRES_LOCAL_LOCATION}/${PERSON_DUMP_NAME}.sql:${DB_POSTGRES_CONTAINER_LOCATION}/01_test_dump.sql
     command: >
       bash -c "PGPASSWORD=${POSTGRES_PASSWORD} psql -h ${PG_CONTAINER_TEST} -U ${POSTGRES_USER} -d ${POSTGRES_DB} -f ${DB_POSTGRES_CONTAINER_LOCATION}/01_test_dump.sql"
