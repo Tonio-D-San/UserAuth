@@ -1,0 +1,9 @@
+.login-pf body {
+    background-image: url('../img/logo.png');
+    background-size: cover;
+}
+#kc-header-wrapper {
+    background: url('../img/corno_hamal.svg') no-repeat center;
+    background-size: contain;
+    height: 99px;
+}

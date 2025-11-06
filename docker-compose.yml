@@ -1,0 +1,35 @@
+networks:
+  application:
+    driver: bridge
+  databases:
+    driver: bridge
+  elk:
+    driver: bridge
+
+services:
+  ############## Backend ##############
+  backend:
+    build:
+      context: ./user-be
+      dockerfile: Dockerfile
+    volumes:
+      - ./user-be:/app
+    ports:
+      - "8081:8081"
+    restart: no
+    networks:
+      - application
+      - databases
+    container_name: user-be
+
+#  ############## Frontend ##############
+  frontend:
+    build:
+      context: ./user-fe
+      dockerfile: Dockerfile
+    ports:
+      - "4200:4200"
+    networks:
+      - application
+      - databases
+    container_name: user-fe
