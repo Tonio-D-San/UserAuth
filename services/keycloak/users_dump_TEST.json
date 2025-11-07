@@ -589,13 +589,13 @@
     {
       "id": "167fc152-213f-4c2d-b2f9-03a3ddce4a4c",
       "createdTimestamp": 1730280764285,
-      "username": "lbisci",
+      "username": "jdoe",
       "enabled": true,
       "totp": false,
       "emailVerified": true,
-      "firstName": "Lucio Maria",
-      "lastName": "Bisci",
-      "email": "lbisci@cybsec.it",
+      "firstName": "John",
+      "lastName": "Doe",
+      "email": "jdoe@test.it",
       "credentials": [
         {
           "type": "password",
@@ -620,7 +620,7 @@
       "emailVerified": true,
       "firstName": "Marco",
       "lastName": "Carta",
-      "email": "mcarta@cybsec.it",
+      "email": "mcarta@test.it",
       "credentials": [
         {
           "type": "password",
@@ -645,7 +645,7 @@
       "emailVerified": true,
       "firstName": "Tiziano",
       "lastName": "Ferro",
-      "email": "tferro@cybsec.it",
+      "email": "tferro@test.it",
       "credentials": [
         {
           "type": "password",
@@ -670,7 +670,7 @@
       "emailVerified": true,
       "firstName": "Giovanni",
       "lastName": "Sasso",
-      "email": "gsasso@cybsec.it",
+      "email": "gsasso@test.it",
       "credentials": [
         {
           "type": "password",
@@ -689,13 +689,13 @@
     {
       "id": "c456db89-a8af-4a94-afee-03bb5a0dff6a",
       "createdTimestamp": 1730280764285,
-      "username": "mbove",
+      "username": "pbaudo",
       "enabled": false,
       "totp": false,
       "emailVerified": true,
-      "firstName": "Mario",
-      "lastName": "Bove",
-      "email": "mbove@cybsec.it",
+      "firstName": "Pippo",
+      "lastName": "Baudo",
+      "email": "pbaudo@test.it",
       "credentials": [
         {
           "type": "password",
@@ -720,7 +720,7 @@
       "emailVerified": true,
       "firstName": "Leonida",
       "lastName": "Forbici",
-      "email": "leforbici@cybsec.it",
+      "email": "leforbici@test.it",
       "credentials": [
         {
           "type": "password",
@@ -739,13 +739,13 @@
     {
       "id": "b9afa0e2-1ca7-4b3e-912b-1574d87c085b",
       "createdTimestamp": 1730280764285,
-      "username": "pviola",
+      "username": "fprimo",
       "enabled": true,
       "totp": false,
       "emailVerified": true,
-      "firstName": "Peppino",
-      "lastName": "Viola",
-      "email": "pviola@cybsec.it",
+      "firstName": "Francesco",
+      "lastName": "Primo",
+      "email": "fprimo@test.it",
       "credentials": [
         {
           "type": "password",
@@ -2033,8 +2033,8 @@
     "fromDisplayName": "",
     "user": "test@test.com"
   },
-  "loginTheme": "custom-theme",
-  "emailTheme": "custom-theme",
+  "loginTheme": "ala",
+  "emailTheme": "ala",
   "eventsEnabled": false,
   "eventsListeners": [
     "jboss-logging"

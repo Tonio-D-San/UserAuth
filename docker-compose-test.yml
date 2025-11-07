@@ -59,7 +59,7 @@ services:
     restart: no
     environment:
       KC_HOSTNAME: ${HOST}
-      KC_HOSTNAME_PORT: 5443
+      KC_HOSTNAME_PORT: ${KC_EXTERNAL_PORT}
       KC_HOSTNAME_STRICT: false
       KC_HOSTNAME_STRICT_HTTPS: false
       KC_LOG_LEVEL: info
