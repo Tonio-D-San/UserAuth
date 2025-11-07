@@ -49,7 +49,7 @@
     "realm": [
       {
         "id": "5fcf1dc8-6ec9-4e88-97a1-b3b41d232bfe",
-        "name": "default-roles-story",
+        "name": "default-roles-user-auth",
         "description": "${role_default-roles}",
         "composite": true,
         "composites": {
@@ -75,7 +75,7 @@
         "composite": true,
         "composites": {
           "client": {
-            "story-client-be": [
+            "user-auth-client-be": [
               "client_user"
             ]
           }
@@ -340,11 +340,11 @@
           "attributes": {}
         }
       ],
-      "story-client-fe": [
+      "user-auth-client-fe": [
         {
           "id": "e70e14ef-575e-45d6-b414-4ebdb55b8f72",
           "name": "client_admin",
-          "description": "story-client-fe admin",
+          "description": "user-auth-client-fe admin",
           "composite": false,
           "clientRole": true,
           "containerId": "7f6f4034-9480-4aa5-be97-9348650ea6aa",
@@ -353,14 +353,14 @@
         {
           "id": "cbb5dcd6-7eca-4ee0-a396-46672a691de3",
           "name": "client_user",
-          "description": "story-client-fe user",
+          "description": "user-auth-client-fe user",
           "composite": false,
           "clientRole": true,
           "containerId": "7f6f4034-9480-4aa5-be97-9348650ea6aa",
           "attributes": {}
         }
       ],
-      "story-client": [
+      "user-auth-client": [
         {
           "id": "394b7321-e044-4d93-b93b-ab970835b37f",
           "name": "ADMIN",
@@ -472,11 +472,11 @@
           "attributes": {}
         }
       ],
-      "story-client-be": [
+      "user-auth-client-be": [
         {
           "id": "fc6e7555-ec27-4e59-a356-cfdf33a4b23f",
           "name": "client_user",
-          "description": "story-client-be user",
+          "description": "user-auth-client-be user",
           "composite": false,
           "clientRole": true,
           "containerId": "9bb71861-a620-4b01-bd90-36b81ec2ccca",
@@ -485,7 +485,7 @@
         {
           "id": "a7ae4ff9-95bd-4bab-b1ba-f43f9fdaffcd",
           "name": "client_admin",
-          "description": "story-client-be admin",
+          "description": "user-auth-client-be admin",
           "composite": false,
           "clientRole": true,
           "containerId": "9bb71861-a620-4b01-bd90-36b81ec2ccca",
@@ -497,19 +497,19 @@
   "groups": [
     {
       "id": "7de6d481-9da9-4bcc-aca2-30073030ae9d",
-      "name": "story-users",
-      "path": "/story-users",
+      "name": "user-auth-users",
+      "path": "/user-auth-users",
       "subGroups": [
         {
           "id": "f70783d9-b64b-46b9-81c2-e4af0e5f9889",
           "name": "admin-service-administrators",
-          "path": "/story-users/admin-service-administrators",
+          "path": "/user-auth-users/admin-service-administrators",
           "parentId": "7de6d481-9da9-4bcc-aca2-30073030ae9d",
           "realmRoles": [
             "admin"
           ],
           "clientRoles": {
-            "story-client-be": [
+            "user-auth-client-be": [
               "client_admin"
             ]
           }
@@ -517,26 +517,26 @@
         {
           "id": "e246270c-acaa-4aed-8d9f-4b7bbe95f2cb",
           "name": "user-service-administrators",
-          "path": "/story-users/user-service-administrators",
+          "path": "/user-auth-users/user-service-administrators",
           "parentId": "7de6d481-9da9-4bcc-aca2-30073030ae9d",
           "realmRoles": [
             "user"
           ],
           "clientRoles": {
-            "story-client-be": [
+            "user-auth-client-be": [
               "client_user"
             ]
           }
         }
       ],
       "realmRoles": [
-        "default-roles-story"
+        "default-roles-user-auth"
       ]
     }
   ],
   "defaultRole": {
     "id": "5fcf1dc8-6ec9-4e88-97a1-b3b41d232bfe",
-    "name": "default-roles-story",
+    "name": "default-roles-user-auth",
     "description": "${role_default-roles}",
     "composite": true,
     "clientRole": false,
@@ -604,11 +604,11 @@
       ],
       "disableableCredentialTypes": [],
       "realmRoles": [
-        "default-roles-story"
+        "default-roles-user-auth"
       ],
       "notBefore": 0,
       "groups": [
-        "/story-users/admin-service-administrators"
+        "/user-auth-users/admin-service-administrators"
       ]
     },
     {
@@ -629,11 +629,11 @@
       ],
       "disableableCredentialTypes": [],
       "realmRoles": [
-        "default-roles-story"
+        "default-roles-user-auth"
       ],
       "notBefore": 0,
       "groups": [
-        "/story-users/user-service-administrators"
+        "/user-auth-users/user-service-administrators"
       ]
     },
     {
@@ -654,11 +654,11 @@
       ],
       "disableableCredentialTypes": [],
       "realmRoles": [
-        "default-roles-story"
+        "default-roles-user-auth"
       ],
       "notBefore": 0,
       "groups": [
-        "/story-users/user-service-administrators"
+        "/user-auth-users/user-service-administrators"
       ]
     },
     {
@@ -679,11 +679,11 @@
       ],
       "disableableCredentialTypes": [],
       "realmRoles": [
-        "default-roles-story"
+        "default-roles-user-auth"
       ],
       "notBefore": 0,
       "groups": [
-        "/story-users/user-service-administrators"
+        "/user-auth-users/user-service-administrators"
       ]
     },
     {
@@ -704,11 +704,11 @@
       ],
       "disableableCredentialTypes": [],
       "realmRoles": [
-        "default-roles-story"
+        "default-roles-user-auth"
       ],
       "notBefore": 0,
       "groups": [
-        "/story-users/user-service-administrators"
+        "/user-auth-users/user-service-administrators"
       ]
     },
     {
@@ -729,11 +729,11 @@
       ],
       "disableableCredentialTypes": [],
       "realmRoles": [
-        "default-roles-story"
+        "default-roles-user-auth"
       ],
       "notBefore": 0,
       "groups": [
-        "/story-users/user-service-administrators"
+        "/user-auth-users/user-service-administrators"
       ]
     },
     {
@@ -754,27 +754,27 @@
       ],
       "disableableCredentialTypes": [],
       "realmRoles": [
-        "default-roles-story"
+        "default-roles-user-auth"
       ],
       "notBefore": 0,
       "groups": [
-        "/story-users/user-service-administrators"
+        "/user-auth-users/user-service-administrators"
       ]
     },
 
     {
       "id": "a5f15f04-bc35-4dd9-a62e-a12d283b9716",
       "createdTimestamp": 1729866574734,
-      "username": "service-account-story-client",
+      "username": "service-account-user-auth-client",
       "enabled": true,
       "totp": false,
       "emailVerified": false,
-      "serviceAccountClientId": "story-client",
+      "serviceAccountClientId": "user-auth-client",
       "credentials": [],
       "disableableCredentialTypes": [],
       "requiredActions": [],
       "realmRoles": [
-        "default-roles-story"
+        "default-roles-user-auth"
       ],
       "notBefore": 0,
       "groups": []
@@ -791,7 +791,7 @@
       "disableableCredentialTypes": [],
       "requiredActions": [],
       "realmRoles": [
-        "default-roles-story"
+        "default-roles-user-auth"
       ],
       "clientRoles": {
         "realm-management": [
@@ -827,13 +827,13 @@
       "clientId": "account",
       "name": "${client_account}",
       "rootUrl": "${authBaseUrl}",
-      "baseUrl": "/realms/story/account/",
+      "baseUrl": "/realms/user-auth/account/",
       "surrogateAuthRequired": false,
       "enabled": true,
       "alwaysDisplayInConsole": false,
       "clientAuthenticatorType": "client-secret",
       "redirectUris": [
-        "/realms/story/account/*"
+        "/realms/user-auth/account/*"
       ],
       "webOrigins": [],
       "notBefore": 0,
@@ -871,13 +871,13 @@
       "clientId": "account-console",
       "name": "${client_account-console}",
       "rootUrl": "${authBaseUrl}",
-      "baseUrl": "/realms/story/account/",
+      "baseUrl": "/realms/user-auth/account/",
       "surrogateAuthRequired": false,
       "enabled": true,
       "alwaysDisplayInConsole": false,
       "clientAuthenticatorType": "client-secret",
       "redirectUris": [
-        "/realms/story/account/*"
+        "/realms/user-auth/account/*"
       ],
       "webOrigins": [],
       "notBefore": 0,
@@ -1003,9 +1003,9 @@
     },
     {
       "id": "e79c1006-8042-45d7-ba8a-165b302a7bb6",
-      "clientId": "story-client",
-      "name": "story-client",
-      "description": "story Client",
+      "clientId": "user-auth-client",
+      "name": "user-auth-client",
+      "description": "user-auth Client",
       "rootUrl": "http://localhost",
       "adminUrl": "",
       "baseUrl": "http://localhost",
@@ -1108,7 +1108,7 @@
     },
     {
       "id": "9bb71861-a620-4b01-bd90-36b81ec2ccca",
-      "clientId": "story-client-be",
+      "clientId": "user-auth-client-be",
       "name": "",
       "description": "",
       "rootUrl": "http://localhost",
@@ -1137,7 +1137,7 @@
       "protocol": "openid-connect",
       "attributes": {
         "client.secret.creation.time": "1729860158",
-        "login_theme": "keycloak",
+        "login_theme": "ala",
         "post.logout.redirect.uris": "+",
         "oauth2.device.authorization.grant.enabled": "true",
         "backchannel.logout.revoke.offline.tokens": "false",
@@ -1172,7 +1172,7 @@
     },
     {
       "id": "7f6f4034-9480-4aa5-be97-9348650ea6aa",
-      "clientId": "story-client-fe",
+      "clientId": "user-auth-client-fe",
       "name": "",
       "description": "",
       "rootUrl": "http://localhost/",
@@ -1420,13 +1420,13 @@
       "clientId": "security-admin-console",
       "name": "${client_security-admin-console}",
       "rootUrl": "${authAdminUrl}",
-      "baseUrl": "/admin/story/console/",
+      "baseUrl": "/admin/user-auth/console/",
       "surrogateAuthRequired": false,
       "enabled": true,
       "alwaysDisplayInConsole": false,
       "clientAuthenticatorType": "client-secret",
       "redirectUris": [
-        "/admin/story/console/*"
+        "/admin/user-auth/console/*"
       ],
       "webOrigins": [
         "+"
