@@ -46,6 +46,7 @@ services:
       - POSTGRES_DB=${POSTGRES_DB}
     volumes:
       - postgres_test:/var/lib/postgresql/data
+      - ${DB_PG_AUTH_HUB_LOCATION}/logo.png:${DB_POSTGRES_CONTAINER_LOCATION}/logo.png
       - ${DB_PG_AUTH_HUB_LOCATION}/${PERSON_DUMP_NAME}.sql:${DB_POSTGRES_CONTAINER_LOCATION}/01_test_dump.sql
     command: >
       bash -c "PGPASSWORD=${POSTGRES_PASSWORD} psql -h ${PG_CONTAINER} -U ${POSTGRES_USER} -d ${POSTGRES_DB} -f ${DB_POSTGRES_CONTAINER_LOCATION}/01_test_dump.sql"
