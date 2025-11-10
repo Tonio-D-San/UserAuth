@@ -5,6 +5,7 @@ target/
 !**/src/test/**/target/
 .env
 ./.env
+services/keycloak/users_dump_TEST-01.json
 
 ### STS ###
 .apt_generated

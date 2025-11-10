@@ -61,15 +61,34 @@
       "containerId" : "02669709-4f5d-4f9b-9235-8d173680732a",
       "attributes" : { }
     }, {
+      "id" : "f7bc3278-76d5-4027-9869-e156e826e5e4",
+      "name" : "community",
+      "description" : "Community roles",
+      "composite" : false,
+      "clientRole" : false,
+      "containerId" : "02669709-4f5d-4f9b-9235-8d173680732a",
+      "attributes" : { }
+    }, {
+      "id" : "4fa54bd1-80d9-4e35-8721-051e176e7921",
+      "name" : "masters",
+      "description" : "Masters roles",
+      "composite" : false,
+      "clientRole" : false,
+      "containerId" : "02669709-4f5d-4f9b-9235-8d173680732a",
+      "attributes" : { }
+    }, {
       "id" : "0f0b733d-0de4-4a43-aa3e-a40d87f853bb",
       "name" : "user",
       "description" : "realm user",
-      "composite" : true,
-      "composites" : {
-        "client" : {
-          "user-auth-client-be" : [ "client_user" ]
-        }
-      },
+      "composite" : false,
+      "clientRole" : false,
+      "containerId" : "02669709-4f5d-4f9b-9235-8d173680732a",
+      "attributes" : { }
+    }, {
+      "id" : "b026eef8-0330-46b1-bf4b-a15eec37c3f9",
+      "name" : "ala",
+      "description" : "Ala roles",
+      "composite" : false,
       "clientRole" : false,
       "containerId" : "02669709-4f5d-4f9b-9235-8d173680732a",
       "attributes" : { }
@@ -91,6 +110,14 @@
           "realm-management" : [ "manage-users" ]
         }
       },
+      "clientRole" : false,
+      "containerId" : "02669709-4f5d-4f9b-9235-8d173680732a",
+      "attributes" : { }
+    }, {
+      "id" : "412e39d3-eef9-4746-97d7-a090da52915f",
+      "name" : "team-social",
+      "description" : "Team social roles",
+      "composite" : false,
       "clientRole" : false,
       "containerId" : "02669709-4f5d-4f9b-9235-8d173680732a",
       "attributes" : { }
@@ -325,9 +352,65 @@
         "attributes" : { }
       } ],
       "user-auth-client-be" : [ {
-        "id" : "fc6e7555-ec27-4e59-a356-cfdf33a4b23f",
-        "name" : "client_user",
-        "description" : "user-auth-client-be user",
+        "id" : "4def3696-bd64-4412-b96d-3dce448d3419",
+        "name" : "team-social",
+        "description" : "Team social roles",
+        "composite" : false,
+        "clientRole" : true,
+        "containerId" : "9bb71861-a620-4b01-bd90-36b81ec2ccca",
+        "attributes" : { }
+      }, {
+        "id" : "ad5e2cdd-8bcb-449b-ac98-bc362f2e17d0",
+        "name" : "masters",
+        "description" : "Masters roles",
+        "composite" : false,
+        "clientRole" : true,
+        "containerId" : "9bb71861-a620-4b01-bd90-36b81ec2ccca",
+        "attributes" : { }
+      }, {
+        "id" : "b3880791-2f83-41c9-81b8-782141aba9d8",
+        "name" : "pg",
+        "description" : "PG roles",
+        "composite" : false,
+        "clientRole" : true,
+        "containerId" : "9bb71861-a620-4b01-bd90-36b81ec2ccca",
+        "attributes" : { }
+      }, {
+        "id" : "3f826a97-733c-4a5a-96c0-97f50a663241",
+        "name" : "tal-meridia",
+        "description" : "Tal-meridia roles",
+        "composite" : false,
+        "clientRole" : true,
+        "containerId" : "9bb71861-a620-4b01-bd90-36b81ec2ccca",
+        "attributes" : { }
+      }, {
+        "id" : "9b03a4d5-3b17-48d1-9205-87d0c7b53a49",
+        "name" : "levalia",
+        "description" : "Levalia roles",
+        "composite" : false,
+        "clientRole" : true,
+        "containerId" : "9bb71861-a620-4b01-bd90-36b81ec2ccca",
+        "attributes" : { }
+      }, {
+        "id" : "95f5fc2d-a9ec-46cd-9d63-8da42eeca939",
+        "name" : "ala",
+        "description" : "Ala roles",
+        "composite" : false,
+        "clientRole" : true,
+        "containerId" : "9bb71861-a620-4b01-bd90-36b81ec2ccca",
+        "attributes" : { }
+      }, {
+        "id" : "9762cd77-dc0b-4413-8527-070a4ba12bab",
+        "name" : "coronor",
+        "description" : "Coronor roles",
+        "composite" : false,
+        "clientRole" : true,
+        "containerId" : "9bb71861-a620-4b01-bd90-36b81ec2ccca",
+        "attributes" : { }
+      }, {
+        "id" : "8a52ab81-5541-4127-add4-adf19e4ce7d3",
+        "name" : "malatea",
+        "description" : "Malatea roles",
         "composite" : false,
         "clientRole" : true,
         "containerId" : "9bb71861-a620-4b01-bd90-36b81ec2ccca",
@@ -336,6 +419,30 @@
         "id" : "a7ae4ff9-95bd-4bab-b1ba-f43f9fdaffcd",
         "name" : "client_admin",
         "description" : "user-auth-client-be admin",
+        "composite" : false,
+        "clientRole" : true,
+        "containerId" : "9bb71861-a620-4b01-bd90-36b81ec2ccca",
+        "attributes" : { }
+      }, {
+        "id" : "b7bef950-a49d-474d-8d70-eef4afa26652",
+        "name" : "community",
+        "description" : "Community roles",
+        "composite" : false,
+        "clientRole" : true,
+        "containerId" : "9bb71861-a620-4b01-bd90-36b81ec2ccca",
+        "attributes" : { }
+      }, {
+        "id" : "81ddbf4e-2f73-4191-b3bb-873273c4731d",
+        "name" : "png",
+        "description" : "PNG roles",
+        "composite" : false,
+        "clientRole" : true,
+        "containerId" : "9bb71861-a620-4b01-bd90-36b81ec2ccca",
+        "attributes" : { }
+      }, {
+        "id" : "25671387-86e5-4ec0-b3b3-4f237d1f8455",
+        "name" : "valmora",
+        "description" : "Valmora roles",
         "composite" : false,
         "clientRole" : true,
         "containerId" : "9bb71861-a620-4b01-bd90-36b81ec2ccca",
@@ -431,12 +538,20 @@
         "id" : "58844fa6-cc21-423b-9f96-f3565e45f1a3",
         "name" : "masters",
         "path" : "/ala-users/admin/masters",
-        "parentId" : "f70783d9-b64b-46b9-81c2-e4af0e5f9889"
+        "parentId" : "f70783d9-b64b-46b9-81c2-e4af0e5f9889",
+        "realmRoles" : [ "masters" ],
+        "clientRoles" : {
+          "user-auth-client-be" : [ "masters" ]
+        }
       }, {
         "id" : "c1781682-1137-489c-8eb7-df213e1c36ed",
         "name" : "team-social",
         "path" : "/ala-users/admin/team-social",
-        "parentId" : "f70783d9-b64b-46b9-81c2-e4af0e5f9889"
+        "parentId" : "f70783d9-b64b-46b9-81c2-e4af0e5f9889",
+        "realmRoles" : [ "team-social" ],
+        "clientRoles" : {
+          "user-auth-client-be" : [ "team-social" ]
+        }
       } ],
       "realmRoles" : [ "admin" ],
       "clientRoles" : {
@@ -456,40 +571,63 @@
           "id" : "c552f701-5dd3-460b-b46d-b12fa14fd858",
           "name" : "coronor",
           "path" : "/ala-users/community/pg/coronor",
-          "parentId" : "a6b73484-8cff-4188-aabc-e73fa2b5ee99"
+          "parentId" : "a6b73484-8cff-4188-aabc-e73fa2b5ee99",
+          "clientRoles" : {
+            "user-auth-client-be" : [ "coronor" ]
+          }
         }, {
           "id" : "c94e607f-c907-4518-9a7b-2c8ca3532d9c",
           "name" : "levalia",
           "path" : "/ala-users/community/pg/levalia",
-          "parentId" : "a6b73484-8cff-4188-aabc-e73fa2b5ee99"
+          "parentId" : "a6b73484-8cff-4188-aabc-e73fa2b5ee99",
+          "clientRoles" : {
+            "user-auth-client-be" : [ "levalia" ]
+          }
         }, {
           "id" : "982c54fc-2701-4e12-a6b4-5bcf47400114",
           "name" : "malatea",
           "path" : "/ala-users/community/pg/malatea",
-          "parentId" : "a6b73484-8cff-4188-aabc-e73fa2b5ee99"
+          "parentId" : "a6b73484-8cff-4188-aabc-e73fa2b5ee99",
+          "clientRoles" : {
+            "user-auth-client-be" : [ "malatea" ]
+          }
         }, {
           "id" : "8b1f9f6d-309f-41ff-9152-73d8eb1c7519",
           "name" : "tal-meridia",
           "path" : "/ala-users/community/pg/tal-meridia",
-          "parentId" : "a6b73484-8cff-4188-aabc-e73fa2b5ee99"
+          "parentId" : "a6b73484-8cff-4188-aabc-e73fa2b5ee99",
+          "clientRoles" : {
+            "user-auth-client-be" : [ "tal-meridia" ]
+          }
         }, {
           "id" : "c771b65f-9b51-43ac-9220-80ae6b9b1384",
           "name" : "valmora",
           "path" : "/ala-users/community/pg/valmora",
-          "parentId" : "a6b73484-8cff-4188-aabc-e73fa2b5ee99"
-        } ]
+          "parentId" : "a6b73484-8cff-4188-aabc-e73fa2b5ee99",
+          "clientRoles" : {
+            "user-auth-client-be" : [ "valmora" ]
+          }
+        } ],
+        "clientRoles" : {
+          "user-auth-client-be" : [ "pg" ]
+        }
       }, {
         "id" : "de9933c4-f3f8-4aa7-a1a4-42763a3d509f",
         "name" : "png",
         "path" : "/ala-users/community/png",
-        "parentId" : "e246270c-acaa-4aed-8d9f-4b7bbe95f2cb"
+        "parentId" : "e246270c-acaa-4aed-8d9f-4b7bbe95f2cb",
+        "clientRoles" : {
+          "user-auth-client-be" : [ "png" ]
+        }
       } ],
-      "realmRoles" : [ "user" ],
       "clientRoles" : {
-        "user-auth-client-be" : [ "client_user" ]
+        "user-auth-client-be" : [ "community" ]
       }
     } ],
-    "realmRoles" : [ "default-roles-user-auth" ]
+    "realmRoles" : [ "default-roles-user-auth", "ala" ],
+    "clientRoles" : {
+      "user-auth-client-be" : [ "ala" ]
+    }
   } ],
   "defaultRole" : {
     "id" : "5fcf1dc8-6ec9-4e88-97a1-b3b41d232bfe",
@@ -1736,7 +1874,7 @@
       "subType" : "anonymous",
       "subComponents" : { },
       "config" : {
-        "allowed-protocol-mapper-types" : [ "saml-role-list-mapper", "saml-user-property-mapper", "saml-user-attribute-mapper", "oidc-full-name-mapper", "oidc-usermodel-attribute-mapper", "oidc-address-mapper", "oidc-usermodel-property-mapper", "oidc-sha256-pairwise-sub-mapper" ]
+        "allowed-protocol-mapper-types" : [ "oidc-address-mapper", "saml-role-list-mapper", "oidc-usermodel-attribute-mapper", "saml-user-property-mapper", "saml-user-attribute-mapper", "oidc-full-name-mapper", "oidc-sha256-pairwise-sub-mapper", "oidc-usermodel-property-mapper" ]
       }
     }, {
       "id" : "9f5fac4a-6512-4c90-ae77-9dc807f2489a",
@@ -1745,7 +1883,7 @@
       "subType" : "authenticated",
       "subComponents" : { },
       "config" : {
-        "allowed-protocol-mapper-types" : [ "saml-role-list-mapper", "oidc-usermodel-property-mapper", "oidc-sha256-pairwise-sub-mapper", "saml-user-property-mapper", "oidc-address-mapper", "oidc-usermodel-attribute-mapper", "saml-user-attribute-mapper", "oidc-full-name-mapper" ]
+        "allowed-protocol-mapper-types" : [ "oidc-usermodel-property-mapper", "saml-user-property-mapper", "oidc-address-mapper", "oidc-usermodel-attribute-mapper", "saml-role-list-mapper", "oidc-sha256-pairwise-sub-mapper", "oidc-full-name-mapper", "saml-user-attribute-mapper" ]
       }
     }, {
       "id" : "fc826015-33a9-4338-b158-565bbd9f2b10",
