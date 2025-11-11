@@ -45,8 +45,8 @@ services:
       - POSTGRES_DB=${POSTGRES_DB}
     volumes:
       - postgres:/var/lib/postgresql/data
-      - ${DB_POSTGRES_LOCAL_LOCATION}/${PERSON_DDL_NAME}.sql:${DB_POSTGRES_CONTAINER_LOCATION}/01_auth_ddl.sql
-      - ${DB_POSTGRES_LOCAL_LOCATION}/${GROUP_DUMP_NAME}.sql:${DB_POSTGRES_CONTAINER_LOCATION}/02_group_dump.sql
-      - ${DB_POSTGRES_LOCAL_LOCATION}/${DASHBOARD_DDL_NAME}.sql:${DB_POSTGRES_CONTAINER_LOCATION}/03_dashboard_ddl.sql
+      - ${DB_PG_LOCAL_LOCATION}/${PERSON_DDL_NAME}.sql:${DB_POSTGRES_CONTAINER_LOCATION}/01_auth_ddl.sql
+      - ${DB_PG_LOCAL_LOCATION}/${GROUP_DUMP_NAME}.sql:${DB_POSTGRES_CONTAINER_LOCATION}/02_group_dump.sql
+      - ${DB_PG_LOCAL_LOCATION}/${DASHBOARD_DDL_NAME}.sql:${DB_POSTGRES_CONTAINER_LOCATION}/03_dashboard_ddl.sql
     networks:
       - databases
