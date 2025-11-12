@@ -54,7 +54,7 @@ services:
       - databases
 
   ############## Keycloak Test ##############
-  keycloak_test:
+  keycloak_test: #/opt/keycloak/bin/kc.sh export --realm user-auth --users same_file --file /tmp/users_dump_TEST-01.json
     image: quay.io/keycloak/keycloak:23.0.1
     container_name: ${KC_CONTAINER}
     restart: no

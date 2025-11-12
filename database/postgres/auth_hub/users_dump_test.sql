@@ -1,5 +1,5 @@
 INSERT INTO users (uuid, provider, provider_id, name, surname, biography, email, password, is_active, img_profile)
-VALUES  (gen_random_uuid(), 'Google', 'googleID', 'John', 'Doe', '','johndoe@test.com', 'password', TRUE, pg_read_binary_file('/docker-entrypoint-initdb.d\logo.png')),
+VALUES  (gen_random_uuid(), 'Google', 'googleID', 'John', 'Doe', '','johndoe@test.com', 'password', TRUE, NULL),
         (gen_random_uuid(), 'Google', 'googleID', 'Marco', 'Carta', '', 'mcarta@test.com', 'password', TRUE, NULL),
         (gen_random_uuid(), 'Google', 'googleID', 'Tiziano', 'Ferro', '', 'tferro@test.com', 'password', TRUE, NULL),
         (gen_random_uuid(), 'Google', 'googleID', 'Giovanni', 'Sasso', '', 'gsasso@test.com', 'password', TRUE,NULL),
