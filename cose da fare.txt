@@ -1,0 +1,466 @@
+- Nozioni fondamentali
+	- Terminologia di gioco
+	Time In:
+viene annunciato solo da un GM e segna
+l’inizio o la ripresa del gioco:
+tutto è considerato In Character (IC), tranne
+le aree dichiarate Out of Character (OOC).
+Da quel momento è obbligatorio rimanere
+nel proprio ruolo in ogni momento e luogo.
+Time Out:
+anch’esso dichiarato solo da un GM, indica
+la fine dell’evento.
+Stop:
+si utilizza solo in caso di reale pericolo:
+tutto si ferma immediatamente e si riprende
+solo su indicazione del GM o della persona
+che ha fatto la chiamata.
+L’abuso di questo segnale comporta
+l’allontanamento dall’evento.
+Man Down:
+va usato se un giocatore si infortuna
+realmente.
+Tutti devono fermarsi e sedersi per
+permettere i soccorsi.
+L’abuso di questo segnale comporta
+l’allontanamento dall’evento.
+Time Freeze:
+può essere dichiarato solo da un GM o dallo
+Staff autorizzato. Tutti si fermano, chiudono
+gli occhi e mormorano per non vedere né
+udire. Il gioco riprende con un nuovo Time
+In, come se nulla fosse accaduto.
+Cartellino Giallo / Drop:
+si applica in caso di comportamenti
+pericolosi, metagame o fuori ruolo.
+Il gioco si interrompe per il giocatore e il GM
+o lo Staff spiega l’errore.
+Esempi: colpi troppo forti, mirati a testa, collo
+o inguine, atteggiamenti troppo concitati,
+alzare il dito facendo metagame.
+Cartellino Rosso / Drop:
+si applica per violazioni gravi o dopo due
+gialli. Il giocatore deve abbandonare la
+scena ed è OOC fino a nuovo ordine del GM.
+Abbreviazioni:
+Le seguenti abbreviazioni sono
+frequentemente utilizzate nel
+regolamento:
+PS: Punti Scheda
+GRV: Gioco di Ruolo dal Vivo
+PV: Punti Vita
+CA: Categoria Armatura
+PA: Punti Armatura
+PG: Personaggio Giocante
+PNG: Personaggio Non Giocante
+GM: Master di Gioco
+	- Codici colore
+		- Fascia Blu (Bl):
+Indica 1 PA magico.
+Fascia Rossa (Ro):
+Indica 1 PV magico.
+Fascia Viola (Vi):
+Indica qualcosa o qualcuno in forma
+spettrale ed incorporea, che pertanto
+non può essere afferrato né toccato.
+Fascia Gialla (Gi):
+Questa fascia viene applicata sopra un’altra
+per proteggerla dalla prima dispersione
+magica, fungendo da strato difensivo
+aggiuntivo contro gli effetti arcani.
+Fascia Argentata (Ar):
+Legata intorno ad un oggetto o ad una
+porta/maniglia, indica che quell’oggetto
+ha su di sè attivo l’effetto dell’incantesimo
+[serratura magica].
+Busta Verde (Ve):
+una busta da lettere verde viene apposta
+sopra o accanto a un oggetto (ad
+eccezione di armi e scudi).
+La busta verde segnala che l’oggetto è
+coperto da una sostanza (unguento,
+crema, ecc).
+Se toccato senza protezioni, la busta va
+aperta immediatamente: può contenere
+una chiamata effetto.
+Cartellini Bianchi:
+consentono di raccogliere sia l’oggetto
+che il cartellino.
+Cartellini Gialli:
+consentono di raccogliere solo il cartellino
+che dovrà essere immediatamente
+applicato su un oggetto.
+
+- Armi e armature
+	- Armi bianche
+Rientrano in questa categoria le armi a una
+mano, a due mani e le armi da lancio.
+Armi a una mano corte
+(lunghezza massima 50 cm)
+Armi a una mano
+(lunghezza massima 115 cm)
+Armi a due mani
+(lunghezza compresa tra 116 cm e 230 cm)
+Armi da lancio
+Armi prive di un’anima rigida.
+Armi da fuoco
+(a scoppietto o fulminante)
+Le uniche armi da fuoco approvate negli
+Eventi A.L.A. sono le repliche giocattolo
+delle armi ad avancarica del 1500-1700 D.C.
+Le armi da fuoco non possono in alcun
+modo proiettare materiale dalla canna.
+Ogni uso di questa tipologia di arma
+consuma sempre un cartellino “Carica di
+polvere…” da dover consegnare al primo
+GM visibile, pena ammonizione.
+Armi da tiro
+Rientrano in questa categoria archi e
+balestre.
+Sono le uniche armi in grado di proiettare
+fisicamente un dardo larp acquistabili
+esclusivamente da rivenditori autorizzati.
+La forza di tensione massima consentita per
+un’arma da tiro è di 30 libbre.
+È severamente vietato l’utilizzo di frecce
+o dardi autoprodotti o non conformi agli
+standard di sicurezza.
+I dardi Larp vanno tirati in linea retta: è
+vietato lanciarli con traiettore paraboliche.
+Danno delle armi
+Ognuna di queste armi, al netto di specifici
+effetti, infligge sempre e solo 1 danno.
+I danni si sottraggono ai PV, a meno che la
+zona colpita non sia protetta da armatura:
+in tal caso, si scalano prima i PA, poi i PV
+una volta esauriti.
+Se un colpo è accompagnato da una
+chiamata e va a segno, il danno
+verrà sempre scalato dai PA o dai
+PV, indipendentemente dal fatto che il
+personaggio resista o meno all’effetto della
+chiamata.
+Obblighi per il buon gioco:
+Anche se il colpo è assorbito dall’armatura,
+va comunque interpretato in modo chiaro.
+Non serve esagerare, ma è importante
+mostrare che il colpo è andato a segno.
+A 0 PV il personaggio sviene e non può
+agire.
+Solo chi possiede l’abilità [Tenacia] può
+muoversi o chiedere aiuto.
+Altrimenti si resta a terra, immobili e con
+gli occhi chiusi, in attesa di cure o morte.
+Le armi da fuoco infliggono sempre
+1 danno e richiedono 1 dose di Polvere
+da Sparo per colpo.
+Le Pistole hanno gittata 5 metri, i fucili
+10 metri.
+Il colpo è a segno solo se lo scoppietto
+esplode.
+Una volta esauriti i colpi (anche se falliti),
+è obbligatoria la ricarica: deve durare
+almeno 30 secondi per ogni dose e va
+simulata con una bacchetta, visibile
+davanti al petto.
+Se interrotta, la ricarica va ricominciata da
+capo.
+Le armi a canne multiple possono sparare
+colpi in sequenza, ma ogni colpo richiede
+una ricarica completa.
+Armature
+Ai fini del calcolo dei PA il corpo di ogni
+Personaggio è suddiviso in 3 locativi
+Testa
+Torso
+Arti
+Per godere della protezione di una qualsiasi
+armatura, un PG deve provvedere a
+proteggere almeno il 75% del suo locativo.
+Le parti di armatura sotto descritte possono
+appartenere a Categorie Armatura (CA)
+differenti.
+Categoria Armatura Materiale
+   CA 1       Cuoio (≥3mm) o Imbottita
+   CA 2       Cotta di maglia o Corazza di scaglie o Brigantina
+   CA 3       Corazza di Piastre o Sovrapposizione di CA1 e CA2
+   
+   Categoria Armatura Torso Arti
+		1 		1 		1
+		2		2 		2
+		3 		3 		3
+	
+Qualsiasi tipologia di Elmo conferisce 1 PA.
+Qualunque tipo di armatura non
+contemplato tra i suddetti dovrà essere
+valutato all’ingresso ad insindacabile
+giudizio del GM, altrimenti non potrà
+essere usato.
+- Oggetti di gioco
+	- Durante il gioco potresti imbatterti in oggetti
+dotati di cartellini identificativi bianchi
+o gialli: questi attestano la validità e la
+funzionalità dell’oggetto nel mondo di
+gioco.
+Ogni cartellino deve essere sempre
+applicato al relativo oggetto fisico
+(PhysicalRep); è vietato possedere
+cartellini sfusi o non correttamente
+associati: in caso contrario, verranno
+ritirati senza possibilità di appello e
+l’oggetto si considererà scarico, usurato o
+perduto.
+La creazione di oggetti di gioco richiede
+abilità specifiche, salvo diversa indicazione
+da parte dei GM o dello Staff.
+In caso di cartellino giallo è responsabilità
+del Giocatore procurare l’oggetto fisico su
+cui apporre il cartellino.
+È vietato produrre, vendere o cedere
+cartellini separati dagli oggetti cui sono
+destinati.
+Un Giocatore con abilità di creazione o
+autorizzato dal GM ad apporre cartellini non
+può in alcun modo consegnarli “nudi” ad
+altri.
+La violazione di questa regola comporta
+ammonizione e, in caso di recidiva,
+l’allontanamento dall’evento.
+Infine, chiediamo a tutti senso civico: i
+cartellini strappati o non più validi non
+devono essere abbandonati a terra.
+Gettarli a terra comporta ammonizione.
+Per non incappare in sanzioni ricorda di
+consegnare sempre i tuoi cartellini usati ad
+un GM o ad uno Staff.
+Laboratori e Kit
+Durante la creazione o produzione
+(alchemica, artigianale o di altro tipo),
+i GM terranno conto non solo della
+coerenza scenica, ma anche della scenicità
+e completezza dei laboratori e dei kit di
+attrezzi.
+Un buon allestimento, accompagnato da
+una buona interpretazione, potrebbe, in
+alcuni casi, ridurre lo spreco di tempo o
+reagenti.
+Utilizzare gli Oggetti Magici
+Ogni Personaggio può avere un solo
+oggetto magico attivo alla volta.
+Solo chi possiede l’abilità [Vettore Rituale]
+può sintonizzarsi fino a un massimo di due
+oggetti.
+La sintonizzazione è un momento
+interpretativo libero, a discrezione del
+giocatore, ma deve sempre essere
+comunicata preventivamente a un GM e
+durare almeno 5 minuti.
+Solo al termine di questo tempo l’oggetto è
+considerato attivo.
+Utilizzare gli Ordigni
+Gli ordigni sono oggetti prodotti dagli
+Artefici e attivano un effetto dichiarato dal
+loro utilizzatore o da un membro dello Staff.
+Per avere effetto gli ordigni devono colpire
+fisicamente il bersaglio e devono essere
+rappresentati da oggetti di gioco sicuri e
+approvati in anticipo, come barilotti in
+lattice o palline di spugna scenografate.
+Utilizzare le Misture
+Le Misture sono rappresentate da boccette
+o contenitori piccoli corredati da cartellino
+oggetto.
+Possono essere Pozioni o Unguenti, e
+vengono create dagli Alchimisti.
+Le Misture non hanno scadenza, ma se
+l’umidità danneggia il cartellino rendendolo
+illeggibile, si considerano rovinate.
+È possibile proteggere i cartellini con nastro
+trasparente, ma essi devono comunque
+essere strappati al momento dell’uso e
+consegnati a un GM.
+Per le Pozioni, bisogna simulare l’atto di
+stapparla e berla, poi strappare subito il
+cartellino e dichiarare eventuali effetti.
+Per gli Unguenti, bisogna simulare
+l’applicazione con una spatola o altro
+strumento sicuro.
+L’effetto si applica quando tocca la pelle
+nuda del bersaglio, e solo allora si può
+dichiarare l’effetto e strappare il cartellino.
+Se un unguento viene spalmato su un’arma,
+l’effetto si considera attivo anche se il colpo
+è parato, a causa degli schizzi.
+Gli Unguenti non possono essere usati su
+frecce.
+Se l’unguento viene applicato su oggetti
+(esclusi armi o scudi), si utilizza una busta da
+lettere verde come descritto nella sezione
+Codici Colori.
+Un personaggio con l’abilità [Tenacia] può
+usare Misture su sé stesso anche in stato di
+sanguinamento.
+Per consentire dinamiche di inganno, ogni
+Mistura viene cartellinata con due cartellini
+sovrapposti: quello inferiore contiene
+l’effetto reale, mentre quello superiore
+presenta un codice pozione interpretabile
+solo da chi possiede l’abilità Alchimia.
+Al momento dell’uso, entrambi i cartellini
+vanno strappati.
+Utilizzare le Pergamene
+Le Pergamene sono oggetti di gioco
+rappresentati da fogli in formato A5, recanti
+due intestazioni:
+- Pergamena Maggiore
+- Pergamena Minore
+e il timbro ufficiale di gioco in calce.
+Al centro del foglio è riportata una frase
+magica di varia lunghezza, accompagnata
+da una nota OOC che specifica la relativa
+chiamata.
+Le Pergamene sono scritte da coloro che
+sono in possesso delle abilità [Incantatore
+1] e/o [Incantatore 2] e si dividono in due
+categorie:
+Le Pergamene Minori
+possono essere utilizzate solo da personaggi
+che possiedono l’abilità [Incantatore].
+Le Pergamene Maggiori
+possono essere utilizzate da qualsiasi
+personaggio in grado di leggere.
+Gli incanti lanciati tramite Pergamene, siano
+esse Minori o Maggiori, non richiedono
+tempo di Meditazione dopo l’utilizzo.
+Se si interpreta un personaggio analfabeta,
+l’uso delle pergamene è precluso.
+Durante la battaglia, la lettura deve avvenire
+a voce molto alta (meglio se urlata); in
+momenti di quiete è sufficiente una voce
+chiara e comprensibile.
+Una volta letta la frase magica, il giocatore
+deve strappare la pergamena, dichiarare
+l’effetto e consegnarla a un GM.
+Nota:
+Se l’effetto della Pergamena prevede l’uso
+di una fascia colorata, questa dicitura sarà
+inclusa e andrà applicata dal giocatore
+stesso, che è responsabile di procurarsela.
+Utilizzare i Sigilli di Protezione
+I Sigilli di Protezione sono oggetti di
+gioco rappresentati da tavolette di legno
+scenografate, acquistabili in gioco.
+Ogni sigillo garantisce immunità a una
+specifica chiamata, indicata in modo
+chiaro sul retro del sigillo stesso tramite
+una nota OOC.
+Possono essere utilizzati da qualunque
+Personaggio, ma per essere attivi devono
+essere indossati al collo.
+La protezione si applica una sola volta.
+Ogni personaggio può indossare un solo
+Sigillo di Protezione alla volta.
+Quando si è colpiti dalla prima chiamata
+corrispondente a quella scritta sul retro
+del sigillo, si deve dichiarare “No-Effect”,
+ignorando l’effetto ricevuto, e consegnare
+appena possibile la tavoletta ai GM o allo
+Staff.
+La mancata consegna comporta
+ammonizione.
+Serrature & Trappole
+Serrature:
+sono oggetti di gioco inamovibili sotto
+forma di lucchetto con codice numerico.
+Le chiavi di queste serrature sono
+rappresentate in gioco da oggetti sul cui
+cartellino è presente il codice numerico di
+sblocco del relativo lucchetto.
+È fatto severamente divieto utilizzare i
+lucchetti nell’area di gioco per chiudere
+realmente porte o altre vie di accesso o di
+fuga pena l’allontanamento dagli eventi
+Alarion e segnalazione al Direttivo ALA
+per motivi di sicurezza.
+Per scassinare o distruggere una serratura
+bisogna essere in possesso di un’abilità che
+lo permetta.
+Trappole:
+Le trappole sono oggetti di gioco
+inamovibili, smontabili, scenografate e
+potrebbero non essere immediatamente
+visibili.
+Qualsiasi tentativo di spostarle dalla loro
+sede corrisponde ad attivarle sarà quindi
+obbligatorio leggere l’effetto apposto
+sotto la struttura della trappola e subirne
+gli effetti descritti.
+Su ogni trappola disattivabile è presente il
+seguente simbolo: <simbolo>
+Per essere disattivate le trappole devono
+essere smontate, utilizzando solo attrezzi,
+fino a raggiungere l’oggetto identificativo
+Verde prima di quello Rosso.
+Trovare l’oggetto Rosso equivale ad
+innescare la trappola quindi sarà
+necessario leggere preventivamente l’effetto
+sotto la struttura della trappola.
+Cristalli di Alathium
+All’interno dell’Infezione può capitare di
+imbattersi in creature, luoghi o oggetti che
+contengono piccole o grandi quantità di
+Alathium Grezzo.
+Il suo utilizzo non si limita ai rituali.
+Chiunque può raccogliere l’Alathium
+Grezzo, indipendentemente dalle proprie
+Abilità. Tuttavia, i tempi e le modalità
+di raccolta variano in base alla natura e
+all’origine del cristallo, e spetta al Giocatore
+interpretare la scena con cura, rendendo
+l’azione coerente e coinvolgente.
+L’Alathium Grezzo, una volta raccolto, può
+essere raffinato solo da Personaggi
+in possesso dell’Abilità [Raffinare Alathium],
+i quali possono estrarne due risorse
+fondamentali:
+- Lacrime di Alathium
+- Alathium Puro
+Nota: Scene di raccolta poco scenografiche
+o non interpretate adeguatamente possono
+portare alla distruzione del cristallo da parte
+dei GM o dello Staff.
+Il Buon Gioco è parte integrante di ogni
+scoperta.
+Valutare Oggetti
+Nel mondo di Alarion esistono tre tipologie
+di conio:
+Rame - Falci di Luna
+Argento - Mezze Lune
+Oro - Lune Piene
+Ogni categoria vale dieci volte la
+precedente.
+Tutti gli oggetti di un qualche valore sono
+corredati da un cartellino valore riportante
+un codice alfanumerico che inizia sempre
+con le lettere “val-”.
+Il codice, leggibile solo da chi possiede
+l’abilità [Valutare], indica il valore medio
+effettivo dell’oggetto che potrebbe anche
+non corrispondere al valore apparente
+dell’oggetto (identificato dalla lettera presente
+sul cartellino valore).
+
+- Situazioni complesse
+	- 
+- Morte del personaggio
+	-
+- Chiamate e prefissi
+	-
+- Creazione del personaggio
+	-
+- Abilità
+	-
+- Appendici
+	-
+- Play by mail
+	-
