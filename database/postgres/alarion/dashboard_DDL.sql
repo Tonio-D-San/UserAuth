@@ -4,7 +4,7 @@
 -- CREATE TYPE money_name AS ENUM ('cartographer', 'constitution');
 -- CREATE TYPE ability_name AS ENUM (...);
 -- CREATE TYPE reagent_name AS ENUM (...);
--- CREATE TYPE kingdom_name AS ENUM (...);
+-- CREATE TYPE realm_name AS ENUM (...);
 
 -- =========================================
 -- BAG
@@ -219,13 +219,13 @@ CREATE TABLE reagents
 -- =========================================
 -- KINGDOM
 -- =========================================
-CREATE TABLE kingdoms
+CREATE TABLE realms
 (
     id           SERIAL PRIMARY KEY,
     uuid         UUID NOT NULL UNIQUE,
-    kingdom_name VARCHAR(50),
+    realm_name VARCHAR(50),
     card_id      INTEGER UNIQUE,
     player_id    INTEGER UNIQUE,
-    CONSTRAINT fk_kingdom_card FOREIGN KEY (card_id) REFERENCES cards (id),
-    CONSTRAINT fk_kingdom_player FOREIGN KEY (player_id) REFERENCES players (id) ON DELETE CASCADE
+    CONSTRAINT fk_realm_card FOREIGN KEY (card_id) REFERENCES cards (id),
+    CONSTRAINT fk_realm_player FOREIGN KEY (player_id) REFERENCES players (id) ON DELETE CASCADE
 );
