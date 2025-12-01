@@ -32,7 +32,7 @@ CREATE TABLE cards
 -- =========================================================
 CREATE TABLE ability_definition
 (
-    code             VARCHAR(50) PRIMARY KEY, -- Enum salvato come stringa
+    code             VARCHAR(50) PRIMARY KEY,
     name             VARCHAR(255) NOT NULL,
     description_key  VARCHAR(255) NOT NULL,
     type             VARCHAR(50),
@@ -103,6 +103,15 @@ CREATE TABLE ability_definition_unlockables
         FOREIGN KEY (ability_definition_code) REFERENCES ability_definition (code) ON DELETE CASCADE
 );
 
+-- =========================================
+-- KINGDOM
+-- =========================================
+CREATE TABLE realms
+(
+    id         SERIAL PRIMARY KEY,
+    uuid       UUID NOT NULL UNIQUE,
+    realm_name VARCHAR(50)
+);
 
 -- =========================================
 -- players
@@ -113,10 +122,12 @@ CREATE TABLE players
     uuid       UUID    NOT NULL UNIQUE,
     pg_name    VARCHAR(50),
     background TEXT,
+    realm_id   INTEGER NOT NULL,
     user_id    BIGINT  NOT NULL,
     card_id    INTEGER UNIQUE,
     bag_id     INTEGER NOT NULL UNIQUE,
     training   VARCHAR(255),
+    CONSTRAINT fk_player_realm FOREIGN KEY (realm_id) REFERENCES realms (id),
     CONSTRAINT fk_player_user FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
     CONSTRAINT fk_player_card FOREIGN KEY (card_id) REFERENCES cards (id),
     CONSTRAINT fk_player_bag FOREIGN KEY (bag_id) REFERENCES bags (id)
@@ -124,15 +135,15 @@ CREATE TABLE players
 
 -- =========================================================
 -- TABELLA DI JOIN: player_ability
--- (ManyToMany fra PlayerAbilities e Player)
+-- (ManyToMany fra ability_definition e players)
 -- =========================================================
 CREATE TABLE player_ability
 (
     player_id  INT NOT NULL,
-    ability_id INT NOT NULL,
+    ability_id VARCHAR(50) NOT NULL,
     PRIMARY KEY (player_id, ability_id),
     CONSTRAINT fk_player FOREIGN KEY (player_id) REFERENCES players (id) ON DELETE CASCADE,
-    CONSTRAINT fk_player_ability FOREIGN KEY (ability_id) REFERENCES player_abilities (id) ON DELETE CASCADE
+    CONSTRAINT fk_ability_definition FOREIGN KEY (ability_id) REFERENCES ability_definition (code) ON DELETE CASCADE
 );
 
 -- =========================================
@@ -216,16 +227,3 @@ CREATE TABLE reagents
     CONSTRAINT fk_reagent_bag FOREIGN KEY (bag_id) REFERENCES bags (id) ON DELETE CASCADE
 );
 
--- =========================================
--- KINGDOM
--- =========================================
-CREATE TABLE realms
-(
-    id           SERIAL PRIMARY KEY,
-    uuid         UUID NOT NULL UNIQUE,
-    realm_name VARCHAR(50),
-    card_id      INTEGER UNIQUE,
-    player_id    INTEGER UNIQUE,
-    CONSTRAINT fk_realm_card FOREIGN KEY (card_id) REFERENCES cards (id),
-    CONSTRAINT fk_realm_player FOREIGN KEY (player_id) REFERENCES players (id) ON DELETE CASCADE
-);
