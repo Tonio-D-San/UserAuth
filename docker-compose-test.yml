@@ -32,6 +32,7 @@ services:
       - ${DB_PG_ALARION_LOCATION}/${DASHBOARD_DDL_NAME}.sql:${DB_POSTGRES_CONTAINER_LOCATION}/03_dashboard_ddl.sql
       - ${DB_PG_ALARION_LOCATION}/${ABILITIES_DUMP_NAME}.sql:${DB_POSTGRES_CONTAINER_LOCATION}/04_abilities_dump.sql
       - ${DB_PG_LOCAL_LOCATION}/${MANAGEMENT_DUMP_NAME}.sql:${DB_POSTGRES_CONTAINER_LOCATION}/05_users_dump.sql
+      - ${DB_PG_LOCAL_LOCATION}/realm_dump.sql:${DB_POSTGRES_CONTAINER_LOCATION}/06_payments_dump.sql
     networks:
       - databases
 
