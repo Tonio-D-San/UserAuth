@@ -69,5 +69,5 @@ VALUES (gen_random_uuid(),
        (gen_random_uuid(),
         'prefix_poison.name',
         'call_amnesia.name',
-        null),
+        null)
     ;

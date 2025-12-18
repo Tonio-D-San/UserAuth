@@ -1,0 +1,70 @@
+CREATE OR REPLACE FUNCTION refresh_updated_at()
+    RETURNS TRIGGER AS
+$$
+BEGIN
+    NEW.updated_at = (extract(epoch from now()) * 1000)::bigint;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION refresh_last_access()
+    RETURNS TRIGGER AS
+$$
+BEGIN
+    NEW.last_access = now();
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TABLE users
+(
+    id           SERIAL PRIMARY KEY,
+    uuid         UUID NOT NULL UNIQUE DEFAULT gen_random_uuid(),
+    created_at   BIGINT NOT NULL DEFAULT (extract(epoch from now()) * 1000)::bigint,
+    updated_at   BIGINT NOT NULL DEFAULT (extract(epoch from now()) * 1000)::bigint,
+    is_active    BOOLEAN NOT NULL DEFAULT true,
+    provider     VARCHAR(50),
+    provider_id  VARCHAR(50),
+    name         VARCHAR(100) NOT NULL,
+    surname      VARCHAR(50) NOT NULL,
+    biography    TEXT,
+    first_access timestamptz DEFAULT now() NOT NULL,
+    last_access  timestamptz DEFAULT now() NOT NULL,
+    email        VARCHAR(100) NOT NULL UNIQUE,
+    password     VARCHAR(100),
+    img_profile  BYTEA
+);
+
+CREATE TABLE groups
+(
+    id          SERIAL PRIMARY KEY,
+    uuid        UUID NOT NULL UNIQUE DEFAULT gen_random_uuid(),
+    created_at  BIGINT NOT NULL DEFAULT (extract(epoch from now()) * 1000)::bigint,
+    updated_at  BIGINT NOT NULL DEFAULT (extract(epoch from now()) * 1000)::bigint,
+    is_active   BOOLEAN NOT NULL DEFAULT true,
+    name        VARCHAR(50) NOT NULL,
+    path        VARCHAR(50) NOT NULL,
+    description VARCHAR(255)
+);
+
+CREATE TABLE user_group
+(
+    user_id  INT REFERENCES users (id) ON DELETE CASCADE,
+    group_id INT REFERENCES groups (id) ON DELETE CASCADE,
+    PRIMARY KEY (user_id, group_id)
+);
+
+CREATE TRIGGER users_refresh_updated_at
+    BEFORE UPDATE ON users
+    FOR EACH ROW
+EXECUTE FUNCTION refresh_updated_at();
+
+CREATE TRIGGER groups_refresh_updated_at
+    BEFORE UPDATE ON groups
+    FOR EACH ROW
+EXECUTE FUNCTION refresh_updated_at();
+
+CREATE TRIGGER users_refresh_last_access
+    BEFORE UPDATE ON users
+    FOR EACH ROW
+EXECUTE FUNCTION refresh_last_access();
