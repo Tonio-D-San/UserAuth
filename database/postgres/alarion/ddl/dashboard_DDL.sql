@@ -20,6 +20,26 @@ END;
 $$ LANGUAGE plpgsql;
 
 -- =========================================
+-- CAMPAIGNS
+-- =========================================
+CREATE TABLE campaigns
+(
+    id         SERIAL PRIMARY KEY,
+    uuid       UUID NOT NULL UNIQUE DEFAULT gen_random_uuid(),
+    name       VARCHAR(100) NOT NULL UNIQUE,
+    description TEXT,
+    created_at BIGINT NOT NULL DEFAULT (extract(epoch from now()) * 1000)::bigint,
+    updated_at BIGINT NOT NULL DEFAULT (extract(epoch from now()) * 1000)::bigint,
+    is_active  BOOLEAN NOT NULL DEFAULT true
+);
+
+CREATE TRIGGER campaigns_refresh_updated_at
+    BEFORE UPDATE ON campaigns
+    FOR EACH ROW
+EXECUTE FUNCTION refresh_updated_at();
+
+
+-- =========================================
 -- BAG
 -- =========================================
 CREATE TABLE bags
@@ -206,13 +226,14 @@ CREATE TRIGGER reagents_refresh_updated_at
 EXECUTE FUNCTION refresh_updated_at();
 
 -- =========================================
--- PLAYERS
+-- CHARACTERS
 -- =========================================
-CREATE TABLE players
+CREATE TABLE characters
 (
     id         SERIAL PRIMARY KEY,
     uuid       UUID    NOT NULL UNIQUE DEFAULT gen_random_uuid(),
     pg_name    VARCHAR(50),
+    campaign_id INTEGER REFERENCES campaigns(id),
     background TEXT,
     realm_id   INTEGER NOT NULL REFERENCES realms(id),
     user_id    BIGINT  NOT NULL REFERENCES users(id) ON DELETE CASCADE,
@@ -224,28 +245,35 @@ CREATE TABLE players
     is_active  BOOLEAN NOT NULL DEFAULT true
 );
 
-CREATE INDEX idx_players_realm_id ON players(realm_id);
-CREATE INDEX idx_players_user_id ON players(user_id);
-CREATE INDEX idx_players_card_id ON players(card_id);
-CREATE INDEX idx_players_bag_id ON players(bag_id);
+CREATE INDEX idx_characters_campaign_id ON characters(campaign_id);
 
-CREATE TRIGGER players_refresh_updated_at
-    BEFORE UPDATE ON players
+-- Un solo PG giocante per user per campagna
+CREATE UNIQUE INDEX ux_one_playing_pg_per_user_campaign
+    ON characters (user_id, campaign_id) WHERE is_active = true;
+
+
+CREATE INDEX idx_characters_realm_id ON characters(realm_id);
+CREATE INDEX idx_characters_user_id ON characters(user_id);
+CREATE INDEX idx_characters_card_id ON characters(card_id);
+CREATE INDEX idx_characters_bag_id ON characters(bag_id);
+
+CREATE TRIGGER characters_refresh_updated_at
+    BEFORE UPDATE ON characters
     FOR EACH ROW
 EXECUTE FUNCTION refresh_updated_at();
 
 -- =========================================
--- PLAYER_ABILITY (ManyToMany)
+-- CHARACTER_ABILITY (ManyToMany)
 -- =========================================
-CREATE TABLE player_ability
+CREATE TABLE character_ability
 (
-    player_id  INT NOT NULL REFERENCES players(id) ON DELETE CASCADE,
+    character_id  INT NOT NULL REFERENCES characters(id) ON DELETE CASCADE,
     ability_id INT NOT NULL REFERENCES ability(id) ON DELETE CASCADE,
-    PRIMARY KEY (player_id, ability_id)
+    PRIMARY KEY (character_id, ability_id)
 );
 
-CREATE INDEX idx_player_ability_player_id ON player_ability(player_id);
-CREATE INDEX idx_player_ability_ability_id ON player_ability(ability_id);
+CREATE INDEX idx_character_ability_character_id ON character_ability(character_id);
+CREATE INDEX idx_character_ability_ability_id ON character_ability(ability_id);
 
 -- =========================================
 -- DIARIES
@@ -255,7 +283,7 @@ CREATE TABLE diaries
     id         SERIAL PRIMARY KEY,
     uuid       UUID NOT NULL UNIQUE DEFAULT gen_random_uuid(),
     name       VARCHAR(100) NOT NULL UNIQUE,
-    owner_id   INTEGER NOT NULL REFERENCES players(id) ON DELETE CASCADE,
+    owner_id   INTEGER NOT NULL REFERENCES characters(id) ON DELETE CASCADE,
     created_at BIGINT NOT NULL DEFAULT (extract(epoch from now()) * 1000)::bigint,
     updated_at BIGINT NOT NULL DEFAULT (extract(epoch from now()) * 1000)::bigint,
     is_active  BOOLEAN NOT NULL DEFAULT true
@@ -342,24 +370,3 @@ CREATE TABLE diary_image_paragraph
 
 CREATE INDEX idx_dip_image_id ON diary_image_paragraph(diary_image_id);
 CREATE INDEX idx_dip_paragraph_id ON diary_image_paragraph(paragraph_id);
-
--- =========================================
--- REAGENTS
--- =========================================
-CREATE TABLE reagents
-(
-    id           SERIAL PRIMARY KEY,
-    uuid         UUID NOT NULL UNIQUE DEFAULT gen_random_uuid(),
-    reagent_name reagent_name_enum NOT NULL,
-    bag_id       INTEGER NOT NULL REFERENCES bags(id) ON DELETE CASCADE,
-    created_at   BIGINT NOT NULL DEFAULT (extract(epoch from now()) * 1000)::bigint,
-    updated_at   BIGINT NOT NULL DEFAULT (extract(epoch from now()) * 1000)::bigint,
-    is_active    BOOLEAN NOT NULL DEFAULT true
-);
-
-CREATE INDEX idx_reagents_bag_id ON reagents(bag_id);
-
-CREATE TRIGGER reagents_refresh_updated_at
-    BEFORE UPDATE ON reagents
-    FOR EACH ROW
-EXECUTE FUNCTION refresh_updated_at();

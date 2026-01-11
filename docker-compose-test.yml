@@ -27,52 +27,19 @@ services:
       - POSTGRES_DB=${POSTGRES_DB}
     volumes:
       - postgres_test:/var/lib/postgresql/data
+      # --- Utenti (Auth) ---
       - ${DDL_AUTH_HUB_LOCATION}/${PERSON_DDL_NAME}.sql:${DB_POSTGRES_CONTAINER_LOCATION}/01_auth_ddl.sql
       - ${DUMP_AUTH_HUB_LOCATION}/${GROUP_DUMP_NAME}.sql:${DB_POSTGRES_CONTAINER_LOCATION}/02_group_dump.sql
-    networks:
-      - databases
-
-  postgres-dump-auth-test:
-    image: postgres:15.6
-    container_name: ${PG_CONTAINER}_dump
-    depends_on:
-      postgres-core:
-        condition: service_healthy
-    environment:
-      - POSTGRES_USER=${POSTGRES_USER}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-      - POSTGRES_DB=${POSTGRES_DB}
-    volumes:
-      - postgres_test:/var/lib/postgresql/data
-      - ${DUMP_AUTH_HUB_LOCATION}/${PERSON_DUMP_NAME}.sql:${DB_POSTGRES_CONTAINER_LOCATION}/01_person_test_dump.sql
-    command: >
-      bash -c "PGPASSWORD=${POSTGRES_PASSWORD} psql -h ${PG_CONTAINER} -U ${POSTGRES_USER} -d ${POSTGRES_DB} -f ${DB_POSTGRES_CONTAINER_LOCATION}/01_test_dump.sql"
-    networks:
-      - databases
-
-  postgres-dump-ala-test:
-    image: postgres:15.6
-    container_name: ${PG_CONTAINER}_dump
-    depends_on:
-      postgres-core:
-        condition: service_healthy
-    environment:
-      - POSTGRES_USER=${POSTGRES_USER}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-      - POSTGRES_DB=${POSTGRES_DB}
-    volumes:
-      - postgres_test:/var/lib/postgresql/data
-      - ${DDL_ALARION_LOCATION}/${DASHBOARD_DDL_NAME}.sql:${DB_POSTGRES_CONTAINER_LOCATION}/01_dashboard_ddl.sql
-      - ${DDL_ALARION_LOCATION}/${EFFECTS_DDL_NAME}.sql:${DB_POSTGRES_CONTAINER_LOCATION}/02_effects_ddl.sql
-      - ${DDL_ALARION_LOCATION}/${MANAGEMENT_DDL_NAME}.sql:${DB_POSTGRES_CONTAINER_LOCATION}/03_management_ddl.sql
-      - ${DUMP_ALARION_LOCATION}/${ABILITIES_DUMP_NAME}.sql:${DB_POSTGRES_CONTAINER_LOCATION}/04_abilities_dump.sql
-      - ${DUMP_ALARION_LOCATION}/${EFFECTS_DUMP_NAME}.sql:${DB_POSTGRES_CONTAINER_LOCATION}/05_effects_dump.sql
-      - ${DUMP_ALARION_LOCATION}/${NOTES_DUMP_NAME}.sql:${DB_POSTGRES_CONTAINER_LOCATION}/06_notes_dump.sql
-      - ${DUMP_ALARION_LOCATION}/${REALMS_DUMP_NAME}.sql:${DB_POSTGRES_CONTAINER_LOCATION}/07_realms_dump.sql
-      - ${DUMP_ALARION_LOCATION}/${ROADS_DUMP_NAME}.sql:${DB_POSTGRES_CONTAINER_LOCATION}/08_roads_dump.sql
-
-    command: >
-      bash -c "PGPASSWORD=${POSTGRES_PASSWORD} psql -h ${PG_CONTAINER} -U ${POSTGRES_USER} -d ${POSTGRES_DB} -f ${DB_POSTGRES_CONTAINER_LOCATION}/01_test_dump.sql"
+      - ${DUMP_AUTH_HUB_LOCATION}/${PERSON_DUMP_NAME}.sql:${DB_POSTGRES_CONTAINER_LOCATION}/03_person_dump.sql
+      # --- Piattaforma (Ala) ---
+      - ${DDL_ALARION_LOCATION}/${DASHBOARD_DDL_NAME}.sql:${DB_POSTGRES_CONTAINER_LOCATION}/10_dashboard_ddl.sql
+      - ${DDL_ALARION_LOCATION}/${EFFECTS_DDL_NAME}.sql:${DB_POSTGRES_CONTAINER_LOCATION}/11_effects_ddl.sql
+      - ${DDL_ALARION_LOCATION}/${MANAGEMENT_DDL_NAME}.sql:${DB_POSTGRES_CONTAINER_LOCATION}/12_management_ddl.sql
+      - ${DUMP_ALARION_LOCATION}/${ABILITIES_DUMP_NAME}.sql:${DB_POSTGRES_CONTAINER_LOCATION}/20_abilities_dump.sql
+      - ${DUMP_ALARION_LOCATION}/${EFFECTS_DUMP_NAME}.sql:${DB_POSTGRES_CONTAINER_LOCATION}/21_effects_dump.sql
+      - ${DUMP_ALARION_LOCATION}/${NOTES_DUMP_NAME}.sql:${DB_POSTGRES_CONTAINER_LOCATION}/22_notes_dump.sql
+      - ${DUMP_ALARION_LOCATION}/${REALMS_DUMP_NAME}.sql:${DB_POSTGRES_CONTAINER_LOCATION}/23_realms_dump.sql
+      - ${DUMP_ALARION_LOCATION}/${ROADS_DUMP_NAME}.sql:${DB_POSTGRES_CONTAINER_LOCATION}/24_roads_dump.sql
     networks:
       - databases
 
