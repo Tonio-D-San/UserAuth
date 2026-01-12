@@ -1,34 +1,21 @@
--- =========================================
--- BASE TRIGGERS PER AUDIT
--- =========================================
-CREATE OR REPLACE FUNCTION refresh_updated_at()
-    RETURNS TRIGGER AS
-$$
-BEGIN
-    NEW.updated_at = (extract(epoch from now()) * 1000)::bigint;
-    RETURN NEW;
-END;
-$$ LANGUAGE plpgsql;
+-- 10_campaigns.sql
 
--- =========================================
--- CAMPAIGNS
--- =========================================
-CREATE TABLE campaigns
+CREATE TABLE IF NOT EXISTS campaigns
 (
     id          SERIAL PRIMARY KEY,
-    uuid        UUID         NOT NULL UNIQUE DEFAULT gen_random_uuid(),
+    uuid        UUID NOT NULL UNIQUE DEFAULT gen_random_uuid(),
     name        VARCHAR(100) NOT NULL UNIQUE,
     description TEXT,
-    created_at  BIGINT       NOT NULL        DEFAULT (extract(epoch from now()) * 1000)::bigint,
-    updated_at  BIGINT       NOT NULL        DEFAULT (extract(epoch from now()) * 1000)::bigint,
-    is_active   BOOLEAN      NOT NULL        DEFAULT true
+    created_at  BIGINT NOT NULL DEFAULT (extract(epoch from now()) * 1000)::bigint,
+    updated_at  BIGINT NOT NULL DEFAULT (extract(epoch from now()) * 1000)::bigint,
+    is_active   BOOLEAN NOT NULL DEFAULT true
 );
 
+DROP TRIGGER IF EXISTS campaigns_refresh_updated_at ON campaigns;
 CREATE TRIGGER campaigns_refresh_updated_at
-    BEFORE UPDATE
-    ON campaigns
-    FOR EACH ROW
-EXECUTE FUNCTION refresh_updated_at();
+    BEFORE UPDATE ON campaigns
+    FOR EACH ROW EXECUTE FUNCTION refresh_updated_at();
+
 
 CREATE TABLE IF NOT EXISTS events
 (
@@ -46,6 +33,7 @@ CREATE TABLE IF NOT EXISTS events
 
 CREATE INDEX IF NOT EXISTS idx_events_campaign_id ON events(campaign_id);
 
+DROP TRIGGER IF EXISTS events_refresh_updated_at ON events;
 CREATE TRIGGER events_refresh_updated_at
     BEFORE UPDATE ON events
     FOR EACH ROW EXECUTE FUNCTION refresh_updated_at();
@@ -66,29 +54,7 @@ CREATE TABLE IF NOT EXISTS event_days
 
 CREATE INDEX IF NOT EXISTS idx_event_days_event_id ON event_days(event_id);
 
+DROP TRIGGER IF EXISTS event_days_refresh_updated_at ON event_days;
 CREATE TRIGGER event_days_refresh_updated_at
     BEFORE UPDATE ON event_days
-    FOR EACH ROW EXECUTE FUNCTION refresh_updated_at();
-
-
-CREATE TYPE IF NOT EXISTS attendance_status_enum AS ENUM ('present', 'absent', 'late', 'staff');
-
-CREATE TABLE IF NOT EXISTS character_attendance
-(
-    id           SERIAL PRIMARY KEY,
-    uuid         UUID NOT NULL UNIQUE DEFAULT gen_random_uuid(),
-    character_id INTEGER NOT NULL REFERENCES characters(id) ON DELETE CASCADE,
-    event_day_id INTEGER NOT NULL REFERENCES event_days(id) ON DELETE CASCADE,
-    status       attendance_status_enum NOT NULL DEFAULT 'present',
-    created_at   BIGINT NOT NULL DEFAULT (extract(epoch from now()) * 1000)::bigint,
-    updated_at   BIGINT NOT NULL DEFAULT (extract(epoch from now()) * 1000)::bigint,
-    is_active    BOOLEAN NOT NULL DEFAULT true,
-    CONSTRAINT ux_character_day UNIQUE (character_id, event_day_id)
-);
-
-CREATE INDEX IF NOT EXISTS idx_attendance_character_id ON character_attendance(character_id);
-CREATE INDEX IF NOT EXISTS idx_attendance_event_day_id ON character_attendance(event_day_id);
-
-CREATE TRIGGER character_attendance_refresh_updated_at
-    BEFORE UPDATE ON character_attendance
     FOR EACH ROW EXECUTE FUNCTION refresh_updated_at();

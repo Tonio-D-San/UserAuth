@@ -17,6 +17,7 @@ CREATE TABLE effects
 (
     prefix     VARCHAR(255) NOT NULL,
     call       VARCHAR(255) NOT NULL,
+    duration   BIGINT,
     uuid       UUID NOT NULL UNIQUE DEFAULT gen_random_uuid(),
     created_at BIGINT NOT NULL DEFAULT (extract(epoch from now()) * 1000)::bigint,
     updated_at BIGINT NOT NULL DEFAULT (extract(epoch from now()) * 1000)::bigint,
