@@ -35,3 +35,5 @@ build/
 
 ### VS Code ###
 .vscode/
+/database/postgres.zip
+/database.zip
