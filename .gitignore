@@ -3,6 +3,7 @@ target/
 .mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
+.ai
 .env
 ./.env
 services/keycloak/users_dump_TEST.json
