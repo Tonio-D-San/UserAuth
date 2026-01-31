@@ -32,16 +32,63 @@ services:
       - ${DUMP_AUTH_HUB_LOCATION}/${GROUP_DUMP_NAME}.sql:${DB_POSTGRES_CONTAINER_LOCATION}/02_group_dump.sql
       - ${DUMP_AUTH_HUB_LOCATION}/${PERSON_DUMP_NAME}.sql:${DB_POSTGRES_CONTAINER_LOCATION}/03_person_dump.sql
       # --- Piattaforma (Ala) ---
-      - ${DDL_CAMPAIGN_LOCATION}/triggers.sql:${DB_POSTGRES_CONTAINER_LOCATION}/10_triggers.sql
-      - ${DDL_CAMPAIGN_LOCATION}/schema_DDL.sql:${DB_POSTGRES_CONTAINER_LOCATION}/11_schema.sql
-      - ${DDL_CAMPAIGN_LOCATION}/diaries_DDL.sql:${DB_POSTGRES_CONTAINER_LOCATION}/12_diaries.sql
-      - ${DDL_CAMPAIGN_LOCATION}/payments_DDL.sql:${DB_POSTGRES_CONTAINER_LOCATION}/13_payments.sql
+      - ${DDL_CAMPAIGN_LOCATION}/schema_DDL.sql:${DB_POSTGRES_CONTAINER_LOCATION}/10_schema.sql
+      - ${DDL_CAMPAIGN_LOCATION}/seed.sql:${DB_POSTGRES_CONTAINER_LOCATION}/11_seed.sql
+      - ${DDL_CAMPAIGN_LOCATION}/triggers.sql:${DB_POSTGRES_CONTAINER_LOCATION}/12_triggers.sql
+      # --- Piattaforma (Diary) ---
+      - ${DDL_DIARY_LOCATION}/diaries_DDL.sql:${DB_POSTGRES_CONTAINER_LOCATION}/13_diaries.sql
+      # --- Piattaforma (Payments) ---
+      - ${DDL_PAYMENTS_LOCATION}/payments_DDL.sql:${DB_POSTGRES_CONTAINER_LOCATION}/14_payments.sql
     networks:
       - databases
 
   ############## Keycloak Test ##############
-  keycloak_test: #/opt/keycloak/bin/kc.sh export --realm user-auth --users same_file --file /tmp/users_dump_TEST-01.json
-    image: quay.io/keycloak/keycloak:23.0.1
+#  keycloak_test: #/opt/keycloak/bin/kc.sh export --realm user-auth --users same_file --file /tmp/users_dump_TEST-01.json
+#    image: quay.io/keycloak/keycloak:23.0.1
+#    container_name: ${KC_CONTAINER}
+#    restart: no
+#    environment:
+#      KC_HOSTNAME: ${HOST}
+#      KC_HOSTNAME_PORT: ${KC_EXTERNAL_PORT}
+#      KC_HOSTNAME_STRICT: false
+#      KC_HOSTNAME_STRICT_HTTPS: false
+#      KC_LOG_LEVEL: info
+#      KC_METRICS_ENABLED: true
+#      KC_HEALTH_ENABLED: true
+#      KEYCLOAK_ADMIN: admin
+#      KEYCLOAK_ADMIN_PASSWORD: admin
+#    volumes:
+#      - ./services/keycloak/themes/:/opt/keycloak/themes/
+#      - ./services/keycloak/${PERSON_DUMP_NAME}.json:/opt/keycloak/data/import/${PERSON_DUMP_NAME}.json
+#    command: [ "start-dev", "--import-realm","--http-port=5443" ]
+#    ports:
+#      - '5443:5443'
+#    healthcheck:
+#      test:
+#        [
+#          "CMD-SHELL",
+#          "exec 3<>/dev/tcp/localhost/5443 && echo -e 'GET /health/ready HTTP/1.1\\r\\nHost: localhost\\r\\nConnection: close\\r\\n\\r\\n' >&3 && cat <&3 | grep -q '200 OK'"
+#        ]
+#      interval: 5s
+#      timeout: 2s
+#      retries: 50
+#    networks:
+#      - application
+
+
+  # 1) Ferma Keycloak
+  # 2) Pulisci eventuali residui
+  # 3) Copia i dati dal container
+  # 4) Export usando container temporaneo
+  # 5) Riavvia Keycloak
+  #docker stop dpms-kc-TEST
+  #Remove-Item -Recurse -Force kc-data, kc-export -ErrorAction SilentlyContinue
+  #docker cp dpms-kc-TEST:/opt/keycloak/data ./kc-data
+  #docker run --rm -v "${PWD}\kc-data:/opt/keycloak/data" -v "${PWD}\kc-export:/opt/keycloak/data/export" my-keycloak-cieid:26.5.2 export --dir /opt/keycloak/data/export --realm lab --optimized
+  #docker start dpms-kc-TEST
+
+  keycloak_test:
+    image: quay.io/keycloak/keycloak:26.5.2
     container_name: ${KC_CONTAINER}
     restart: no
     environment:
@@ -50,10 +97,10 @@ services:
       KC_HOSTNAME_STRICT: false
       KC_HOSTNAME_STRICT_HTTPS: false
       KC_LOG_LEVEL: info
-      KC_METRICS_ENABLED: true
-      KC_HEALTH_ENABLED: true
-      KEYCLOAK_ADMIN: admin
-      KEYCLOAK_ADMIN_PASSWORD: admin
+      KC_METRICS_ENABLED: "true"
+      KC_HEALTH_ENABLED: "true"
+      KC_BOOTSTRAP_ADMIN_USERNAME: admin
+      KC_BOOTSTRAP_ADMIN_PASSWORD: admin
     volumes:
       - ./services/keycloak/themes/:/opt/keycloak/themes/
       - ./services/keycloak/${PERSON_DUMP_NAME}.json:/opt/keycloak/data/import/${PERSON_DUMP_NAME}.json

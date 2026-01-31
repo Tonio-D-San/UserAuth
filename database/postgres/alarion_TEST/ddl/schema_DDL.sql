@@ -42,15 +42,11 @@ CREATE TABLE IF NOT EXISTS realms
     updated_at  BIGINT NOT NULL DEFAULT (extract(epoch from now()) * 1000)::bigint,
     is_active   BOOLEAN     NOT NULL DEFAULT TRUE,
 
-    ruleset_id  BIGINT      NOT NULL,
-    name        TEXT        NOT NULL,
-    description TEXT        NULL,
+    name        TEXT        NOT NULL    UNIQUE,
+--     description TEXT        NULL,
+    maxim       TEXT        NULL,
 
-    CONSTRAINT uq_realms_uuid UNIQUE (uuid),
-    CONSTRAINT uq_realms_ruleset_name UNIQUE (ruleset_id, name),
-
-    CONSTRAINT fk_realms_ruleset
-        FOREIGN KEY (ruleset_id) REFERENCES rulesets(id) ON DELETE RESTRICT
+    CONSTRAINT uq_realms_uuid UNIQUE (uuid)
 );
 
 CREATE TABLE IF NOT EXISTS abilities
@@ -268,8 +264,6 @@ CREATE TABLE IF NOT EXISTS point_transactions
 -- =========================
 -- INDICI UTILI
 -- =========================
-
-CREATE INDEX IF NOT EXISTS ix_realms_ruleset_id ON realms (ruleset_id);
 CREATE INDEX IF NOT EXISTS ix_abilities_ruleset_id ON abilities (ruleset_id);
 CREATE INDEX IF NOT EXISTS ix_ability_costs_ability_id ON ability_costs (ability_id);
 CREATE INDEX IF NOT EXISTS ix_prereq_ability_id ON ability_prerequisites (ability_id);
