@@ -13,6 +13,11 @@ CREATE TABLE IF NOT EXISTS rulesets
     name                   TEXT        NOT NULL,
     description            TEXT        NULL,
 
+    code                   TEXT        NOT NULL,
+    version                INTEGER     NOT NULL,
+    status                 TEXT        NOT NULL,
+    published_at           BIGINT      NULL,
+    previous_ruleset_uuid  UUID      NULL,
     initial_points         INTEGER     NOT NULL DEFAULT 0,
     required_spend_points  INTEGER     NOT NULL DEFAULT 0,
     max_points_at_creation INTEGER     NULL,
@@ -22,7 +27,11 @@ CREATE TABLE IF NOT EXISTS rulesets
     CONSTRAINT ck_rulesets_points_nonneg CHECK (
         initial_points >= 0 AND required_spend_points >= 0 AND
         (max_points_at_creation IS NULL OR max_points_at_creation >= 0)
-        )
+        ),
+    CONSTRAINT uq_rulesets_code_version UNIQUE (code, version),
+    CONSTRAINT ck_rulesets_status CHECK (status IN ('DRAFT','ACTIVE','DEPRECATED')),
+    CONSTRAINT fk_rulesets_previous
+        FOREIGN KEY (previous_ruleset_uuid) REFERENCES rulesets(uuid) ON DELETE SET NULL
 );
 
 CREATE TABLE IF NOT EXISTS realms
@@ -272,3 +281,4 @@ CREATE INDEX IF NOT EXISTS ix_characters_ruleset_id ON characters (ruleset_id);
 CREATE INDEX IF NOT EXISTS ix_char_abilities_character_id ON character_abilities (character_id);
 CREATE INDEX IF NOT EXISTS ix_point_tx_character_id ON point_transactions (character_id);
 CREATE INDEX IF NOT EXISTS ix_point_tx_ref ON point_transactions (ref_type, ref_uuid);
+CREATE UNIQUE INDEX IF NOT EXISTS uq_rulesets_active_per_code ON rulesets(code) WHERE status = 'ACTIVE';
