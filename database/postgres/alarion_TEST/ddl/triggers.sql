@@ -33,3 +33,14 @@ DO $$
                         );
             END LOOP;
     END $$;
+
+DO $$
+    BEGIN
+        IF NOT EXISTS (
+            SELECT 1 FROM pg_constraint WHERE conname = 'fk_characters_alchemy_path'
+        ) THEN
+            ALTER TABLE characters
+                ADD CONSTRAINT fk_characters_alchemy_path
+                    FOREIGN KEY (alchemy_path_id) REFERENCES alchemy_paths(id) ON DELETE SET NULL;
+        END IF;
+    END $$;
