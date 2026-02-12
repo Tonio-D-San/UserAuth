@@ -15,7 +15,7 @@ services:
     volumes:
       - ./user-be:/app
     ports:
-      - "8081:8081"
+      - "8082:8082"
     restart: no
     networks:
       - application

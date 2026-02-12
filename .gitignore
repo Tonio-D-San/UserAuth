@@ -38,3 +38,6 @@ build/
 .vscode/
 /database/postgres.zip
 /database.zip
+
+./ngrok.yml
+ngrok.yml

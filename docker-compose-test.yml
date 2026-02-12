@@ -92,10 +92,10 @@ services:
     container_name: ${KC_CONTAINER}
     restart: no
     environment:
-      KC_HOSTNAME: ${HOST}
-      KC_HOSTNAME_PORT: ${KC_EXTERNAL_PORT}
-      KC_HOSTNAME_STRICT: false
-      KC_HOSTNAME_STRICT_HTTPS: false
+      KC_PROXY: edge
+      KC_HTTP_ENABLED: "true"
+      KC_HOSTNAME_STRICT: "false"
+      KC_HOSTNAME_STRICT_HTTPS: "false"
       KC_LOG_LEVEL: info
       KC_METRICS_ENABLED: "true"
       KC_HEALTH_ENABLED: "true"
@@ -104,7 +104,8 @@ services:
     volumes:
       - ./services/keycloak/themes/:/opt/keycloak/themes/
       - ./services/keycloak/${PERSON_DUMP_NAME}.json:/opt/keycloak/data/import/${PERSON_DUMP_NAME}.json
-    command: [ "start-dev", "--import-realm","--http-port=5443" ]
+    command:
+      [ "start-dev", "--import-realm", "--http-port=5443", "--http-relative-path=/kc", "--proxy-headers=xforwarded" ]
     ports:
       - '5443:5443'
     healthcheck:
@@ -116,5 +117,16 @@ services:
       interval: 5s
       timeout: 2s
       retries: 50
+    networks:
+      - application
+
+  gateway:
+    image: caddy:2
+    container_name: gateway
+    restart: no
+    ports:
+      - "9000:9000"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
     networks:
       - application
