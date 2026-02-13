@@ -36,8 +36,8 @@ Write-Host "==> Starting docker services (no-build)..."
 docker compose -f $ComposeFile up -d --no-build --remove-orphans gateway keycloak_test | Out-Host
 
 Write-Host "==> Waiting local gateway..."
-if (-not (Wait-HttpGet "http://localhost:9000/ala/swagger-ui/index.html")) { throw "Local /ala not responding" }
-if (-not (Wait-HttpGet "http://localhost:9000/kc/realms/$Realm/.well-known/openid-configuration")) {
+if (-not (Wait-HttpGet "http://localhost:9001/ala/swagger-ui/index.html")) { throw "Local /ala not responding" }
+if (-not (Wait-HttpGet "http://localhost:9001/kc/realms/$Realm/.well-known/openid-configuration")) {
   throw "Local Keycloak well-known not responding"
 }
 

@@ -125,7 +125,7 @@ services:
     container_name: gateway
     restart: no
     ports:
-      - "9000:9000"
+      - "9001:9000"
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile:ro
     networks:

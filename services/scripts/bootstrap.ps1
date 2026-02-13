@@ -33,7 +33,7 @@ version: "2"
 tunnels:
   gateway:
     proto: http
-    addr: 9000
+    addr: 9001
 "@ | Set-Content -Path $NgrokYml -Encoding UTF8
   Write-Host "Created $NgrokYml"
 } else {
@@ -51,10 +51,11 @@ Write-Host "==> Pulling docker images (optional but useful)..."
 docker compose -f $ComposeFile pull | Out-Host
 
 Write-Host ""
-Write-Host "DONE ✅ Bootstrap complete."
+Write-Host "DONE - Bootstrap complete."
 Write-Host ""
 Write-Host "Next manual steps (one-time):"
-Write-Host "1) ngrok authtoken: ngrok config add-authtoken <TOKEN>"
+Write-Host "1) Set NGROK_AUTHTOKEN (in .env or as env var). Example: setx NGROK_AUTHTOKEN <TOKEN>"
+Write-Host "   If you use ngrok CLI instead of Docker: ngrok config add-authtoken <TOKEN>"
 Write-Host "2) Install Expo Go on Android"
 Write-Host ""
 Write-Host "Then run:"
