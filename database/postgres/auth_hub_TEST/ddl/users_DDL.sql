@@ -31,7 +31,7 @@ CREATE TABLE users
     first_access timestamptz DEFAULT now() NOT NULL,
     last_access  timestamptz DEFAULT now() NOT NULL,
     email        VARCHAR(100) NOT NULL UNIQUE,
-    password     VARCHAR(100),
+    username     VARCHAR(100),
     img_profile  BYTEA
 );
 
