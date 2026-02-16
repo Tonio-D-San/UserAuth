@@ -66,7 +66,7 @@ if (Test-Path $EnvTsPath) {
 
 Write-Host "==> Starting Expo in new window..."
 if (Test-Path $MobileDir) {
-  Start-Process powershell -ArgumentList "-NoExit", "-Command", "cd `"$MobileDir`"; npx expo start"
+  Start-Process powershell -ArgumentList "-NoExit", "-Command", "cd `"$MobileDir`"; npx expo start --tunnel -c"
 } else {
   Write-Warning "MobileDir not found: $MobileDir (skip Expo start)"
 }
