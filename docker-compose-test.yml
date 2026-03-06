@@ -33,12 +33,15 @@ services:
       - ${DUMP_AUTH_HUB_LOCATION}/${PERSON_DUMP_NAME}.sql:${DB_POSTGRES_CONTAINER_LOCATION}/03_person_dump.sql
       # --- Piattaforma (Ala) ---
       - ${DDL_CAMPAIGN_LOCATION}/schema_DDL.sql:${DB_POSTGRES_CONTAINER_LOCATION}/10_schema.sql
-      - ${DDL_CAMPAIGN_LOCATION}/seed.sql:${DB_POSTGRES_CONTAINER_LOCATION}/11_seed.sql
-      - ${DDL_CAMPAIGN_LOCATION}/triggers.sql:${DB_POSTGRES_CONTAINER_LOCATION}/12_triggers.sql
+      - ${DDL_CAMPAIGN_LOCATION}/seed.sql:${DB_POSTGRES_CONTAINER_LOCATION}/12_seed.sql
+      - ${DDL_CAMPAIGN_LOCATION}/triggers.sql:${DB_POSTGRES_CONTAINER_LOCATION}/13_triggers.sql
       # --- Piattaforma (Diary) ---
-      - ${DDL_DIARY_LOCATION}/diaries_DDL.sql:${DB_POSTGRES_CONTAINER_LOCATION}/13_diaries.sql
+      - ${DDL_DIARY_LOCATION}/diaries_DDL.sql:${DB_POSTGRES_CONTAINER_LOCATION}/20_diaries.sql
       # --- Piattaforma (Payments) ---
-      - ${DDL_PAYMENTS_LOCATION}/payments_DDL.sql:${DB_POSTGRES_CONTAINER_LOCATION}/14_payments.sql
+      - ${DDL_PAYMENTS_LOCATION}/payments_DDL.sql:${DB_POSTGRES_CONTAINER_LOCATION}/30_payments.sql
+      # --- Blog (Web-site) ---
+      - ${DDL_BLOG_LOCATION}/blog_DDL.sql:${DB_POSTGRES_CONTAINER_LOCATION}/11_blog.sql
+
     networks:
       - databases
 
@@ -75,17 +78,16 @@ services:
 #    networks:
 #      - application
 
-
   # 1) Ferma Keycloak
   # 2) Pulisci eventuali residui
   # 3) Copia i dati dal container
   # 4) Export usando container temporaneo
   # 5) Riavvia Keycloak
-  #docker stop dpms-kc-TEST
+  #docker stop user_auth-kc-TEST
   #Remove-Item -Recurse -Force kc-data, kc-export -ErrorAction SilentlyContinue
-  #docker cp dpms-kc-TEST:/opt/keycloak/data ./kc-data
-  #docker run --rm -v "${PWD}\kc-data:/opt/keycloak/data" -v "${PWD}\kc-export:/opt/keycloak/data/export" my-keycloak-cieid:26.5.2 export --dir /opt/keycloak/data/export --realm lab --optimized
-  #docker start dpms-kc-TEST
+  #docker cp user_auth-kc-TEST:/opt/keycloak/data ./kc-data
+  #docker run --rm -v "${PWD}\kc-data:/opt/keycloak/data" -v "${PWD}\services\keycloak\kc-export:/opt/keycloak/data/export" my-keycloak-cieid:26.5.2 export --dir /opt/keycloak/data/export --realm user-auth --optimized
+  #docker start user_auth-kc-TEST
 
   keycloak_test:
     image: quay.io/keycloak/keycloak:26.5.2

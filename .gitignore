@@ -8,6 +8,7 @@ target/
 ./.env
 services/keycloak/users_dump_TEST.json
 services/keycloak/users_dump_TEST-01.json
+services/keycloak/kc-export/**
 
 ### STS ###
 .apt_generated

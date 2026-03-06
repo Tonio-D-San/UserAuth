@@ -5,4 +5,4 @@ param(
 $ErrorActionPreference = "SilentlyContinue"
 
 Stop-Process -Name ngrok -Force
-docker compose -f $ComposeFile down
+docker compose -f $ComposeFile stop

@@ -33,10 +33,13 @@ function Get-NgrokPublicUrl([int]$Retries = 30, [int]$DelayMs = 500) {
 }
 
 Write-Host "==> Starting docker services (no-build)..."
-docker compose -f $ComposeFile up -d --no-build --remove-orphans gateway keycloak_test | Out-Host
+#docker compose -f $ComposeFile up -d --no-build --remove-orphans gateway keycloak_test | Out-Host
+docker compose -f $ComposeFile start gateway keycloak_test
 
 Write-Host "==> Waiting local gateway..."
-if (-not (Wait-HttpGet "http://localhost:9001/ala/swagger-ui/index.html")) { throw "Local /ala not responding" }
+if (-not (Wait-HttpGet "http://localhost:9001/ala/swagger-ui/index.html")) {
+  throw "Local /ala not responding"
+}
 if (-not (Wait-HttpGet "http://localhost:9001/kc/realms/$Realm/.well-known/openid-configuration")) {
   throw "Local Keycloak well-known not responding"
 }
@@ -66,7 +69,7 @@ if (Test-Path $EnvTsPath) {
 
 Write-Host "==> Starting Expo in new window..."
 if (Test-Path $MobileDir) {
-  Start-Process powershell -ArgumentList "-NoExit", "-Command", "cd `"$MobileDir`"; npx expo start --tunnel -c"
+  Start-Process powershell -ArgumentList "-NoExit", "-Command", "cd `"$MobileDir`"; npx expo start -c"
 } else {
   Write-Warning "MobileDir not found: $MobileDir (skip Expo start)"
 }
