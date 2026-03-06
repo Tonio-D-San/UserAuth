@@ -41,3 +41,4 @@ build/
 
 ./ngrok.yml
 ngrok.yml
+kc-data/**
